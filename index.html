@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>라이스리치AI</title>
+<meta name="description" content="라이스리치AI — 현장에서 바로 쓰는 AI 교육과 AI 에이전트 솔루션">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbf8f1; --surface:#ffffff; --ink:#1b2430; --muted:#5d6b7a;
+    --brand:#1f3a5f; --accent:#d9a23a; --accent-soft:#f6e7c4; --line:#e8e1d2;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10161f; --surface:#17202c; --ink:#eef2f6; --muted:#9aa8b8;
+      --brand:#8fb3e0; --accent:#e8b955; --accent-soft:#2c2617; --line:#253142;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10161f; --surface:#17202c; --ink:#eef2f6; --muted:#9aa8b8;
+    --brand:#8fb3e0; --accent:#e8b955; --accent-soft:#2c2617; --line:#253142;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Noto Sans KR',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;word-break:keep-all}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+  /* nav */
+  header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.15rem;color:var(--brand)}
+  .logo-mark{width:30px;height:30px;border-radius:8px;background:var(--brand);display:grid;place-items:center}
+  .logo-mark span{width:10px;height:16px;border-radius:50%;background:var(--accent);transform:rotate(25deg)}
+  .menu{display:flex;gap:28px;font-size:.95rem;color:var(--muted)}
+  .menu a:hover{color:var(--ink)}
+  @media (max-width:640px){.menu{display:none}}
+
+  /* hero */
+  .hero{padding-top:96px;padding-bottom:80px}
+  .eyebrow{display:inline-block;padding:6px 14px;border-radius:999px;background:var(--accent-soft);color:var(--ink);font-size:.85rem;font-weight:500;margin-bottom:24px}
+  h1{font-size:clamp(2rem,5.5vw,3.6rem);line-height:1.25;font-weight:900;letter-spacing:-.02em}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lead{margin-top:20px;font-size:clamp(1rem,2vw,1.2rem);color:var(--muted);max-width:620px}
+  .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+  .btn{display:inline-block;padding:14px 26px;border-radius:10px;font-weight:700;transition:transform .15s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:var(--brand);color:var(--bg)}
+  .btn-ghost{border:1.5px solid var(--line);color:var(--ink)}
+
+  /* sections */
+  section{padding:80px 0}
+  .sec-title{font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:900;letter-spacing:-.01em}
+  .sec-sub{color:var(--muted);margin-top:8px;margin-bottom:40px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px}
+  .card .icon{width:44px;height:44px;border-radius:12px;background:var(--accent-soft);display:grid;place-items:center;font-size:1.3rem;margin-bottom:18px}
+  .card h3{font-size:1.15rem;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:.95rem}
+
+  .band{background:var(--brand);color:var(--bg);border-radius:20px;padding:56px 40px}
+  .band .sec-sub{color:color-mix(in srgb,var(--bg) 75%,transparent)}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px}
+  .step b{display:block;color:var(--accent);font-size:2rem;font-weight:900;line-height:1}
+  .step h4{margin:10px 0 6px;font-size:1.05rem}
+  .step p{font-size:.92rem;opacity:.8}
+  @media (max-width:640px){.band{padding:40px 22px}}
+
+  .course{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 0;border-bottom:1px solid var(--line)}
+  .course:first-child{border-top:1px solid var(--line)}
+  .course h3{font-size:1.05rem}
+  .course p{color:var(--muted);font-size:.9rem}
+  .tag{flex-shrink:0;padding:4px 12px;border-radius:999px;border:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+  @media (max-width:640px){.course{flex-direction:column;align-items:flex-start}}
+
+  .contact{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  @media (max-width:760px){.contact{grid-template-columns:1fr}}
+  .info dt{font-size:.85rem;color:var(--muted);margin-top:16px}
+  .info dd{font-weight:500}
+
+  footer{border-top:1px solid var(--line);padding:32px 0;color:var(--muted);font-size:.85rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#" class="logo"><div class="logo-mark"><span></span></div>라이스리치AI</a>
+    <div class="menu">
+      <a href="#services">서비스</a>
+      <a href="#process">교육 방식</a>
+      <a href="#courses">과정</a>
+      <a href="#contact">문의</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <span class="eyebrow">부산IT교육센터 · AI 교육 브랜드</span>
+    <h1>배운 날부터<br><em>현장에서 쓰는</em> AI</h1>
+    <p class="lead">라이스리치AI는 AI 에이전트, 데이터 분석, 풀스택 개발을 실무 프로젝트 중심으로 가르칩니다. 개념에서 끝나지 않고, 직접 만들어 배포하는 경험까지 함께합니다.</p>
+    <div class="cta">
+      <a href="#courses" class="btn btn-primary">교육 과정 보기</a>
+      <a href="#contact" class="btn btn-ghost">교육 문의하기</a>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <h2 class="sec-title">무엇을 하나요</h2>
+      <p class="sec-sub">교육과 실무 사이의 간격을 줄이는 세 가지 서비스</p>
+      <div class="grid">
+        <div class="card">
+          <div class="icon">🎓</div>
+          <h3>AI·SW 직무 교육</h3>
+          <p>국비지원(KDT·산대특) 과정을 NCS 기반으로 설계하고 운영합니다. AI, 빅데이터, Java·Spring, React·Next.js까지.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🤖</div>
+          <h3>AI 에이전트 실습</h3>
+          <p>Claude Code 등 최신 AI 에이전트 도구로 기획부터 구현·배포까지 한 사이클을 완성하는 프로젝트형 교육.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🏭</div>
+          <h3>기업·대학 맞춤 과정</h3>
+          <p>스마트팩토리, 스마트물류 등 산업 도메인에 맞춘 AI 활용 커리큘럼과 교안을 함께 만듭니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="wrap">
+      <div class="band">
+        <h2 class="sec-title">이렇게 배웁니다</h2>
+        <p class="sec-sub">모든 과정은 "만들어서 보여주기"로 끝납니다</p>
+        <div class="steps">
+          <div class="step"><b>01</b><h4>개념 압축</h4><p>꼭 필요한 이론만 짧고 명확하게</p></div>
+          <div class="step"><b>02</b><h4>따라 만들기</h4><p>단계별 실습 교안으로 손에 익히기</p></div>
+          <div class="step"><b>03</b><h4>팀 프로젝트</h4><p>실제 문제를 정해 직접 설계·구현</p></div>
+          <div class="step"><b>04</b><h4>배포·발표</h4><p>클라우드에 올리고 결과물로 증명</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="courses">
+    <div class="wrap">
+      <h2 class="sec-title">대표 과정</h2>
+      <p class="sec-sub">현재 운영 중이거나 설계한 과정 분야</p>
+      <div>
+        <div class="course"><div><h3>AI 자동화 · 데이터 분석</h3><p>Python, 데이터 수집·분석·시각화, 머신러닝·딥러닝</p></div><span class="tag">장기 과정</span></div>
+        <div class="course"><div><h3>풀스택 웹 개발</h3><p>Java·Spring Boot, Django, React·TypeScript·Next.js</p></div><span class="tag">장기 과정</span></div>
+        <div class="course"><div><h3>AI 에이전트 활용 종합설계</h3><p>AI 코딩 에이전트로 아이디어를 서비스로 완성</p></div><span class="tag">단기 특강</span></div>
+        <div class="course"><div><h3>산업 특화 AI</h3><p>스마트팩토리·스마트물류 도메인 AI 활용</p></div><span class="tag">맞춤형</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap contact">
+      <div>
+        <h2 class="sec-title">함께 과정을 만들어요</h2>
+        <p class="sec-sub" style="margin-bottom:0">교육 수강, 기관·기업 맞춤 과정, 교안 제작 문의를 환영합니다.</p>
+      </div>
+      <dl class="info card">
+        <dt>소속</dt><dd>라이스리치AI</dd>
+        <dt>지역</dt><dd>부산광역시</dd>
+        <dt>이메일</dt><dd><a href="mailto:root@ricerich.net">root@ricerich.net</a></dd>
+        <dt>전화</dt><dd><a href="tel:051-753-5600">051-753-5600</a></dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> 라이스리치AI. All rights reserved.</span>
+    <span>Deployed on Vercel</span>
+  </div>
+</footer>
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>
