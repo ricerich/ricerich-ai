@@ -75,6 +75,10 @@
   .course p{color:var(--muted);font-size:.9rem}
   .tag{flex-shrink:0;padding:4px 12px;border-radius:999px;border:1px solid var(--line);font-size:.8rem;color:var(--muted)}
   @media (max-width:640px){.course{flex-direction:column;align-items:flex-start}}
+  .course-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .btn-sm{display:inline-block;padding:7px 14px;border-radius:8px;font-size:.85rem;font-weight:700;border:1.5px solid var(--line);color:var(--ink);transition:transform .15s,border-color .15s}
+  .btn-sm:hover{transform:translateY(-1px);border-color:var(--accent)}
+  .btn-sm-primary{background:var(--brand);color:var(--bg);border-color:var(--brand)}
 
   .contact{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
   @media (max-width:760px){.contact{grid-template-columns:1fr}}
@@ -128,7 +132,7 @@
         <div class="card">
           <div class="icon">🏭</div>
           <h3>기업·대학 맞춤 과정</h3>
-          <p>스마트팩토리, 스마트물류 등 산업 도메인에 맞춘 AI 활용 커리큘럼과 교안을 함께 만듭니다.</p>
+          <p>스마트팩토리, 스마트물류, 해양수산 등 산업 도메인에 맞춘 AI 활용 커리큘럼과 교안을 함께 만듭니다.</p>
         </div>
       </div>
     </div>
@@ -157,7 +161,13 @@
         <div class="course"><div><h3>AI 자동화 · 데이터 분석</h3><p>Python, 데이터 수집·분석·시각화, 머신러닝·딥러닝</p></div><span class="tag">장기 과정</span></div>
         <div class="course"><div><h3>풀스택 웹 개발</h3><p>Java·Spring Boot, Django, React·TypeScript·Next.js</p></div><span class="tag">장기 과정</span></div>
         <div class="course"><div><h3>AI 에이전트 활용 종합설계</h3><p>AI 코딩 에이전트로 아이디어를 서비스로 완성</p></div><span class="tag">단기 특강</span></div>
-        <div class="course"><div><h3>산업 특화 AI</h3><p>스마트팩토리·스마트물류 도메인 AI 활용</p></div><span class="tag">맞춤형</span></div>
+        <div class="course"><div><h3>AI활용 스마트물류 통합관리 플랫폼</h3><p>물류센터 프로세스, 자동화 설비, 수요 예측까지 스마트물류 도메인 AI 활용</p>
+          <div class="course-links">
+            <a class="btn-sm btn-sm-primary" href="/logistic_visual/">▶ 설비 계산 시각화</a>
+            <a class="btn-sm" href="/logistic_quiz/">✎ 용어 퀴즈</a>
+          </div></div><span class="tag">720시간</span></div>
+        <div class="course"><div><h3>AI·데이터 기반 해양·수산 서비스 개발</h3><p>해양수산 데이터 수집·구축, CNN·RNN·RAG 모델, Spring Boot·FastAPI·React 서비스 구현 — 어장 위치 추천 프로젝트</p></div><span class="tag">720시간</span></div>
+        <div class="course"><div><h3>산업 특화 AI</h3><p>스마트팩토리 등 제조 도메인 AI 활용</p></div><span class="tag">맞춤형</span></div>
       </div>
     </div>
   </section>
