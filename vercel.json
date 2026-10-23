@@ -1,5 +1,14 @@
 {
   "redirects": [
-    { "source": "/logistic_visual", "destination": "/logistic_visual/", "permanent": true }
+    {
+      "source": "/logistic_visual",
+      "destination": "/logistic_visual/",
+      "permanent": true
+    },
+    {
+      "source": "/logistic_quiz",
+      "destination": "/logistic_quiz/",
+      "permanent": true
+    }
   ]
 }

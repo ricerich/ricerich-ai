@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="5과목 스마트물류 용어를 복습하는 4지선다 퀴즈">
+  <title>스마트물류 용어 퀴즈</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">BSP</span>
+        <span class="brand-name">스마트물류 용어 퀴즈</span>
+      </div>
+      <span class="subject-badge">5과목</span>
+    </header>
+
+    <main id="app-main">
+      <noscript>
+        <p class="notice notice-error">이 퀴즈를 풀려면 JavaScript를 켜 주세요.</p>
+      </noscript>
+
+      <!-- 시작 화면 -->
+      <section id="screen-start" class="screen" aria-labelledby="start-title">
+        <div class="hero">
+          <p class="eyebrow">스마트물류 · 5과목</p>
+          <h1 id="start-title" tabindex="-1">스마트물류<br>용어 퀴즈</h1>
+          <p class="lead">
+            물류센터 프로세스부터 자동화 설비, BSP 센터 설계까지.<br>
+            4지선다로 핵심 용어를 복습하세요.
+          </p>
+        </div>
+
+        <div id="data-error" class="notice notice-error" role="alert" hidden></div>
+
+        <form id="start-form" class="setup-card" novalidate>
+          <fieldset class="fieldset">
+            <legend>학습 범위</legend>
+            <div id="session-options" class="chip-group">
+              <label class="chip">
+                <input type="radio" name="session" value="all" checked>
+                <span>전체</span>
+              </label>
+              <label class="chip">
+                <input type="radio" name="session" value="1">
+                <span>1차시</span>
+              </label>
+              <label class="chip">
+                <input type="radio" name="session" value="2">
+                <span>2차시</span>
+              </label>
+              <label class="chip">
+                <input type="radio" name="session" value="3">
+                <span>3차시</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="fieldset">
+            <legend>문항 수</legend>
+            <div id="count-options" class="chip-group"></div>
+            <p id="pool-hint" class="hint"></p>
+          </fieldset>
+
+          <button id="start-btn" class="btn btn-primary btn-block" type="submit" disabled>
+            퀴즈 시작
+            <span aria-hidden="true">→</span>
+          </button>
+        </form>
+
+        <p class="source-note">
+          문제와 보기는 매번 섞이며, <strong>5과목 용어 노트</strong>의 내용만으로 출제됩니다.
+        </p>
+      </section>
+
+      <!-- 문제 화면 -->
+      <section id="screen-quiz" class="screen" aria-labelledby="question-text" hidden>
+        <div class="quiz-toolbar">
+          <button id="quit-btn" class="btn-quiet" type="button">← 나가기</button>
+          <span id="quiz-progress-label" class="progress-label">1 / 1</span>
+        </div>
+
+        <div id="progress" class="progress" role="progressbar" aria-labelledby="quiz-progress-label"
+          aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+
+        <div class="quiz-meta">
+          <span id="quiz-session" class="badge"></span>
+          <span id="question-number" class="meta-text">문제 1</span>
+        </div>
+
+        <h1 id="question-text" class="question-text" tabindex="-1"></h1>
+        <div id="choice-list" class="choice-list" role="group" aria-labelledby="question-text"></div>
+
+        <div class="quiz-actions">
+          <p id="selection-hint" class="hint">보기를 하나 선택하세요.</p>
+          <button id="next-btn" class="btn btn-primary" type="button" disabled>다음 문제</button>
+        </div>
+      </section>
+
+      <!-- 결과 화면 -->
+      <section id="screen-result" class="screen" aria-labelledby="result-title" hidden>
+        <p class="eyebrow">학습 결과</p>
+        <h1 id="result-title" class="result-title" tabindex="-1">퀴즈 결과</h1>
+
+        <div class="result-card">
+          <p class="result-label">맞힌 문항</p>
+          <p class="result-score">
+            <strong id="result-correct">0</strong>
+            <span>/ <span id="result-total">0</span></span>
+          </p>
+          <p id="result-percent" class="result-percent">0%</p>
+          <p id="result-message" class="result-message"></p>
+          <p id="result-config" class="hint"></p>
+        </div>
+
+        <div class="result-actions">
+          <button id="retry-btn" class="btn btn-primary btn-block" type="button">같은 조건으로 다시 풀기</button>
+          <button id="home-btn" class="btn btn-secondary btn-block" type="button">시작 화면으로</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>5과목 · 스마트물류 시스템 및 자동화설비 이해</p>
+    </footer>
+  </div>
+
+  <script src="data/questions.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
