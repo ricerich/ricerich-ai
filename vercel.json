@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/logistic_visual", "destination": "/logistic_visual/", "permanent": true }
+  ]
+}

@@ -1,0 +1,91 @@
+/* BSP 설비 계산 시각화 — 공통 스타일 (Bootstrap 5 위에 덧씌움) */
+:root {
+  --bsp: #0e4a5c;
+  --bsp-dark: #0a3644;
+  --accent: #e0902a;
+  --ok: #1f8a5b;
+  --warn: #d99a17;
+  --bad: #c8463a;
+  --raw: #d9534f;
+  --opt: #1e6fd9;
+  --agv: #0e7c86;
+  --spare: #e0a33a;
+}
+
+body {
+  font-family: "Pretendard", "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", system-ui, sans-serif;
+  background: #f4f7f9;
+  color: #1d2b33;
+}
+
+.bg-bsp { background: var(--bsp); }
+.text-accent { color: var(--accent); }
+.navbar .nav-link.active { color: #fff; font-weight: 600; border-bottom: 2px solid var(--accent); }
+
+.hero {
+  background: linear-gradient(120deg, #ffffff 0%, #e8f2f5 100%);
+  border: 1px solid #dbe7ec;
+}
+
+.menu-card { transition: transform .15s, box-shadow .15s; border: 1px solid #dbe7ec; }
+.menu-card:hover { transform: translateY(-3px); box-shadow: 0 .5rem 1rem rgba(14, 74, 92, .12); }
+.menu-num { font-size: 2rem; color: var(--accent); font-weight: 700; line-height: 1; margin-bottom: .5rem; }
+.menu-card .card-title { color: var(--bsp); font-weight: 700; }
+
+.card { border-color: #dbe7ec; }
+.card-header { background: #fbfdfe; }
+
+.page-head { margin-bottom: 1rem; }
+.page-head h2 { color: var(--bsp); margin-bottom: .35rem; }
+.formula {
+  display: inline-block;
+  background: #fff;
+  border: 1px dashed #b9cfd8;
+  border-radius: .5rem;
+  padding: .35rem .75rem;
+  font-family: Consolas, "D2Coding", monospace;
+  font-size: .9rem;
+}
+
+/* 숫자 카드 */
+.stat {
+  background: #fff;
+  border: 1px solid #dbe7ec;
+  border-radius: .6rem;
+  padding: .6rem .8rem;
+  height: 100%;
+}
+.stat-label { font-size: .78rem; color: #5d7481; }
+.stat-value { font-size: 1.35rem; font-weight: 700; color: var(--bsp); }
+.stat-strong { background: var(--bsp); border-color: var(--bsp); }
+.stat-strong .stat-label { color: #cfe3ea; }
+.stat-strong .stat-value { color: #fff; }
+.stat-raw .stat-value { color: var(--raw); }
+.stat-opt .stat-value { color: var(--opt); }
+.stat.ok { border-color: var(--ok); background: #eef8f3; }
+.stat.ok .stat-value { color: var(--ok); }
+.stat.bad { border-color: var(--bad); background: #fbefed; }
+.stat.bad .stat-value { color: var(--bad); }
+
+.chart-box { position: relative; height: 280px; }
+.chart-box.chart-sm { height: 170px; }
+
+/* 피킹 */
+.pk-canvas { max-width: 100%; height: auto; background: #fff; border-radius: .4rem; }
+.seq { font-family: Consolas, monospace; font-size: .9rem; }
+
+/* AGV 대열 */
+.fleet { display: flex; flex-wrap: wrap; gap: .5rem; min-height: 64px; }
+.fleet svg { width: 68px; height: 50px; animation: pop .35s ease-out both; }
+.fleet .agv-card { text-align: center; font-size: .7rem; color: #5d7481; }
+@keyframes pop { from { transform: scale(.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.legend-dot { display: inline-block; width: .8rem; height: .8rem; border-radius: .2rem; vertical-align: -1px; }
+.bg-agv { background: var(--agv); }
+.bg-spare { background: var(--spare); }
+
+/* 소터 게이지 */
+.gauge { width: 100%; max-width: 320px; }
+.gauge .needle { transition: transform .8s cubic-bezier(.3, 1.4, .5, 1); transform-origin: 150px 160px; }
+.ref-img { height: 190px; object-fit: cover; border-radius: 0; }
+
+footer { background: #fff; }

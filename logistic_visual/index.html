@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BSP 설비 계산 시각화 · 5장 부록</title>
+  <link rel="stylesheet" href="vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ 상단 메뉴 ============ -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-bsp sticky-top shadow-sm">
+  <div class="container-xl">
+    <a class="navbar-brand fw-bold" href="#home">BSP 스마트물류센터 <span class="fw-normal opacity-75 small">· 설비 계산 시각화</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-label="메뉴 열기">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#home" data-page="home">홈</a></li>
+        <li class="nav-item"><a class="nav-link" href="#conveyor" data-page="conveyor">① 컨베이어 처리량</a></li>
+        <li class="nav-item"><a class="nav-link" href="#picking" data-page="picking">② 피킹 동선 거리</a></li>
+        <li class="nav-item"><a class="nav-link" href="#agv" data-page="agv">③ AGV·AMR 대수</a></li>
+        <li class="nav-item"><a class="nav-link" href="#sorter" data-page="sorter">④ 소터 용량</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container-xl py-4">
+
+<!-- ============ 홈 ============ -->
+<section id="page-home" class="page">
+  <div class="p-4 p-md-5 mb-4 rounded-4 hero">
+    <div class="small text-uppercase fw-semibold text-accent mb-2">5장 부록 예제 · 3차시 계산 실습을 웹으로</div>
+    <h1 class="display-6 fw-bold mb-3">숫자를 바꾸면 설비가 움직입니다</h1>
+    <p class="lead mb-0">파이썬으로 계산했던 네 가지 실습을 화면에서 직접 바꿔 보고, 그래프와 애니메이션으로 확인합니다.
+      계산식은 실습 소스(<code>conveyor.py · picking.py · agv.py · sorter.py</code>)와 같습니다.</p>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-md-6 col-lg-3">
+      <a href="#conveyor" class="card h-100 menu-card text-decoration-none">
+        <div class="card-body">
+          <div class="menu-num">①</div>
+          <h5 class="card-title">컨베이어 처리량</h5>
+          <p class="card-text small text-secondary">속도 ÷ (박스 길이 + 간격) × 60 — 벨트 애니메이션과 처리량 그래프</p>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <a href="#picking" class="card h-100 menu-card text-decoration-none">
+        <div class="card-body">
+          <div class="menu-num">②</div>
+          <h5 class="card-title">피킹 동선 거리</h5>
+          <p class="card-text small text-secondary">주문 순서 vs 지그재그 — 블록맵 위에서 작업자가 걷는 모습</p>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <a href="#agv" class="card h-100 menu-card text-decoration-none">
+        <div class="card-body">
+          <div class="menu-num">③</div>
+          <h5 class="card-title">AGV·AMR 대수 산정</h5>
+          <p class="card-text small text-secondary">사이클 시간 · 처리 건수 · 거리별 필요 대수 — 로봇 아이콘으로</p>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <a href="#sorter" class="card h-100 menu-card text-decoration-none">
+        <div class="card-body">
+          <div class="menu-num">④</div>
+          <h5 class="card-title">소터 용량 검토</h5>
+          <p class="card-text small text-secondary">같은 물량, 다른 집중도 — 부하 게이지와 슈트 분류 애니메이션</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">BSP 센터 제원 (실습 전제)</div>
+        <div class="card-body p-0">
+          <table class="table table-sm mb-0 align-middle">
+            <tbody>
+              <tr><th class="ps-3">관리 품목 수</th><td>1,200 SKU (5개 카테고리)</td></tr>
+              <tr><th class="ps-3">일 평균 출고</th><td>약 48,000 박스</td></tr>
+              <tr><th class="ps-3">피크 배수</th><td>1.6배</td></tr>
+              <tr><th class="ps-3">작업 시간</th><td>16시간 (2교대)</td></tr>
+              <tr><th class="ps-3">소터</th><td>슬라이딩슈 8,000개/h · 12슈트</td></tr>
+              <tr><th class="ps-3">AMR</th><td>속도 1.2 m/s · 적재·하역 20초</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">네 실습이 공통으로 말하는 것</div>
+        <div class="card-body">
+          <p class="mb-2"><strong>수요를 미리 알면 더 나은 답이 나옵니다.</strong></p>
+          <ul class="mb-3">
+            <li>컨베이어 속도는 피크 물량을 알아야 정한다</li>
+            <li>동선은 무엇이 나갈지 알아야 미리 정렬한다</li>
+            <li>AMR 대수는 운반 건수를 알아야 산정한다</li>
+            <li>소터 여유는 시간대별 물량을 알아야 판단한다</li>
+          </ul>
+          <div class="small text-secondary">그래서 다음 과목이 수요 예측입니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ① 컨베이어 ============ -->
+<section id="page-conveyor" class="page d-none">
+  <div class="page-head">
+    <div class="small text-accent fw-semibold">실습 ① · conveyor.py</div>
+    <h2 class="fw-bold">컨베이어 처리량</h2>
+    <div class="formula">처리량(개/시간) = 속도(m/분) ÷ (박스 길이 + 안전 간격) × 60</div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-lg-4">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">입력값 바꿔 보기</div>
+        <div class="card-body">
+          <label class="form-label d-flex justify-content-between">벨트 속도 <span><b id="cv-speed-v"></b> m/분</span></label>
+          <input type="range" class="form-range" id="cv-speed" min="20" max="60" step="1" value="36">
+          <label class="form-label d-flex justify-content-between mt-2">박스 길이 <span><b id="cv-box-v"></b> m</span></label>
+          <input type="range" class="form-range" id="cv-box" min="0.2" max="0.8" step="0.05" value="0.4">
+          <label class="form-label d-flex justify-content-between mt-2">안전 간격 <span><b id="cv-gap-v"></b> m</span></label>
+          <input type="range" class="form-range" id="cv-gap" min="0.10" max="0.40" step="0.05" value="0.20">
+          <label class="form-label mt-2" for="cv-need">피크 시간 필요량 (개/시간)</label>
+          <input type="number" class="form-control" id="cv-need" value="4000" min="0" step="100">
+          <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-outline-secondary btn-sm" id="cv-reset">기본값 (36 m/분 · 0.4 · 0.2)</button>
+            <button class="btn btn-outline-secondary btn-sm" id="cv-try">간격 0.15로</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="row g-3 mb-3">
+        <div class="col-sm-4"><div class="stat"><div class="stat-label">피치 (박스+간격)</div><div class="stat-value" id="cv-pitch">-</div></div></div>
+        <div class="col-sm-4"><div class="stat"><div class="stat-label">시간당 처리량</div><div class="stat-value" id="cv-tp">-</div></div></div>
+        <div class="col-sm-4"><div class="stat" id="cv-judge-box"><div class="stat-label">필요량 대비</div><div class="stat-value" id="cv-judge">-</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span class="fw-semibold">벨트 애니메이션</span>
+          <span class="small text-secondary">화면 속 1초 = 실제 1초 · 지나간 박스 <b id="cv-count">0</b>개 · 시뮬레이션 처리량 <b id="cv-simtp">-</b>개/h</span>
+        </div>
+        <div class="card-body p-2">
+          <canvas id="cv-canvas" class="w-100" height="170"></canvas>
+          <div class="d-flex gap-2 mt-2">
+            <button class="btn btn-primary btn-sm" id="cv-play">일시정지</button>
+            <button class="btn btn-outline-primary btn-sm" id="cv-fast">2배속</button>
+            <span class="small text-secondary align-self-center ms-1">벨트 위 눈금은 1 m 간격입니다.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3 mt-1">
+    <div class="col-lg-8">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">속도별 처리량 — 간격 세 가지 비교</div>
+        <div class="card-body"><div class="chart-box"><canvas id="cv-chart"></canvas></div></div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">실습 표 (현재 박스·간격 기준)</div>
+        <div class="card-body p-0">
+          <table class="table table-sm mb-0 text-center align-middle" id="cv-table">
+            <thead><tr><th>속도</th><th>처리량</th><th>판정</th></tr></thead><tbody></tbody>
+          </table>
+        </div>
+        <div class="card-footer small text-secondary">간격을 줄이면 처리량은 늘지만 소터가 박스를 못 읽어 재순환이 늘 수 있습니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ② 피킹 동선 ============ -->
+<section id="page-picking" class="page d-none">
+  <div class="page-head">
+    <div class="small text-accent fw-semibold">실습 ② · picking.py</div>
+    <h2 class="fw-bold">피킹 동선 거리</h2>
+    <div class="formula">거리 = 통로를 따라 걷는 거리(맨해튼 거리) · 시작 (0,0) → 로케이션 6곳 → 출고 컨베이어 (28,44)</div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-lg-7">
+      <div class="card h-100">
+        <div class="card-header d-flex flex-wrap gap-2 justify-content-between align-items-center">
+          <span class="fw-semibold">블록맵 (1칸 = 1 m)</span>
+          <div class="btn-group btn-group-sm" role="group">
+            <button class="btn btn-outline-danger" id="pk-run-raw">주문 순서</button>
+            <button class="btn btn-outline-primary" id="pk-run-opt">지그재그</button>
+            <button class="btn btn-dark" id="pk-run-both">동시 비교</button>
+          </div>
+        </div>
+        <div class="card-body p-2 text-center">
+          <canvas id="pk-canvas" width="560" height="760" class="pk-canvas"></canvas>
+          <div class="small text-secondary mt-1">회색 블록 = 랙 · 흰 칸 = 통로(세로 통로 x=5·14·23, 가로 통로 4 m 간격) · 걷는 길이는 맨해튼 거리와 같습니다.</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="row g-3 mb-3">
+        <div class="col-6"><div class="stat stat-raw"><div class="stat-label">주문 순서 그대로</div><div class="stat-value"><span id="pk-raw-live">0</span> / <span id="pk-raw">-</span> m</div></div></div>
+        <div class="col-6"><div class="stat stat-opt"><div class="stat-label">지그재그 정렬</div><div class="stat-value"><span id="pk-opt-live">0</span> / <span id="pk-opt">-</span> m</div></div></div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="mb-2"><span class="badge text-bg-danger me-1">주문</span><span id="pk-raw-seq" class="seq"></span></div>
+          <div class="mb-2"><span class="badge text-bg-primary me-1">정렬</span><span id="pk-opt-seq" class="seq"></span></div>
+          <div class="fs-5">절감 <b id="pk-save">-</b></div>
+          <div class="d-flex gap-2 mt-2 flex-wrap">
+            <button class="btn btn-outline-secondary btn-sm" id="pk-shuffle">주문서 섞기</button>
+            <button class="btn btn-outline-secondary btn-sm" id="pk-default">실습 주문서로</button>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header fw-semibold">거리 비교</div>
+        <div class="card-body"><div class="chart-box chart-sm"><canvas id="pk-chart"></canvas></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header fw-semibold">하루로 환산하면</div>
+        <div class="card-body">
+          <label class="form-label d-flex justify-content-between">하루 피킹 오더 수 <span><b id="pk-orders-v"></b>건</span></label>
+          <input type="range" class="form-range" id="pk-orders" min="200" max="3000" step="100" value="1200">
+          <div id="pk-daily" class="mt-1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ③ AGV ============ -->
+<section id="page-agv" class="page d-none">
+  <div class="page-head">
+    <div class="small text-accent fw-semibold">실습 ③ · agv.py</div>
+    <h2 class="fw-bold">AGV · AMR 대수 산정</h2>
+    <div class="formula">1회 사이클 = 거리 × 2 ÷ 속도 + 적재·하역 &nbsp;|&nbsp; 필요 대수 = 올림( 시간당 운반 건수 ÷ (3600 ÷ 사이클) × (1 + 여유율) )</div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-lg-4">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">입력값 바꿔 보기</div>
+        <div class="card-body">
+          <label class="form-label d-flex justify-content-between">시간당 운반 건수 <span><b id="ag-moves-v"></b>건</span></label>
+          <input type="range" class="form-range" id="ag-moves" min="60" max="480" step="10" value="240">
+          <label class="form-label d-flex justify-content-between mt-2">편도 거리 <span><b id="ag-dist-v"></b> m</span></label>
+          <input type="range" class="form-range" id="ag-dist" min="40" max="160" step="10" value="100">
+          <label class="form-label d-flex justify-content-between mt-2">주행 속도 <span><b id="ag-speed-v"></b> m/s</span></label>
+          <input type="range" class="form-range" id="ag-speed" min="0.8" max="2.0" step="0.1" value="1.2">
+          <label class="form-label d-flex justify-content-between mt-2">적재·하역 시간 <span><b id="ag-hand-v"></b>초</span></label>
+          <input type="range" class="form-range" id="ag-hand" min="0" max="60" step="5" value="20">
+          <label class="form-label d-flex justify-content-between mt-2">여유율 <span><b id="ag-margin-v"></b>%</span></label>
+          <input type="range" class="form-range" id="ag-margin" min="0" max="50" step="5" value="20">
+          <div class="d-flex gap-2 mt-3 flex-wrap">
+            <button class="btn btn-outline-secondary btn-sm" id="ag-reset">기본값</button>
+            <button class="btn btn-outline-secondary btn-sm" id="ag-60">거리 60 m</button>
+            <button class="btn btn-outline-secondary btn-sm" id="ag-fast">속도 1.5 m/s</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3"><div class="stat"><div class="stat-label">1회 사이클</div><div class="stat-value" id="ag-cycle">-</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat"><div class="stat-label">1대 시간당 처리</div><div class="stat-value" id="ag-per">-</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat"><div class="stat-label">계산상 대수</div><div class="stat-value" id="ag-raw">-</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat stat-strong"><div class="stat-label">필요 대수</div><div class="stat-value" id="ag-need">-</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-1">
+          <span class="fw-semibold">필요한 AMR — 실제 대수만큼</span>
+          <span class="small"><span class="legend-dot bg-agv"></span>운반에 필요 &nbsp; <span class="legend-dot bg-spare"></span>여유분(고장·충전·피크)</span>
+        </div>
+        <div class="card-body">
+          <div id="ag-fleet" class="fleet"></div>
+          <div class="small text-secondary mt-2" id="ag-fleet-note"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt-3">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span class="fw-semibold">1대의 사이클 — 적재 → 주행 → 하역 → 복귀</span>
+      <span class="small text-secondary">화면 속 1초 = 실제 <span id="ag-scale"></span>초 · 남은 시간 <b id="ag-timer">-</b></span>
+    </div>
+    <div class="card-body p-2"><canvas id="ag-canvas" class="w-100" height="120"></canvas></div>
+  </div>
+
+  <div class="row g-3 mt-1">
+    <div class="col-lg-4">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">걸린 시간 — 사이클 구성</div>
+        <div class="card-body"><div class="chart-box"><canvas id="ag-chart-time"></canvas></div></div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">건수 — 요구 vs 처리 능력</div>
+        <div class="card-body"><div class="chart-box"><canvas id="ag-chart-moves"></canvas></div></div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">거리 — 거리별 필요 대수</div>
+        <div class="card-body"><div class="chart-box"><canvas id="ag-chart-dist"></canvas></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ④ 소터 ============ -->
+<section id="page-sorter" class="page d-none">
+  <div class="page-head">
+    <div class="small text-accent fw-semibold">실습 ④ · sorter.py</div>
+    <h2 class="fw-bold">소터 용량 검토</h2>
+    <div class="formula">피크 시간 물량 = 일 출고 × 피크 배수 ÷ 작업 시간 &nbsp;|&nbsp; 부하 = 피크 시간 물량 ÷ 소터 능력 &nbsp;(80% 미만 여유 · 100% 미만 주의 · 이상 부족)</div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-lg-4">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">입력값 바꿔 보기</div>
+        <div class="card-body">
+          <label class="form-label" for="st-daily">일 평균 출고 (박스)</label>
+          <input type="number" class="form-control" id="st-daily" value="48000" step="1000" min="0">
+          <label class="form-label d-flex justify-content-between mt-2">피크 배수 <span><b id="st-ratio-v"></b>배</span></label>
+          <input type="range" class="form-range" id="st-ratio" min="1.0" max="2.5" step="0.1" value="1.6">
+          <label class="form-label d-flex justify-content-between mt-2">출고 작업 시간 <span><b id="st-hours-v"></b>시간</span></label>
+          <input type="range" class="form-range" id="st-hours" min="6" max="20" step="1" value="10">
+          <label class="form-label d-flex justify-content-between mt-2">소터 능력 <span><b id="st-cap-v"></b>개/h</span></label>
+          <input type="range" class="form-range" id="st-cap" min="4000" max="16000" step="500" value="8000">
+          <label class="form-label d-flex justify-content-between mt-2">슈트 수 <span><b id="st-chutes-v"></b>개</span></label>
+          <input type="range" class="form-range" id="st-chutes" min="6" max="16" step="1" value="12">
+          <div class="mt-3 small fw-semibold">실습 상황 바로가기</div>
+          <div class="d-flex gap-1 flex-wrap mt-1" id="st-cases"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">설비 대비 부하</div>
+        <div class="card-body text-center">
+          <svg id="st-gauge" viewBox="-25 0 350 190" class="gauge"></svg>
+          <div class="fs-4 fw-bold" id="st-judge">-</div>
+          <div class="row g-2 mt-2 text-start">
+            <div class="col-6"><div class="stat"><div class="stat-label">피크 시간 물량</div><div class="stat-value" id="st-peak">-</div></div></div>
+            <div class="col-6"><div class="stat"><div class="stat-label">슈트당 물량</div><div class="stat-value" id="st-chute">-</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">참고 사진 — 실제 소터</div>
+        <img src="img/sorter_ref.jpg" class="card-img-bottom ref-img" alt="크로스벨트 소터 사진">
+        <div class="card-body small text-secondary">
+          사진은 크로스벨트 방식 소터입니다(실습의 슬라이딩슈와 방식은 다르지만 '라인 위 화물을 슈트로 나눈다'는 역할은 같습니다).<br>
+          사진: Tecnowey · CC BY-SA 3.0 · Wikimedia Commons
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt-3">
+    <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-1">
+      <span class="fw-semibold">슬라이딩슈 소터 그림 — 투입 속도는 피크 시간 물량에 비례</span>
+      <span class="small text-secondary">분류 <b id="st-sorted">0</b> · 처리 못 해 재순환 <b id="st-recirc" class="text-danger">0</b></span>
+    </div>
+    <div class="card-body p-2"><canvas id="st-canvas" class="w-100" height="260"></canvas></div>
+  </div>
+
+  <div class="row g-3 mt-1">
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">실습 네 상황 — 부하 비교</div>
+        <div class="card-body"><div class="chart-box"><canvas id="st-chart-cases"></canvas></div></div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-header fw-semibold">출고를 몇 시간에 몰아 내보내나 — 집중도별 부하</div>
+        <div class="card-body"><div class="chart-box"><canvas id="st-chart-hours"></canvas></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="border-top py-3 small text-secondary">
+  <div class="container-xl d-flex justify-content-between flex-wrap gap-2">
+    <span>AI활용 스마트물류 통합관리 플랫폼 과정 · 5. 스마트물류 시스템 및 자동화설비 이해 · 부록 예제</span>
+    <span>부산IT교육센터 · 라이스리치AI</span>
+  </div>
+</footer>
+
+<script src="vendor/bootstrap.bundle.min.js"></script>
+<script src="vendor/chart.umd.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/conveyor.js"></script>
+<script src="js/picking.js"></script>
+<script src="js/agv.js"></script>
+<script src="js/sorter.js"></script>
+</body>
+</html>
