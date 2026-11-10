@@ -9,6 +9,11 @@
       "source": "/logistic_quiz",
       "destination": "/logistic_quiz/",
       "permanent": true
+    },
+    {
+      "source": "/deep_learning",
+      "destination": "/deep_learning/",
+      "permanent": true
     }
   ]
 }

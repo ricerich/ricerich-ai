@@ -1,0 +1,564 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>1장 머신러닝·딥러닝 개요 지도</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* 레이아웃: 위에 연표 한 줄, 가운데 네 절이 왼쪽→오른쪽으로 이어지는 네 기둥, 아래에 정리 띠. 절 사이 연결은 '↔ 연결' 칩으로 표시 */
+:root{
+  --bg:#F3F7FC; --panel:#FFFFFF; --fg:#1C2B3D; --body:#3F5068; --muted:#73839A; --line:#D3DEEC;
+  --navy:#12386E; --blue:#1E6FD9; --mint:#0C8F84; --amber:#B87400; --rose:#BD3F66;
+  --disp:"IBM Plex Sans KR","Noto Sans KR","Malgun Gothic",sans-serif;
+  --text:"Noto Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  --mono:"JetBrains Mono",Consolas,"D2Coding",monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0E1622; --panel:#16212F; --fg:#E8EEF6; --body:#B9C6D6; --muted:#8696AB; --line:#2A3A4E;
+  --navy:#9DBDF2; --blue:#6AA6F5; --mint:#4FCDBF; --amber:#F0B048; --rose:#F08AAA; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0E1622; --panel:#16212F; --fg:#E8EEF6; --body:#B9C6D6; --muted:#8696AB; --line:#2A3A4E;
+  --navy:#9DBDF2; --blue:#6AA6F5; --mint:#4FCDBF; --amber:#F0B048; --rose:#F08AAA; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--body);font-family:var(--text);font-size:13px;line-height:1.55;
+  padding-block:22px 36px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1680px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+h1,h2,h3,h4{font-family:var(--disp);color:var(--fg);margin:0;text-wrap:balance}
+p{margin:0}
+b,strong{color:var(--fg);font-weight:700}
+code,.mono{font-family:var(--mono);font-size:.92em}
+
+/* 머리말 */
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 24px}
+.top .eyebrow{font-size:11.5px;letter-spacing:.14em;color:var(--mint);font-weight:700}
+.top h1{font-size:clamp(24px,3vw,34px);color:var(--navy);line-height:1.2}
+.top p{max-width:56ch;font-size:13px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+
+/* 연표 */
+.tl{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.tl>div{padding:10px 12px;border-left:1px solid var(--line);min-width:0}
+.tl>div:first-child{border-left:0}
+.tl .y{font-family:var(--disp);font-weight:700;font-size:17px;color:var(--navy);font-variant-numeric:tabular-nums}
+.tl .n{font-weight:700;color:var(--fg);font-size:12.5px}
+.tl .d{font-size:11.5px;color:var(--muted);line-height:1.45}
+.tl .scope{background:color-mix(in srgb,var(--mint) 12%,var(--panel))}
+.tl .scope .y{color:var(--mint)}
+.tlnote{font-size:12px;color:var(--muted);margin-top:-8px}
+
+/* 네 기둥 */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:14px;align-items:start}
+.sec{--c:var(--blue);background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:10px;min-width:0;display:flex;flex-direction:column}
+.s1{--c:var(--navy)} .s2{--c:var(--mint)} .s3{--c:var(--blue)} .s4{--c:var(--amber)}
+.sec>header{padding:12px 14px 10px;display:flex;gap:10px;align-items:baseline;border-bottom:1px solid var(--line)}
+.sec>header .no{font-family:var(--disp);font-weight:700;font-size:26px;color:var(--c);line-height:1}
+.sec>header h2{font-size:17px}
+.sec>header p{font-size:11.5px;color:var(--muted)}
+.blk{padding:11px 14px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:7px;min-width:0}
+.blk:last-child{border-bottom:0}
+.blk h3{font-size:13.5px;color:var(--c)}
+.blk h3 small{font-family:var(--text);font-weight:500;color:var(--muted);font-size:11.5px;margin-left:4px}
+.tint{background:color-mix(in srgb,var(--c) 9%,var(--panel));border-radius:7px;padding:7px 9px}
+.note{font-size:12px;color:var(--muted)}
+.warn{color:var(--rose);font-weight:700;font-size:12px}
+.new{display:inline-block;font-size:10px;font-weight:700;color:var(--c);border:1px solid var(--c);border-radius:99px;padding:0 6px;margin-left:5px;vertical-align:2px;font-family:var(--text)}
+.link{display:inline-block;font-size:11.5px;color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--panel));border:1px dashed color-mix(in srgb,var(--c) 55%,var(--panel));border-radius:6px;padding:2px 8px;align-self:flex-start}
+
+/* 흐름 */
+.flow{display:flex;flex-wrap:nowrap;align-items:stretch}
+.flow .st{flex:1 1 0;min-width:0;word-break:keep-all;overflow-wrap:anywhere;border:1.5px solid color-mix(in srgb,var(--c) 60%,var(--panel));border-radius:7px;padding:5px 3px;text-align:center;font-size:11.5px;line-height:1.35;color:var(--fg);font-weight:500;display:flex;flex-direction:column;justify-content:center;background:var(--panel)}
+.flow .st small{display:block;color:var(--muted);font-weight:400;font-size:10.5px}
+.flow .st.on{background:var(--c);border-color:var(--c);color:var(--panel);font-weight:700}
+.flow .st.on small{color:var(--panel);opacity:.85}
+.flow .ar{flex:0 0 13px;display:flex;align-items:center;justify-content:center;color:var(--c);font-weight:700}
+.back{font-size:11.5px;color:var(--c);text-align:center}
+.lab{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.04em}
+
+/* 2열·3열 묶음 */
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:7px;padding:6px 8px;min-width:0;font-size:12px}
+.cell h4{font-size:12.5px;margin-bottom:1px}
+.cell .ex{color:var(--muted);font-size:11px}
+.cell .to{color:var(--c);font-size:11px;font-weight:700}
+ul{margin:0;padding-left:15px} li{margin:1px 0}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th,td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-family:var(--disp);color:var(--fg);font-size:11.5px;background:color-mix(in srgb,var(--c) 9%,var(--panel))}
+tr:last-child td{border-bottom:0}
+.tw{overflow-x:auto}
+pre{margin:0;background:color-mix(in srgb,var(--fg) 6%,var(--panel));border:1px solid var(--line);border-radius:7px;padding:7px 9px;font-family:var(--mono);font-size:11px;line-height:1.5;color:var(--fg);overflow-x:auto}
+pre i{color:var(--muted);font-style:normal}
+
+/* 포함 관계 */
+.nest{border:1.5px solid var(--navy);border-radius:14px;padding:5px 8px 8px;font-size:12px}
+.nest>.t{font-weight:700;color:var(--fg)} .nest>.t small{font-weight:400;color:var(--muted)}
+.nest .nest{margin-top:4px}
+.nest.n2{border-color:var(--blue)} .nest.n3{border-color:var(--mint)}
+.nest.n4{border-color:var(--amber);background:color-mix(in srgb,var(--amber) 12%,var(--panel))}
+
+/* 데이터 분할 막대 */
+.bar{display:flex;border-radius:7px;overflow:hidden;font-size:11.5px;font-weight:700;text-align:center}
+.bar span{padding:5px 2px;color:var(--panel)}
+.bar .a{flex:60;background:var(--blue)} .bar .b{flex:20;background:var(--mint)} .bar .c{flex:20;background:var(--amber)}
+.kf{display:grid;grid-template-columns:auto repeat(5,1fr);gap:2px;font-size:10.5px;align-items:center}
+.kf i{font-style:normal;height:11px;border-radius:2px;background:color-mix(in srgb,var(--blue) 28%,var(--panel))}
+.kf i.v{background:var(--mint)}
+.kf span{color:var(--muted);padding-right:5px}
+
+/* 어텐션 막대 */
+.att{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;align-items:end;height:74px}
+.att div{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:10.5px;color:var(--muted)}
+.att i{display:block;width:100%;background:color-mix(in srgb,var(--c) 35%,var(--panel));border-radius:3px 3px 0 0}
+.att .hi i{background:var(--c)} .att .hi{color:var(--fg);font-weight:700}
+.attw{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;text-align:center;font-size:11px;color:var(--fg)}
+
+figure{margin:0} figcaption{font-size:11.5px;color:var(--muted);margin-top:3px}
+svg{display:block;width:100%;height:auto;color:var(--fg)}
+svg text{font-family:var(--text);fill:currentColor}
+
+/* 정리 띠 */
+.sum{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 14px;display:flex;flex-direction:column;gap:9px}
+.sum h2{font-size:16px;color:var(--navy)}
+.sum .keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,185px),1fr));gap:8px}
+.sum .keys div{border-left:3px solid var(--mint);padding:2px 0 2px 9px;font-size:12px;min-width:0}
+.sum .keys b{display:block;font-family:var(--disp);font-size:12.5px}
+.next{font-size:12.5px;color:var(--muted)}
+@media (max-width:700px){ .tl{grid-template-columns:repeat(2,minmax(0,1fr))} .tl>div{border-top:1px solid var(--line)} .g3{grid-template-columns:repeat(2,minmax(0,1fr))} }
+</style>
+
+<div class="wrap">
+
+<div class="top">
+  <div>
+    <div class="eyebrow">CHAPTER 1 · 한 장으로 보는 지도</div>
+    <h1>머신러닝 · 딥러닝 개요</h1>
+    <p>1장 62쪽의 내용을 네 절의 흐름으로 펼쳤습니다. 왼쪽에서 오른쪽으로 읽고, 점선 칩은 절과 절이 이어지는 곳입니다.</p>
+  </div>
+  <div class="legend" style="--c:var(--blue)">
+    <span><span class="flow"><span class="st on" style="min-width:0;padding:1px 8px">단계</span></span> 핵심 단계</span>
+    <span><span class="link" style="--c:var(--blue)">↔ 연결</span> 다른 절·다른 장과 이어짐</span>
+    <span><span class="new" style="--c:var(--blue);margin:0">신규</span> 개정판에서 추가</span>
+  </div>
+</div>
+
+<div class="tl" aria-label="AI 발전 연표">
+  <div><div class="y">1956</div><div class="n">다트머스 회의</div><div class="d">'인공지능' 용어 등장. 규칙 기반 접근</div></div>
+  <div><div class="y">1997</div><div class="n">딥블루 · 통계적 ML</div><div class="d">SVM·결정트리 등 고전 머신러닝 전성기</div></div>
+  <div class="scope"><div class="y">2012</div><div class="n">AlexNet</div><div class="d">GPU + 대규모 데이터로 딥러닝이 이미지 인식 장악</div></div>
+  <div class="scope"><div class="y">2017</div><div class="n">Transformer</div><div class="d">"Attention Is All You Need" — 모든 LLM의 뿌리</div></div>
+  <div><div class="y">2022</div><div class="n">ChatGPT</div><div class="d">생성형 AI 대중화. 사전학습 + 파인튜닝이 표준</div></div>
+  <div><div class="y">2024~</div><div class="n">멀티모달 · 에이전트</div><div class="d">텍스트·이미지·음성을 함께 다루고 도구를 직접 사용</div></div>
+</div>
+<p class="tlnote">초록 구간(2012~2017)의 기반 기술 CNN·RNN을 이 과목에서 직접 구현하고, 그 이후의 흐름은 4절에서 조망합니다.</p>
+
+<div class="cols">
+
+<!-- ───────── 1절 ───────── -->
+<section class="sec s1">
+  <header><span class="no">1</span><div><h2>인공지능 · 머신러닝 · 딥러닝</h2><p>세 개념의 포함 관계와 접근 방식의 차이</p></div></header>
+
+  <div class="blk">
+    <h3>포함 관계</h3>
+    <div class="nest"><div class="t">인공지능 (AI) <small>사람이 하는 일을 기계가 하도록 만드는 기술 전반</small></div>
+      <div class="nest n2"><div class="t">머신러닝 (ML) <small>데이터에서 규칙을 스스로 학습</small></div>
+        <div class="nest n3"><div class="t">딥러닝 (DL) <small>심층 신경망을 쓰는 머신러닝의 한 갈래</small></div>
+          <div class="nest n4"><div class="t">생성형 AI · 파운데이션 모델 <small>LLM · 확산모델 · 멀티모달</small></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3>규칙을 누가 만드는가</h3>
+    <div class="g2">
+      <div class="cell"><h4>규칙 기반 프로그래밍</h4>사람이 규칙을 직접 코드로 작성<div class="ex mono">if 조도 &lt; 50 : 조명 켜기</div><div class="ex">규칙이 복잡해지면 한계</div></div>
+      <div class="cell"><h4>머신러닝 (데이터 기반)</h4>규칙을 데이터에서 스스로 찾음<div class="ex mono">데이터 + 정답 → 규칙(모델)</div><div class="ex">규칙이 복잡할수록 유리</div></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3>핵심 차이 <small>특성(feature)을 누가 만드는가</small></h3>
+    <div class="lab">머신러닝</div>
+    <div class="flow"><div class="st">입력<small>자동차 사진</small></div><div class="ar">→</div><div class="st on">특성 추출<small>사람이 설계</small></div><div class="ar">→</div><div class="st">분류기<small>SVM 등</small></div><div class="ar">→</div><div class="st">출력<small>CAR / NOT</small></div></div>
+    <div class="lab">딥러닝</div>
+    <div class="flow"><div class="st">입력<small>자동차 사진</small></div><div class="ar">→</div><div class="st on" style="flex:2.3">특성 추출 + 분류<small>신경망이 한꺼번에 학습</small></div><div class="ar">→</div><div class="st">출력<small>CAR / NOT</small></div></div>
+    <p class="note">머신러닝은 사람이 만든 특성에 성능이 좌우됩니다. 딥러닝은 특성 추출까지 모델 안에서 학습하며(<b>표현 학습</b>), 대신 많은 데이터와 연산이 필요합니다.</p>
+  </div>
+
+  <div class="blk">
+    <h3>머신러닝과 딥러닝 비교</h3>
+    <div class="tw"><table>
+      <tr><th>구분</th><th>머신러닝</th><th>딥러닝</th></tr>
+      <tr><td><b>동작</b></td><td>데이터에 알고리즘을 적용해 예측</td><td>신경망으로 특징과 관계를 해석</td></tr>
+      <tr><td><b>재사용</b></td><td>같은 유형이라도 재사용 불가</td><td>같은 유형 데이터에 재사용 가능</td></tr>
+      <tr><td><b>데이터</b></td><td>수천 개</td><td>수백만 개 이상</td></tr>
+      <tr><td><b>훈련</b></td><td>단시간</td><td>장시간 (GPU·분산 학습)</td></tr>
+      <tr><td><b>결과</b></td><td>점수·분류 등 수치</td><td>점수·텍스트·소리 등 어떤 형태도</td></tr>
+      <tr><td><b>해석</b></td><td>특성의 의미가 명확해 설명이 쉬움</td><td>해석이 어려움 → 설명가능 AI(XAI)</td></tr>
+    </table></div>
+  </div>
+
+  <div class="blk">
+    <h3>지금 어디에 쓰이나 <span class="new">신규</span></h3>
+    <div class="g2">
+      <div class="cell"><h4>제조 · 품질</h4>불량 검출, 설비 고장 예측<div class="to">→ CNN · 이상 탐지</div></div>
+      <div class="cell"><h4>의료</h4>영상 판독 보조, 신약 후보 탐색<div class="to">→ CNN · 트랜스포머</div></div>
+      <div class="cell"><h4>금융</h4>이상 거래 탐지, 신용 평가<div class="to">→ 부스팅 · 이상 탐지</div></div>
+      <div class="cell"><h4>유통 · 물류</h4>수요 예측, 재고·배송 경로<div class="to">→ 회귀 · 시계열</div></div>
+      <div class="cell"><h4>고객 응대</h4>챗봇, 문의 분류, 요약<div class="to">→ LLM · RAG</div></div>
+      <div class="cell"><h4>콘텐츠 · 마케팅</h4>이미지 생성, 카피, 추천<div class="to">→ 생성형 AI · 추천</div></div>
+    </div>
+    <p class="tint">어느 분야든 출발점은 <b>어떤 데이터가 쌓여 있는가</b>입니다. 알고리즘보다 데이터가 먼저입니다.</p>
+  </div>
+</section>
+
+<!-- ───────── 2절 ───────── -->
+<section class="sec s2">
+  <header><span class="no">2</span><div><h2>머신러닝이란?</h2><p>학습 과정, 데이터셋 분리, 네 가지 학습 알고리즘</p></div></header>
+
+  <div class="blk">
+    <h3>정의</h3>
+    <p>컴퓨터가 대용량 데이터에서 패턴을 찾아 학습하고 예측하는 것.</p>
+    <div class="g2">
+      <div class="cell"><h4>아서 새뮤얼, 1959</h4>명시적인 프로그래밍 없이 컴퓨터가 학습하는 능력을 갖추게 하는 연구 분야</div>
+      <div class="cell"><h4>톰 미첼, 1997</h4>작업 T의 성능 P가 경험 E로 향상되면 학습한 것<div class="ex">스팸 필터 — T 분류 · P 정확도 · E 라벨링한 메일</div></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3>학습 과정 <small>두 단계</small></h3>
+    <div class="lab">학습 단계 — 정답(라벨)이 함께 주어진다</div>
+    <div class="flow"><div class="st">훈련 데이터</div><div class="ar">→</div><div class="st">특성 추출</div><div class="ar">→</div><div class="st">알고리즘</div><div class="ar">→</div><div class="st on">모델</div></div>
+    <div class="lab">예측 단계</div>
+    <div class="flow"><div class="st">새로운 데이터</div><div class="ar">→</div><div class="st">특성 추출</div><div class="ar">→</div><div class="st on">학습된 모델</div><div class="ar">→</div><div class="st">예측 결과</div></div>
+    <p class="note"><b>특성 추출</b>은 사진·문장·소리를 숫자의 나열(벡터)로 바꾸는 일입니다. 오토바이라면 바퀴 수, 손잡이 형태, 빈 공간의 비율 → <span class="mono">[0.82, 0.13, 0.45, …]</span></p>
+    <span class="link">↔ 4절 RAG의 '임베딩'과 같은 개념</span>
+  </div>
+
+  <div class="blk">
+    <h3>특성 추출에서 표현 학습으로 <span class="new">신규</span></h3>
+    <div class="flow"><div class="st">픽셀</div><div class="ar">→</div><div class="st">선·모서리</div><div class="ar">→</div><div class="st">질감·부위</div><div class="ar">→</div><div class="st">사물 전체</div><div class="ar">→</div><div class="st on">의미</div></div>
+    <p class="note">층이 깊어질수록 표현이 추상화됩니다. 고전 ML은 SIFT·HOG처럼 사람이 특성을 설계했고(성능의 8할), 딥러닝은 모델이 스스로 구성합니다. 학습한 표현을 다른 과제에 가져다 쓰는 것이 <b>전이학습</b>입니다.</p>
+  </div>
+
+  <div class="blk">
+    <h3>데이터 전처리 <span class="new">신규</span> <small>실무에서 가장 많은 시간이 드는 구간</small></h3>
+    <div class="g3">
+      <div class="cell"><h4>결측치</h4><div class="ex">평균·중앙값 대체, 삭제</div></div>
+      <div class="cell"><h4>이상치</h4><div class="ex">IQR, Z-score</div></div>
+      <div class="cell"><h4>정규화·표준화</h4><div class="ex">Min-Max, Z-score</div></div>
+      <div class="cell"><h4>범주형 인코딩</h4><div class="ex">원-핫, 라벨</div></div>
+      <div class="cell"><h4>데이터 분할</h4><div class="ex">층화 추출</div></div>
+      <div class="cell"><h4>불균형 처리</h4><div class="ex">샘플링, 가중치</div></div>
+    </div>
+    <p class="warn">전처리 규칙은 훈련 데이터에서만 계산해 검증·테스트에 적용합니다. 전체로 계산하면 정보가 샙니다(데이터 누수).</p>
+  </div>
+
+  <div class="blk">
+    <h3>훈련 · 검증 · 테스트 <small>6 : 2 : 2</small></h3>
+    <div class="bar"><span class="a">훈련 60%</span><span class="b">검증 20%</span><span class="c">테스트 20%</span></div>
+    <ul>
+      <li><b>훈련</b> — 모델의 가중치를 실제로 갱신</li>
+      <li><b>검증</b> — 학습 중 성능 확인, 하이퍼파라미터 선택</li>
+      <li><b>테스트</b> — 학습이 끝난 뒤 단 한 번, 최종 성능 측정</li>
+    </ul>
+    <p class="warn">테스트셋을 보고 모델을 고치는 순간, 그것은 더 이상 처음 보는 데이터가 아닙니다.</p>
+    <div class="lab">데이터가 적을 때 — 5-겹 교차 검증 <span class="new" style="margin-left:2px">신규</span></div>
+    <div class="kf" aria-label="5-겹 교차 검증: 검증 조각을 돌려가며 다섯 번 학습">
+      <span>1회</span><i class="v"></i><i></i><i></i><i></i><i></i>
+      <span>2회</span><i></i><i class="v"></i><i></i><i></i><i></i>
+      <span>3회</span><i></i><i></i><i class="v"></i><i></i><i></i>
+      <span>4회</span><i></i><i></i><i></i><i class="v"></i><i></i>
+      <span>5회</span><i></i><i></i><i></i><i></i><i class="v"></i>
+    </div>
+    <p class="note">초록이 검증 조각. 5회의 검증 성능을 평균 내어 추정합니다. 수천 건 이하이거나 모델을 공정하게 비교할 때 씁니다.</p>
+  </div>
+
+  <div class="blk">
+    <h3>모델의 학습 절차 <small>반복</small></h3>
+    <div class="flow"><div class="st">① 모델(가설) 선택</div><div class="ar">→</div><div class="st">② 학습 및 평가</div><div class="ar">→</div><div class="st">③ 평가로 업데이트</div></div>
+    <div class="back">↺ 성능이 더 좋아지지 않을 때까지 ① → ② → ③ 반복</div>
+    <div class="g2">
+      <div class="cell"><h4>파라미터</h4>모델이 학습으로 찾는 값<div class="ex">가중치, 편향</div></div>
+      <div class="cell"><h4>하이퍼파라미터</h4>사람이 미리 정하는 값<div class="ex">학습률, 배치 크기, 에포크, 층 수</div></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3>성능 평가 <small>훈련 정확도와 검증 정확도로 읽는다</small></h3>
+    <div class="g3">
+      <div class="cell"><h4>과소적합</h4>훈련 ↓ 검증 ↓<div class="ex">너무 단순, 학습 부족</div></div>
+      <div class="cell" style="border-color:var(--c)"><h4>적정</h4>훈련 ↑ 검증 ↑<div class="ex">가장 바람직</div></div>
+      <div class="cell"><h4>과적합</h4>훈련 ↑ 검증 ↓<div class="ex">훈련 데이터를 외움</div></div>
+    </div>
+    <p class="note">과적합 대책 — 데이터 늘리기 · 데이터 증강 · 규제(L1/L2) · 드롭아웃 · 조기 종료</p>
+    <div class="tw"><table>
+      <tr><th>헷갈리는 용어 <span class="new">신규</span></th><th>뜻</th><th>예</th></tr>
+      <tr><td><b>Regularization</b><br>규제</td><td>외우지 못하게 가중치에 벌점</td><td>L1/L2, 드롭아웃</td></tr>
+      <tr><td><b>Normalization</b><br>정규화</td><td>값의 범위를 맞춤 (0~1)</td><td>Min-Max, 배치 정규화</td></tr>
+      <tr><td><b>Standardization</b><br>표준화</td><td>평균 0, 표준편차 1</td><td>Z-score</td></tr>
+    </table></div>
+  </div>
+
+  <div class="blk">
+    <h3>학습 알고리즘 4분류 <small>라벨을 누가 만드는가</small></h3>
+    <div class="tw"><table>
+      <tr><th>방식</th><th>라벨</th><th>대표 과제 · 알고리즘</th></tr>
+      <tr><td><b>지도</b></td><td>사람이 붙인다</td><td><b>분류</b> KNN, SVM, 결정트리, 로지스틱 회귀<br><b>회귀</b> 선형, 릿지·라쏘, 부스팅</td></tr>
+      <tr><td><b>비지도</b></td><td>없다</td><td><b>군집</b> K-평균, DBSCAN, 계층적<br><b>차원 축소</b> PCA, t-SNE, UMAP</td></tr>
+      <tr><td><b>자기지도</b> <span class="new">신규</span></td><td>데이터가 스스로 라벨</td><td><b>사전학습</b> 다음 토큰 예측(GPT), 마스크 복원(BERT), 대조학습(CLIP)</td></tr>
+      <tr><td><b>강화</b></td><td>정답 대신 보상</td><td><b>정책 학습</b> MDP, Q-러닝, DQN, PPO</td></tr>
+    </table></div>
+    <p class="note">자기지도 예 — "오늘 아침에 커피를 ___" → 정답 "마셨다"가 원문에 이미 있습니다. 라벨링 비용 없이 인터넷 규모의 데이터를 쓸 수 있습니다.</p>
+    <figure>
+      <svg viewBox="0 0 330 92" role="img" aria-label="강화 학습 순환: 에이전트가 행동을 보내고 환경이 상태와 보상을 돌려준다">
+        <defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+        <rect x="8" y="26" width="96" height="40" rx="7" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="56" y="44" text-anchor="middle" font-size="12.5" font-weight="700">에이전트</text>
+        <text x="56" y="59" text-anchor="middle" font-size="10.5" opacity=".7">학습·행동의 주체</text>
+        <rect x="226" y="26" width="96" height="40" rx="7" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="274" y="44" text-anchor="middle" font-size="12.5" font-weight="700">환경</text>
+        <text x="274" y="59" text-anchor="middle" font-size="10.5" opacity=".7">상호작용하는 세계</text>
+        <path d="M104 36 C140 10,190 10,226 36" fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah2)"/>
+        <text x="165" y="13" text-anchor="middle" font-size="11.5">행동 (Action)</text>
+        <path d="M226 56 C190 82,140 82,104 56" fill="none" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah2)"/>
+        <text x="165" y="89" text-anchor="middle" font-size="11.5">상태 · 보상 (State · Reward)</text>
+      </svg>
+      <figcaption>정답 대신 '얼마나 잘했는지'만 알려 줍니다. 쓰이는 곳 — 알파고, 로봇·자율주행, LLM 정렬(RLHF), 추론 능력 강화.</figcaption>
+    </figure>
+    <span class="link">↔ 4절 AI 에이전트의 루프와 같은 구조</span>
+  </div>
+</section>
+
+<!-- ───────── 3절 ───────── -->
+<section class="sec s3">
+  <header><span class="no">3</span><div><h2>딥러닝이란?</h2><p>신경망의 원리, 학습 과정 5단계, 배치와 에포크</p></div></header>
+
+  <div class="blk">
+    <h3>뉴런을 본뜬 인공 뉴런</h3>
+    <figure>
+      <svg viewBox="0 0 330 112" role="img" aria-label="인공 뉴런: 입력 x에 가중치 w를 곱해 더하고 활성화 함수를 거쳐 출력 y를 낸다">
+        <defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+        <g font-size="12">
+          <circle cx="24" cy="20" r="13" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="24" y="24" text-anchor="middle">x₁</text>
+          <circle cx="24" cy="56" r="13" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="24" y="60" text-anchor="middle">x₂</text>
+          <circle cx="24" cy="92" r="13" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="24" y="96" text-anchor="middle">x₃</text>
+          <line x1="38" y1="22" x2="158" y2="50" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah3)"/>
+          <line x1="38" y1="56" x2="156" y2="56" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah3)"/>
+          <line x1="38" y1="90" x2="158" y2="62" stroke="currentColor" stroke-width="1.3" marker-end="url(#ah3)"/>
+          <text x="92" y="27" text-anchor="middle" font-size="11">× w₁</text><text x="92" y="51" text-anchor="middle" font-size="11">× w₂</text><text x="92" y="92" text-anchor="middle" font-size="11">× w₃</text>
+          <circle cx="186" cy="56" r="27" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="186" y="53" text-anchor="middle" font-size="15" font-weight="700">Σ → ƒ</text>
+          <text x="186" y="69" text-anchor="middle" font-size="9.5" opacity=".7">합 → 활성화</text>
+          <line x1="214" y1="56" x2="282" y2="56" stroke="currentColor" stroke-width="1.5" marker-end="url(#ah3)"/>
+          <circle cx="300" cy="56" r="14" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="300" y="60" text-anchor="middle">y</text>
+          <text x="24" y="111" text-anchor="middle" font-size="9.5" opacity=".7"> </text>
+        </g>
+      </svg>
+      <figcaption>수상돌기 → <b>입력 x</b> · 시냅스 → <b>가중치 w</b> · 세포체 → <b>Σ와 ƒ</b> · 축삭돌기 → <b>출력 경로</b> · 축삭말단 → 다음 층으로 전달</figcaption>
+    </figure>
+    <div class="flow"><div class="st">입력층</div><div class="ar">→</div><div class="st">은닉층 1<small>단순한 특징</small></div><div class="ar">→</div><div class="st">은닉층 2<small>특징 조합</small></div><div class="ar">→</div><div class="st">… n</div><div class="ar">→</div><div class="st">출력층</div></div>
+    <p class="note">은닉층이 2개 이상이면 심층 신경망입니다. '딥'은 <b>층의 깊이</b>를 뜻합니다.</p>
+  </div>
+
+  <div class="blk">
+    <h3>딥러닝 학습 5단계</h3>
+    <div class="flow"><div class="st on">① 데이터 준비</div><div class="ar">→</div><div class="st on">② 모델 정의</div><div class="ar">→</div><div class="st on">③ 컴파일</div><div class="ar">→</div><div class="st on">④ 훈련</div><div class="ar">→</div><div class="st on">⑤ 평가·예측</div></div>
+    <div class="back">↺ 성능이 부족하면 ②~④로 되돌아간다</div>
+  </div>
+
+  <div class="blk">
+    <h3>① 데이터 준비</h3>
+    <div class="g2">
+      <div class="cell"><h4>PyTorch 내장</h4><div class="ex mono">torchvision.datasets</div><div class="ex">MNIST, CIFAR-10</div></div>
+      <div class="cell"><h4>Hugging Face Hub</h4><div class="ex">텍스트·이미지·음성 수십만 종</div></div>
+      <div class="cell"><h4>Kaggle</h4><div class="ex">경진대회 데이터 + 노트북</div></div>
+      <div class="cell"><h4>AI Hub · 공공데이터</h4><div class="ex">한국어 특화 데이터</div></div>
+    </div>
+    <p class="note">구하는 것보다 '쓸 수 있게 다듬는 것'에 훨씬 많은 시간이 듭니다.</p>
+  </div>
+
+  <div class="blk">
+    <h3>② 모델 정의 <small>nn.Module로 층을 쌓는다</small></h3>
+    <div class="tw"><table>
+      <tr><th>데이터</th><th>대표 구조</th><th>다루는 곳</th></tr>
+      <tr><td>표 형태</td><td>완전연결 신경망 (MLP)</td><td>3~5장</td></tr>
+      <tr><td>이미지</td><td>합성곱 신경망 (CNN)</td><td>7장</td></tr>
+      <tr><td>순서가 있는 데이터</td><td>RNN · LSTM</td><td>8장</td></tr>
+      <tr><td>텍스트 · 멀티모달</td><td>트랜스포머</td><td>4절</td></tr>
+    </table></div>
+  </div>
+
+  <div class="blk">
+    <h3>③ 컴파일 <small>세 가지를 고른다</small></h3>
+    <div class="g3">
+      <div class="cell"><h4>활성화 함수</h4>출력을 비선형으로<div class="ex">ReLU, Sigmoid, Softmax, GELU</div></div>
+      <div class="cell"><h4>손실 함수</h4>예측과 정답의 차이<div class="ex">MSE, Cross Entropy, BCE</div></div>
+      <div class="cell"><h4>옵티마이저</h4>손실이 줄게 가중치 수정<div class="ex">SGD, Adam, AdamW</div></div>
+    </div>
+    <p class="note">활성화 함수가 없으면 층을 아무리 쌓아도 하나의 직선일 뿐입니다. 은닉층은 ReLU 계열, 출력층은 문제 유형에 맞춥니다.</p>
+    <div class="tw"><table>
+      <tr><th>문제 유형 <span class="new">신규</span></th><th>출력층</th><th>손실 함수 (PyTorch)</th></tr>
+      <tr><td>회귀</td><td>없음 (선형)</td><td><code>nn.MSELoss</code></td></tr>
+      <tr><td>이진 분류</td><td>Sigmoid</td><td><code>nn.BCELoss</code></td></tr>
+      <tr><td>다중 분류</td><td>Softmax</td><td><code>nn.CrossEntropyLoss</code></td></tr>
+      <tr><td>다중 라벨</td><td>Sigmoid (라벨마다)</td><td><code>nn.BCEWithLogitsLoss</code></td></tr>
+    </table></div>
+    <p class="warn">CrossEntropyLoss 안에 Softmax가 이미 들어 있습니다. 출력층에 또 넣으면 안 됩니다.</p>
+  </div>
+
+  <div class="blk">
+    <h3>④ 훈련 <small>앞으로 모든 실습에서 반복되는 다섯 줄</small></h3>
+<pre>for epoch in range(num_epochs):     <i># 에포크 반복</i>
+  for x, y in train_loader:         <i># 배치 반복</i>
+    pred = model(x)                 <i># ① 순전파</i>
+    loss = criterion(pred, y)       <i># ② 손실 계산</i>
+    optimizer.zero_grad()           <i># ③ 기울기 초기화</i>
+    loss.backward()                 <i># ④ 역전파</i>
+    optimizer.step()                <i># ⑤ 가중치 갱신</i></pre>
+    <p class="warn">zero_grad()를 빠뜨리면 이전 배치의 기울기가 계속 더해집니다. 초심자가 가장 많이 겪는 버그입니다.</p>
+    <div class="g3">
+      <div class="cell"><h4>배치 크기</h4>한 번에 처리하는 샘플 수<div class="ex">크면 빠르고 메모리 ↑, 작으면 일반화에 유리</div></div>
+      <div class="cell"><h4>에포크</h4>전체를 몇 번 반복할지<div class="ex">적으면 과소적합, 많으면 과적합</div></div>
+      <div class="cell"><h4>이터레이션</h4>가중치 갱신 횟수<div class="ex">데이터 수 ÷ 배치 크기</div></div>
+    </div>
+    <p class="tint">데이터 1,000개 ÷ 배치 20 = 에포크당 <b>50회</b> 갱신 → 에포크 10이면 총 <b>500회</b></p>
+  </div>
+
+  <div class="blk">
+    <h3>⑤ 평가 <small>'좋은 성능'은 상황마다 다르다</small></h3>
+    <div class="g3">
+      <div class="cell"><h4>정확도</h4><div class="ex">일반적인 분류</div></div>
+      <div class="cell"><h4>속도</h4><div class="ex">실시간·모바일</div></div>
+      <div class="cell"><h4>재현율</h4><div class="ex">질병 진단, 불량 검출</div></div>
+      <div class="cell"><h4>정밀도</h4><div class="ex">스팸 차단</div></div>
+      <div class="cell"><h4>설명 가능성</h4><div class="ex">금융·의료·공공</div></div>
+      <div class="cell"><h4>운영 비용</h4><div class="ex">대규모 서비스</div></div>
+    </div>
+    <p class="warn">정확도 하나만 보고 모델을 고르는 것은 대부분의 실무에서 위험합니다.</p>
+  </div>
+
+  <div class="blk">
+    <h3>처음부터 학습하지 않는다 <span class="new">신규</span></h3>
+    <div class="flow"><div class="st">사전학습<small>대규모 데이터로 범용 표현</small></div><div class="ar">→</div><div class="st on">파인튜닝<small>우리 데이터로 일부만</small></div><div class="ar">→</div><div class="st">배포<small>서비스에 올린다</small></div></div>
+    <p class="note">데이터가 수백 건이어도 되고, 비용과 시간이 줄며, 성능은 더 좋습니다. 그래도 CNN·RNN을 직접 구현하는 이유 — 내부를 만들어 본 사람만 잘 안 될 때 원인을 짚을 수 있습니다.</p>
+    <p class="note">PyTorch 2.x — <code>torch.compile</code> · 혼합 정밀도(AMP) · Hugging Face 생태계가 표준 도구가 되었습니다.</p>
+    <span class="link">↔ 2절의 전이학습이 출발점</span>
+  </div>
+</section>
+
+<!-- ───────── 4절 ───────── -->
+<section class="sec s4">
+  <header><span class="no">4</span><div><h2>2026년의 머신러닝 · 딥러닝 <span class="new">신규</span></h2><p>트랜스포머, 생성형 AI, 에이전트, MLOps, AI 규제</p></div></header>
+
+  <div class="blk">
+    <h3>RNN의 한계에서 트랜스포머로</h3>
+    <div class="g2">
+      <div class="cell"><h4>RNN · LSTM의 한계</h4><ul><li>순차 처리 → 병렬화가 어렵다</li><li>문장이 길면 앞쪽 정보가 희미해진다</li><li>GPU를 충분히 못 써 크게 키우기 어렵다</li></ul></div>
+      <div class="cell" style="border-color:var(--c)"><h4>트랜스포머 (2017)</h4><ul><li>문장 전체를 한 번에 → 병렬 학습</li><li>먼 단어도 직접 연결 → 장기 의존성 해결</li><li>키울수록 성능이 좋아진다</li></ul></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3>어텐션 <small>어디를 볼 것인가</small></h3>
+    <div class="att" aria-hidden="true">
+      <div>5%<i style="height:6%"></i></div><div class="hi">45%<i style="height:58%"></i></div><div>10%<i style="height:13%"></i></div><div>15%<i style="height:19%"></i></div><div>15%<i style="height:19%"></i></div><div>10%<i style="height:13%"></i></div>
+    </div>
+    <div class="attw"><span>그</span><span><b>강아지는</b></span><span>배가</span><span>고파서</span><span>밥을</span><span>먹었다</span></div>
+    <p class="note">"먹었다"를 해석할 때 각 단어에 준 주의 비중. 모든 단어 쌍의 관련도를 한 번에 계산하고, 그 관련도는 학습으로 정해집니다.</p>
+    <span class="link">↔ 가중치 학습은 5장, 특성 학습은 7장 CNN, 순서 데이터는 8장 RNN</span>
+  </div>
+
+  <div class="blk">
+    <h3>트랜스포머의 데이터 흐름</h3>
+    <div class="flow"><div class="st">입력 문장</div><div class="ar">→</div><div class="st">토큰화</div><div class="ar">→</div><div class="st">임베딩</div><div class="ar">→</div><div class="st">위치 인코딩</div></div>
+    <div class="flow"><div class="ar">→</div><div class="st on" style="flex:2">셀프 어텐션 → 피드포워드<small>× N 층 반복 (보통 수십 층)</small></div><div class="ar">→</div><div class="st">출력<small>다음 토큰 확률</small></div></div>
+    <p class="note">BERT는 인코더(이해)만, GPT 계열은 디코더(생성)만 씁니다.</p>
+  </div>
+
+  <div class="blk">
+    <h3>파운데이션 모델</h3>
+    <div class="g2">
+      <div class="cell"><h4>예전 — 과제마다 모델 하나</h4><div class="ex">번역 · 요약 · 감성분석 · 질의응답 모델을 각각 학습</div></div>
+      <div class="cell" style="border-color:var(--c)"><h4>지금 — 하나를 돌려쓴다</h4><div class="ex">대규모 사전학습 모델 + 프롬프트·파인튜닝으로 적응</div></div>
+    </div>
+    <p class="note"><b>규모의 법칙</b> — 모델 크기·데이터·연산량을 함께 키우면 성능이 예측 가능하게 좋아집니다. 다만 무한정 통하지는 않습니다.</p>
+    <div class="lab">생성형 AI의 갈래 — 모두 자기지도 사전학습 + 트랜스포머 기반</div>
+    <div class="g2">
+      <div class="cell"><h4>LLM</h4><div class="ex">GPT · Claude · Gemini · Llama</div></div>
+      <div class="cell"><h4>확산 모델</h4><div class="ex">노이즈를 걷어 내며 이미지 생성</div></div>
+      <div class="cell"><h4>멀티모달</h4><div class="ex">텍스트·이미지·음성·영상을 함께</div></div>
+      <div class="cell"><h4>코드 생성</h4><div class="ex">코딩 어시스턴트, 에이전트형 도구</div></div>
+    </div>
+    <span class="link">↔ 2절 자기지도 학습이 바로 이 사전학습</span>
+  </div>
+
+  <div class="blk">
+    <h3>내 문제에 붙이는 방법 <small>이 순서로 검토</small></h3>
+    <div class="flow"><div class="st">① 프롬프트<small>학습 없이 지시문</small></div><div class="ar">→</div><div class="st">② RAG<small>문서를 검색해 근거로</small></div><div class="ar">→</div><div class="st">③ 파인튜닝<small>가중치를 더 학습</small></div></div>
+    <p class="note">파인튜닝은 앞의 둘로 안 될 때 꺼내는 카드입니다.</p>
+    <div class="lab">RAG — 검색으로 지식을 보강</div>
+    <div class="flow"><div class="st">질문</div><div class="ar">→</div><div class="st">임베딩</div><div class="ar">→</div><div class="st">벡터 DB 검색</div><div class="ar">→</div><div class="st">문서 조각</div><div class="ar">→</div><div class="st on">LLM<small>근거 기반 답변</small></div></div>
+    <p class="note">미리 해 둘 일 — 사내 문서 → 잘게 나누기 → 임베딩 → 벡터 DB 적재. 최신·사내 정보를 반영하고 출처를 제시하며 재학습이 필요 없습니다.</p>
+    <span class="link">↔ 유사도 검색은 2절 비지도 학습의 거리 계산과 같은 원리</span>
+  </div>
+
+  <div class="blk">
+    <h3>AI 에이전트 <small>답하는 것을 넘어 수행</small></h3>
+    <div class="flow"><div class="st">목표 이해</div><div class="ar">→</div><div class="st">계획 수립</div><div class="ar">→</div><div class="st on">도구 사용<small>검색·코드·API</small></div><div class="ar">→</div><div class="st">결과 점검</div></div>
+    <div class="back">↺ 필요하면 계획 단계로 되돌아간다</div>
+    <p class="note">정책을 학습하는 대신 사전학습된 언어모델의 판단을 씁니다. 코딩 에이전트, 업무 자동화, 도구 연결 표준(MCP 등).</p>
+<pre>from transformers import pipeline
+clf = pipeline("sentiment-analysis")
+clf("이 강의는 정말 유익합니다.")  <i># POSITIVE 0.9987</i></pre>
+    <p class="note">세 줄 실습. 한 번도 학습시키지 않았습니다 — 남이 해 둔 사전학습을 그대로 쓴 것입니다.</p>
+  </div>
+
+  <div class="blk">
+    <h3>만드는 것과 운영하는 것은 다르다</h3>
+    <div class="flow"><div class="st">데이터 수집·검증</div><div class="ar">→</div><div class="st on">모델 학습</div><div class="ar">→</div><div class="st on">평가·검증</div><div class="ar">→</div></div>
+    <div class="flow"><div class="ar">→</div><div class="st on">배포</div><div class="ar">→</div><div class="st">모니터링</div><div class="ar">→</div><div class="st">재학습</div></div>
+    <div class="back">↺ 재학습은 다시 데이터로 — 진한 칸이 이 과목의 범위</div>
+    <ul>
+      <li><b>배포</b> — FastAPI · TorchServe · ONNX Runtime (9장)</li>
+      <li><b>경량화</b> — 양자화(32 → 8/4비트) · 지식 증류 · 온디바이스 AI</li>
+      <li><b>데이터 드리프트</b> — 실제 데이터 분포가 달라져 성능이 서서히 떨어진다</li>
+    </ul>
+  </div>
+
+  <div class="blk">
+    <h3>AI 윤리와 규제</h3>
+    <div class="g3">
+      <div class="cell"><h4>편향</h4><div class="ex">과거의 차별을 그대로 학습</div></div>
+      <div class="cell"><h4>환각</h4><div class="ex">그럴듯한 거짓 정보</div></div>
+      <div class="cell"><h4>개인정보</h4><div class="ex">학습 데이터에 섞임</div></div>
+      <div class="cell"><h4>딥페이크</h4><div class="ex">음성·영상 위조</div></div>
+      <div class="cell"><h4>설명 가능성</h4><div class="ex">판단 근거를 못 댐</div></div>
+    </div>
+    <p class="tint">"모델은 데이터를 비추는 거울이다." 데이터를 고르는 일은 이미 윤리적 판단입니다.</p>
+    <p><b>AI 기본법</b> — 2026년 1월 22일 시행. <b>고영향 AI</b>(의료·채용·대출 심사·공공)에는 더 무거운 의무, <b>생성형 AI 표시 의무</b>.</p>
+    <p class="note">챙길 것 — 학습 데이터의 출처·라이선스 기록, 판단 근거 설명 수단, AI 생성 사실 표시, 개인정보 비식별 처리.</p>
+    <span class="link">↔ 2절 "Garbage In, Garbage Out"</span>
+  </div>
+</section>
+
+</div>
+
+<div class="sum">
+  <h2>이 장에서 붙잡아야 할 것</h2>
+  <div class="keys">
+    <div><b>포함 관계</b>인공지능 ⊃ 머신러닝 ⊃ 딥러닝 ⊃ 생성형 AI</div>
+    <div><b>핵심 차이</b>특성을 사람이 만드는가, 모델이 학습하는가</div>
+    <div><b>데이터 분리</b>훈련·검증·테스트의 역할이 다르다 (6:2:2)</div>
+    <div><b>학습 방식 4가지</b>지도·비지도·자기지도·강화 — 라벨을 누가 만드는가</div>
+    <div><b>딥러닝 5단계</b>데이터 준비 → 모델 정의 → 컴파일 → 훈련 → 평가</div>
+    <div><b>배치와 에포크</b>한 번에 처리할 양 / 전체를 반복하는 횟수</div>
+    <div><b>지금의 패러다임</b>처음부터 학습하지 않는다 — 사전학습 + 파인튜닝</div>
+  </div>
+  <p class="next">다음 — <b>2장 PyTorch Basic</b>. 오늘 배운 5단계를 코드로 옮기기 시작합니다.</p>
+</div>
+
+</div>
+
+</body></html>
