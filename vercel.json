@@ -14,6 +14,11 @@
       "source": "/deep_learning",
       "destination": "/deep_learning/",
       "permanent": true
+    },
+    {
+      "source": "/deep_learning_short",
+      "destination": "/deep_learning_short/",
+      "permanent": true
     }
   ]
 }

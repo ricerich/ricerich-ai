@@ -1,0 +1,169 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>1장 핵심 요약도</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* 레이아웃: 위 세 칸(무엇인가) → 가운데 5단계 척추(어떻게 학습하나) → 아래 두 칸(지금은 어떻게 쓰나). 한 화면에 들어오는 한 장 */
+:root{
+  --bg:#F3F7FC; --panel:#FFFFFF; --fg:#1C2B3D; --body:#3F5068; --muted:#73839A; --line:#D3DEEC;
+  --navy:#12386E; --blue:#1E6FD9; --mint:#0C8F84; --amber:#B87400; --rose:#BD3F66;
+  --disp:"IBM Plex Sans KR","Noto Sans KR","Malgun Gothic",sans-serif;
+  --text:"Noto Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0E1622; --panel:#16212F; --fg:#E8EEF6; --body:#B9C6D6; --muted:#8696AB; --line:#2A3A4E;
+  --navy:#9DBDF2; --blue:#6AA6F5; --mint:#4FCDBF; --amber:#F0B048; --rose:#F08AAA; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0E1622; --panel:#16212F; --fg:#E8EEF6; --body:#B9C6D6; --muted:#8696AB; --line:#2A3A4E;
+  --navy:#9DBDF2; --blue:#6AA6F5; --mint:#4FCDBF; --amber:#F0B048; --rose:#F08AAA; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--body);font-family:var(--text);font-size:13.5px;line-height:1.5;
+  padding-block:20px 28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+h1,h2,h3{font-family:var(--disp);color:var(--fg);margin:0;text-wrap:balance}
+p{margin:0} b{color:var(--fg)}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:6px 20px}
+.eyebrow{font-size:11.5px;letter-spacing:.14em;color:var(--mint);font-weight:700}
+h1{font-size:clamp(22px,2.8vw,30px);color:var(--navy);line-height:1.2}
+.top p{font-size:13px;color:var(--muted);max-width:44ch}
+
+.row{display:grid;gap:12px}
+.r3{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.r2{grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr))}
+.pn{--c:var(--blue);background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:10px;padding:11px 13px 12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.pn h2{font-size:14.5px;color:var(--c)}
+.pn h2 small{font-family:var(--text);font-weight:500;font-size:12px;color:var(--muted);margin-left:5px}
+.say{font-size:12.5px;color:var(--muted)}
+.key{font-size:12.5px;background:color-mix(in srgb,var(--c) 10%,var(--panel));border-radius:7px;padding:6px 9px;color:var(--fg);font-weight:500}
+.band{font-family:var(--disp);font-size:11.5px;font-weight:700;letter-spacing:.1em;color:var(--muted);display:flex;align-items:center;gap:10px}
+.band::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* 포함 관계 */
+.nest{border:1.5px solid var(--navy);border-radius:13px;padding:4px 9px 8px;font-size:12.5px}
+.nest>b{display:block} .nest small{font-weight:400;color:var(--muted);font-size:11.5px;margin-left:4px}
+.nest .nest{margin-top:4px}
+.n2{border-color:var(--blue)} .n3{border-color:var(--mint)}
+.n4{border-color:var(--amber);background:color-mix(in srgb,var(--amber) 13%,var(--panel));padding-bottom:5px}
+
+/* 흐름 */
+.flow{display:flex;align-items:stretch}
+.st{flex:1 1 0;min-width:0;word-break:keep-all;overflow-wrap:anywhere;border:1.5px solid color-mix(in srgb,var(--c) 60%,var(--panel));border-radius:7px;padding:5px 4px;text-align:center;font-size:12px;line-height:1.35;color:var(--fg);font-weight:500;display:flex;flex-direction:column;justify-content:center;background:var(--panel)}
+.st small{display:block;color:var(--muted);font-weight:400;font-size:11px}
+.st.on{background:var(--c);border-color:var(--c);color:var(--panel);font-weight:700}
+.st.on small{color:var(--panel);opacity:.88}
+.ar{flex:0 0 15px;display:flex;align-items:center;justify-content:center;color:var(--c);font-weight:700}
+.lab{font-size:11.5px;font-weight:700;color:var(--muted)}
+
+/* 학습 방식 4 */
+.four{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.four div{border:1px solid var(--line);border-radius:7px;padding:5px 8px;min-width:0;font-size:12px}
+.four b{display:block;font-family:var(--disp);font-size:13px}
+.four span{color:var(--muted);font-size:11.5px}
+
+/* 5단계 척추 */
+.spine{--c:var(--blue);background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:10px;padding:11px 13px 12px;display:flex;flex-direction:column;gap:9px}
+.spine h2{font-size:14.5px;color:var(--c)}
+.spine h2 small{font-family:var(--text);font-weight:500;font-size:12px;color:var(--muted);margin-left:5px}
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0 15px}
+.stp{display:flex;flex-direction:column;gap:6px;min-width:0;position:relative}
+.stp .hd{background:var(--c);color:var(--panel);font-family:var(--disp);font-weight:700;font-size:13.5px;border-radius:7px;padding:6px 4px;text-align:center}
+.stp:not(:last-child) .hd::after{content:"→";position:absolute;right:-15px;width:15px;text-align:center;color:var(--c)}
+.stp .bd{font-size:12px;line-height:1.5}
+.stp .bd b{display:block}
+.stp .ex{color:var(--muted);font-size:11.5px}
+.bar{display:flex;border-radius:5px;overflow:hidden;font-size:10.5px;font-weight:700;text-align:center;color:var(--panel)}
+.bar span{padding:2px 0} .bar .a{flex:60;background:var(--blue)} .bar .b{flex:20;background:var(--mint)} .bar .c{flex:20;background:var(--amber)}
+.back{font-size:12px;color:var(--c);text-align:center;border:1.5px dashed color-mix(in srgb,var(--c) 55%,var(--panel));border-radius:7px;padding:3px 8px}
+.warn{color:var(--rose);font-weight:700}
+.foot{text-align:center;font-family:var(--disp);font-weight:600;color:var(--navy);font-size:13.5px}
+@media (max-width:820px){
+  .steps{grid-template-columns:1fr;gap:10px}
+  .stp:not(:last-child) .hd::after{content:"↓";right:auto;left:50%;bottom:-13px;top:auto;transform:translateX(-50%);position:absolute}
+  .stp{padding-bottom:4px}
+}
+</style>
+
+<div class="wrap">
+
+<div class="top">
+  <div>
+    <div class="eyebrow">CHAPTER 1 · 핵심 요약</div>
+    <h1>머신러닝 · 딥러닝 개요</h1>
+  </div>
+  <p>무엇인가 → 어떻게 학습하나 → 지금은 어떻게 쓰나. 1장에서 붙잡아야 할 일곱 가지를 한 장에 담았습니다.</p>
+</div>
+
+<div class="band">무엇인가</div>
+<div class="row r3">
+  <section class="pn" style="--c:var(--navy)">
+    <h2>포함 관계</h2>
+    <div class="nest"><b>인공지능 <small>사람의 일을 기계가 하게 하는 기술</small></b>
+      <div class="nest n2"><b>머신러닝 <small>데이터에서 규칙을 학습</small></b>
+        <div class="nest n3"><b>딥러닝 <small>심층 신경망</small></b>
+          <div class="nest n4"><b>생성형 AI <small>LLM · 확산 · 멀티모달</small></b></div>
+        </div>
+      </div>
+    </div>
+    <p class="say">안쪽으로 갈수록 범위가 좁아지고, 더 최근에 등장한 기술입니다.</p>
+  </section>
+
+  <section class="pn" style="--c:var(--mint)">
+    <h2>핵심 차이 <small>특성을 누가 만드는가</small></h2>
+    <div class="lab">머신러닝</div>
+    <div class="flow"><div class="st">입력</div><div class="ar">→</div><div class="st on">특성 추출<small>사람이 설계</small></div><div class="ar">→</div><div class="st">분류기</div><div class="ar">→</div><div class="st">출력</div></div>
+    <div class="lab">딥러닝</div>
+    <div class="flow"><div class="st">입력</div><div class="ar">→</div><div class="st on" style="flex:2.25">특성 추출 + 분류<small>신경망이 함께 학습</small></div><div class="ar">→</div><div class="st">출력</div></div>
+    <p class="say">딥러닝은 사람의 특성 설계를 없애는 대신 많은 데이터와 연산이 필요합니다.</p>
+  </section>
+
+  <section class="pn" style="--c:var(--amber)">
+    <h2>학습 방식 4가지 <small>라벨을 누가 만드는가</small></h2>
+    <div class="four">
+      <div><b>지도 학습</b>사람이 라벨을 붙인다<br><span>분류 · 회귀</span></div>
+      <div><b>비지도 학습</b>라벨이 없다<br><span>군집 · 차원 축소</span></div>
+      <div><b>자기지도 학습</b>데이터가 스스로 라벨<br><span>LLM 사전학습</span></div>
+      <div><b>강화 학습</b>정답 대신 보상<br><span>게임 · 로봇 · RLHF</span></div>
+    </div>
+  </section>
+</div>
+
+<div class="band">어떻게 학습하나</div>
+<section class="spine">
+  <h2>딥러닝 학습 5단계 <small>머신러닝도 흐름은 같다</small></h2>
+  <div class="steps">
+    <div class="stp"><div class="hd">① 데이터 준비</div>
+      <div class="bd"><div class="bar"><span class="a">훈련 6</span><span class="b">검증 2</span><span class="c">테스트 2</span></div>
+      <b style="margin-top:5px">세 묶음의 역할이 다르다</b><span class="ex">훈련은 가중치 갱신, 검증은 튜닝, 테스트는 마지막에 단 한 번</span></div></div>
+    <div class="stp"><div class="hd">② 모델 정의</div>
+      <div class="bd"><b>데이터에 맞는 구조를 고른다</b><span class="ex">표 → MLP · 이미지 → CNN · 순서 → RNN · 텍스트 → 트랜스포머</span></div></div>
+    <div class="stp"><div class="hd">③ 컴파일</div>
+      <div class="bd"><b>세 가지를 정한다</b><span class="ex">활성화 함수 · 손실 함수 · 옵티마이저<br>회귀 MSE / 이진 BCE / 다중 Cross Entropy</span></div></div>
+    <div class="stp"><div class="hd">④ 훈련</div>
+      <div class="bd"><b>배치마다 가중치를 고친다</b><span class="ex">순전파 → 손실 → 역전파 → 갱신<br>1,000개 ÷ 배치 20 = 에포크당 50회</span></div></div>
+    <div class="stp"><div class="hd">⑤ 평가</div>
+      <div class="bd"><b>훈련과 검증을 함께 본다</b><span class="ex">훈련 ↑ 검증 ↓ 이면 <span class="warn">과적합</span><br>정확도 하나만 보지 않는다</span></div></div>
+  </div>
+  <div class="back">↺ 성능이 부족하면 ②~④로 되돌아가 다시 돈다</div>
+  <p class="key" style="--c:var(--blue)"><b>배치</b>는 한 번에 처리할 양, <b>에포크</b>는 전체 데이터를 반복하는 횟수입니다. 모델이 찾는 값이 <b>파라미터</b>, 사람이 정해 주는 값이 <b>하이퍼파라미터</b>입니다.</p>
+</section>
+
+<div class="band">지금은 어떻게 쓰나</div>
+<div class="row r2">
+  <section class="pn" style="--c:var(--mint)">
+    <h2>처음부터 학습하지 않는다 <small>2017년 트랜스포머 이후</small></h2>
+    <div class="flow"><div class="st">사전학습<small>대규모 데이터로 범용 표현</small></div><div class="ar">→</div><div class="st on">파인튜닝<small>우리 데이터로 조금만</small></div><div class="ar">→</div><div class="st">배포 · 운영<small>모니터링과 재학습</small></div></div>
+    <p class="say">내 문제에 붙일 때는 <b>프롬프트 → RAG → 파인튜닝</b> 순서로 검토합니다. 그래도 CNN·RNN을 직접 구현하는 이유는, 내부를 만들어 본 사람만 안 될 때 원인을 짚을 수 있기 때문입니다.</p>
+  </section>
+  <section class="pn" style="--c:var(--rose)">
+    <h2>모델은 데이터를 비추는 거울이다</h2>
+    <div class="flow"><div class="st">편향된 데이터</div><div class="ar">→</div><div class="st on">편향된 모델</div><div class="ar">→</div><div class="st">불공정한 결과<small>채용 · 대출 심사</small></div></div>
+    <p class="say">어느 분야든 출발점은 알고리즘이 아니라 <b>어떤 데이터가 쌓여 있는가</b>입니다. AI 기본법은 고영향 AI에 더 무거운 의무를, 생성형 AI에 표시 의무를 둡니다.</p>
+  </section>
+</div>
+
+<p class="foot">다음 — 2장 PyTorch Basic에서 이 5단계를 코드로 옮기기 시작합니다.</p>
+
+</div>
+
+</body></html>
