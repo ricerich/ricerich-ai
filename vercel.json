@@ -20,5 +20,27 @@
       "destination": "/deep_learning_short/",
       "permanent": true
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/exercises/:path*",
+      "destination": "https://health-frontend-ecru.vercel.app/exercises/:path*"
+    },
+    {
+      "source": "/_next/:path*",
+      "destination": "https://health-frontend-ecru.vercel.app/_next/:path*"
+    },
+    {
+      "source": "/models/:path*",
+      "destination": "https://health-frontend-ecru.vercel.app/models/:path*"
+    },
+    {
+      "source": "/environments/:path*",
+      "destination": "https://health-frontend-ecru.vercel.app/environments/:path*"
+    },
+    {
+      "source": "/props/:path*",
+      "destination": "https://health-frontend-ecru.vercel.app/props/:path*"
+    }
   ]
 }
