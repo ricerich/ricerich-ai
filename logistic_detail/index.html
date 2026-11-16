@@ -1,0 +1,355 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>7A 스마트물류 예측 관리 상세 지도</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* layout: 세로 포스터 — 머리 · 10회차 상세 표(4단계 색) · 시스템 구조와 API 지도 · 운영 흐름과 데이터 기간 · 공식 · 재고 등급 · KPI · 실측 */
+:root{
+  --bg:#F3F6F7; --paper:#FFFFFF; --ink:#13283A; --sub:#566B7B; --line:#D5DFE5; --soft:#EEF3F5; --navy:#0B2B4C;
+  --p1:#0E7C80; --p1s:#E5F3F3; --p2:#B7791F; --p2s:#FBF2E2; --p3:#4F5FB0; --p3s:#ECEEF9; --p4:#B8503C; --p4s:#F8EAE6;
+  --ok:#2E8B57; --bad:#B8503C; --onc:#FFFFFF;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1820; --paper:#15222D; --ink:#E4ECF1; --sub:#9AB0BF; --line:#2A3B48; --soft:#1B2B37; --navy:#7FA6CC;
+  --p1:#4FC1C4; --p1s:#173539; --p2:#E3A94B; --p2s:#382D1A; --p3:#97A4F0; --p3s:#262B4A; --p4:#EE8A74; --p4s:#3B2621;
+  --ok:#5CC48A; --bad:#EE8A74; --onc:#0E1820; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0E1820; --paper:#15222D; --ink:#E4ECF1; --sub:#9AB0BF; --line:#2A3B48; --soft:#1B2B37; --navy:#7FA6CC;
+  --p1:#4FC1C4; --p1s:#173539; --p2:#E3A94B; --p2s:#382D1A; --p3:#97A4F0; --p3s:#262B4A; --p4:#EE8A74; --p4s:#3B2621;
+  --ok:#5CC48A; --bad:#EE8A74; --onc:#0E1820; color-scheme:dark }
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);word-break:keep-all;overflow-wrap:anywhere;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px}
+.scroll{overflow-x:auto}
+.poster{width:1600px;margin:0 auto;background:var(--paper);border:1px solid var(--line);padding:28px 32px 22px;display:grid;gap:18px}
+h1,h2,h3,h4{margin:0;text-wrap:balance}
+code,.mono{font-family:var(--f-mono)}
+.sec-h{display:flex;align-items:baseline;gap:10px;border-bottom:2px solid var(--navy);padding-bottom:5px}
+.sec-h h2{font-size:18px}
+.sec-h span{font-size:12px;color:var(--sub)}
+
+/* header */
+.head{display:grid;grid-template-columns:1fr auto;align-items:end;gap:24px;border-bottom:3px solid var(--navy);padding-bottom:14px}
+.eyebrow{font-size:12px;letter-spacing:.08em;color:var(--sub);font-weight:600}
+.head h1{font-size:34px;margin-top:4px}
+.head h1 span{color:var(--p1)}
+.lead{font-size:14px;color:var(--sub);margin-top:6px;max-width:760px;line-height:1.55}
+.facts{display:grid;grid-template-columns:repeat(3,auto);gap:6px}
+.fact{border:1px solid var(--line);background:var(--soft);padding:6px 10px;font-size:12.5px;line-height:1.35}
+.fact b{display:block;font-size:10.5px;color:var(--sub);font-weight:600;letter-spacing:.04em}
+
+/* phase strip */
+.phases{display:grid;grid-template-columns:4fr 2fr 1fr 3fr;gap:6px}
+.ph{color:var(--onc);padding:8px 12px;font-weight:700;font-size:14px;display:flex;justify-content:space-between;gap:8px}
+.ph small{font-weight:500;font-size:12px;opacity:.92}
+.ph1{background:var(--p1)} .ph2{background:var(--p2)} .ph3{background:var(--p3)} .ph4{background:var(--p4)}
+
+/* session table */
+.sess{width:100%;border-collapse:collapse;table-layout:fixed;font-size:12px;line-height:1.45}
+.sess th{background:var(--navy);color:var(--onc);font-weight:600;font-size:12px;padding:7px 8px;text-align:center}
+.sess td{border:1px solid var(--line);padding:7px 8px;vertical-align:top}
+.sess tr{--c:var(--p1);--cs:var(--p1s)}
+.sess tr.g2{--c:var(--p2);--cs:var(--p2s)} .sess tr.g3{--c:var(--p3);--cs:var(--p3s)} .sess tr.g4{--c:var(--p4);--cs:var(--p4s)}
+.sess td.t{background:var(--cs);border-left:5px solid var(--c)}
+.sess td.t .n{font-family:var(--f-mono);color:var(--c);font-size:12px;font-weight:500}
+.sess td.t h3{font-size:14px;line-height:1.3;margin:2px 0 4px}
+.sess td.t p{margin:0;color:var(--sub);font-size:11.5px}
+.sess td.k{font-size:11.5px}
+.sess td.k i{font-style:normal;font-family:var(--f-mono);font-size:10.5px;color:var(--c);margin-right:4px}
+.sess ul{margin:0;padding-left:14px}
+.sess li::marker{color:var(--c)}
+.sess code{font-size:10.5px;background:var(--soft);padding:0 3px}
+.sess .api code{background:var(--cs);color:var(--ink)}
+.chk li{margin-bottom:1px}
+.num{font-family:var(--f-mono);font-weight:500}
+
+/* middle grid */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.panel{display:grid;gap:10px;align-content:start;min-width:0}
+.arch{display:grid;grid-template-columns:1fr 26px 1fr 26px 1.25fr;align-items:stretch}
+.node{border:1.5px solid var(--navy);background:var(--soft);padding:9px 10px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.node h4{font-size:14px}
+.node .port{font-family:var(--f-mono);font-size:11px;color:var(--sub)}
+.node ul{margin:0;padding-left:14px;font-size:11.5px;line-height:1.5}
+.arrow{display:flex;align-items:center;justify-content:center}
+.arrow svg{width:26px;height:40px}
+.arrow svg path{stroke:var(--navy);fill:none;stroke-width:1.6}
+.arrow svg polygon{fill:var(--navy)}
+.apis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.api{border-top:3px solid var(--c);background:var(--soft);padding:6px 8px;font-size:11px;line-height:1.55;min-width:0}
+.api b{display:block;font-size:11px;color:var(--c)}
+.apis .api code{font-size:10.5px;display:block}
+.db{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+.tb{border:1px solid var(--line);border-left:4px solid var(--c);padding:5px 7px;font-size:11px;line-height:1.4;min-width:0}
+.tb code{font-size:11px;font-weight:500;display:block}
+.tb span{color:var(--sub);font-size:10.5px}
+
+.batch{display:grid;grid-template-columns:repeat(5,1fr)}
+.step{position:relative;padding:12px 9px 8px;border:1px solid var(--line);border-left:none;font-size:11.5px;line-height:1.4;min-width:0}
+.step:first-child{border-left:1px solid var(--line)}
+.step b{display:block;font-size:13px;margin-bottom:2px}
+.step code{font-size:10.5px;color:var(--sub)}
+.step .w{display:block;font-family:var(--f-mono);font-size:10.5px;color:var(--sub);margin-top:3px}
+.step .i{position:absolute;top:-9px;left:8px;background:var(--navy);color:var(--onc);font-family:var(--f-mono);font-size:10.5px;width:18px;height:18px;display:grid;place-items:center}
+.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.loop div{border:1.5px dashed var(--c);padding:7px 9px;font-size:11.5px;line-height:1.4}
+.loop div b{color:var(--c);display:block;font-size:12.5px}
+
+/* timeline */
+.tl{position:relative;height:118px;border:1px solid var(--line);background:var(--paper)}
+.tl .axis{position:absolute;left:0;right:0;top:86px;border-top:1px solid var(--sub)}
+.tl .tick{position:absolute;top:80px;font-family:var(--f-mono);font-size:10.5px;color:var(--sub);transform:translateX(-50%);padding-top:12px}
+.tl .tick::before{content:"";position:absolute;left:50%;top:0;height:12px;border-left:1px solid var(--sub)}
+.bar{position:absolute;box-sizing:border-box;height:20px;font-size:11px;line-height:20px;padding:0 6px;color:var(--onc);white-space:nowrap;overflow:hidden}
+.bar.ghost{background:var(--soft);color:var(--ink);border:1px dashed var(--sub);line-height:18px}
+
+/* bottom */
+.formulas{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.fx{border-left:3px solid var(--c);background:var(--soft);padding:7px 9px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.fx .k{font-size:10.5px;color:var(--sub);font-weight:600}
+.fx .e{font-family:var(--f-mono);font-size:12px;font-weight:500}
+.fx .n{font-size:11px;color:var(--sub);line-height:1.4}
+table.mini{width:100%;border-collapse:collapse;font-size:11.5px;font-variant-numeric:tabular-nums}
+table.mini th{background:var(--soft);font-weight:600;padding:5px 7px;text-align:center;border:1px solid var(--line);font-size:11px}
+table.mini td{padding:5px 7px;border:1px solid var(--line)}
+table.mini td.r{text-align:right;font-family:var(--f-mono)}
+.pill{display:inline-block;font-size:10.5px;font-weight:600;padding:0 6px;border:1px solid currentColor}
+.pill.ok{color:var(--ok)} .pill.bad{color:var(--bad)}
+.real{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.metric{border:1px solid var(--line);padding:7px 9px;display:flex;flex-direction:column;gap:2px}
+.metric .v{font-family:var(--f-mono);font-size:18px;font-weight:500}
+.metric .l{font-size:11px;color:var(--sub);line-height:1.35}
+.good .v{color:var(--ok)} .warn .v{color:var(--bad)}
+.three{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:16px}
+.foot{display:flex;justify-content:space-between;font-size:11px;color:var(--sub);border-top:1px solid var(--line);padding-top:8px}
+</style>
+
+<div class="scroll">
+<div class="poster">
+
+<header class="head">
+  <div>
+    <div class="eyebrow">AI활용 스마트물류 통합관리 플랫폼 과정 · 7. 스마트물류 운영 및 분석 · 7-A 단원</div>
+    <h1>7-A <span>스마트물류 예측 관리</span> — 상세 과목 지도</h1>
+    <p class="lead">4번 과목에서 만든 수요 예측 모델을 실제 물류 운영에 붙인다. 서비스로 띄우고(서빙), 계속 맞는지 지켜보고(모니터링), 떨어지면 새로 학습하고(재학습), 예측을 발주 · 배차 · KPI 로 연결한다(업무 연계).</p>
+  </div>
+  <div class="facts">
+    <div class="fact"><b>시간</b>40시간 · 10회차 × 4시간</div>
+    <div class="fact"><b>일정</b>2026.10.23 ~ 11.30</div>
+    <div class="fact"><b>평가</b>11.30 · 객관 · 단답 · 서술 · 코드</div>
+    <div class="fact"><b>무대</b>BSP 센터 · 120 SKU · 5개 품목군</div>
+    <div class="fact"><b>데이터</b>2023.04 ~ 2026.03 일별 출고</div>
+    <div class="fact"><b>모델</b>ridge_window (LSTM 백엔드 선택)</div>
+  </div>
+</header>
+
+<!-- ========== 10회차 상세 ========== -->
+<section class="panel">
+  <div class="sec-h"><h2>10회차 상세</h2><span>회차마다 4교시 구성 · 다루는 파일과 API · 실습 데이터로 직접 돌려 본 체크포인트</span></div>
+  <div class="phases">
+    <div class="ph ph1">① 서빙 <small>모델을 서비스로 · 1~4회차</small></div>
+    <div class="ph ph2">② 모니터링 <small>5~6회차</small></div>
+    <div class="ph ph3">③ 재학습 <small>7회차</small></div>
+    <div class="ph ph4">④ 업무 연계 <small>8~10회차</small></div>
+  </div>
+  <table class="sess">
+    <colgroup><col style="width:15%"><col style="width:27%"><col style="width:25%"><col style="width:33%"></colgroup>
+    <thead><tr><th>회차 · 주제</th><th>1 ~ 4교시 흐름</th><th>다루는 파일 · API</th><th>체크포인트 (실측)</th></tr></thead>
+    <tbody>
+    <tr><td class="t"><span class="n">01</span><h3>예측 운영의 개념과 아키텍처</h3><p>만드는 일과 운영하는 일의 차이</p></td>
+      <td class="k"><i>1</i>만드는 일 vs 운영하는 일 · 예측 관리 정의<br><i>2</i>학습–서빙 분리 · 아티팩트 4종 불러오기<br><i>3</i>React–Spring–FastAPI–DB 설계 · DB · API 설계<br><i>4</i>FastAPI 프로젝트 생성 · 동작 확인</td>
+      <td class="api"><code>db/schema.sql</code> <code>config.py</code> (window 28 · horizon 7)<br><code>generate_data.py</code> <code>init_db.py</code><br><code>GET /health</code></td>
+      <td><ul class="chk"><li>Swagger <code>/docs</code> 가 뜬다</li><li><code>/health</code> → <code>model_not_loaded</code> · <code>model_version: null</code></li><li>predicted_at 과 target_date 를 나눈 이유는 5회차, status 컬럼은 7회차에서 답</li></ul></td></tr>
+    <tr><td class="t"><span class="n">02</span><h3>FastAPI 예측 API 구현</h3><p>모델 상주 · 단건 · 배치 · 오류</p></td>
+      <td class="k"><i>1</i>lifespan 으로 모델을 서버에 상주<br><i>2</i>단건 예측 <code>POST /predict</code><br><i>3</i>배치 예측과 DB 저장 (UPSERT)<br><i>4</i>예외 처리와 응답 규약 <code>errors.py</code></td>
+      <td class="api"><code>predictor.py</code> <code>model_def.py</code> <code>schemas.py</code> <code>errors.py</code><br><code>train.py</code> <code>run_batch.py</code><br><code>POST /predict</code> <code>/predict/batch</code> <code>GET /model/info</code></td>
+      <td><ul class="chk"><li><code>model loaded</code> 로그가 한 번만 찍힌다</li><li>7일치 응답 · 없는 SKU <code>Z-999</code> → 404 · <code>horizon:100</code> → 422</li><li>같은 배치를 두 번 돌려도 건수 그대로 (멱등성)</li></ul></td></tr>
+    <tr><td class="t"><span class="n">03</span><h3>Spring Boot ↔ FastAPI 연계</h3><p>장애에 견디는 호출</p></td>
+      <td class="k"><i>1</i>Spring Boot 프로젝트 생성 · DB 연결<br><i>2</i>WebClient 로 FastAPI 호출 · DTO 매핑<br><i>3</i>타임아웃 · 재시도 · 폴백<br><i>4</i>업무 규칙 적용 · 최종 API</td>
+      <td class="api"><code>WebClientConfig</code> (연결 2초 · 응답 5초)<br><code>ForecastClient</code> (backoff 재시도) <code>ForecastService</code> (폴백)<br><code>SavedForecastRepository</code> (과제)<br><code>GET /api/forecast?sku=&amp;days=</code></td>
+      <td><ul class="chk"><li>AI 서버 켬 → <code>source: LIVE</code></li><li>끔 → <code>retry 1/2 · 2/2</code> 후 <code>CACHED</code> 200 (과제 전엔 503)</li><li>없는 SKU → 404, 폴백하지 않는다</li></ul></td></tr>
+    <tr><td class="t"><span class="n">04</span><h3>예측 결과 저장과 React 대시보드</h3><p>판단할 수 있게 보여 주기</p></td>
+      <td class="k"><i>1</i>Vite 프로젝트 · API 연동 · JSON 표시<br><i>2</i>예측 추이 차트 <code>ForecastChart</code><br><i>3</i>로딩 · 성공 · 실패 상태 · 품목 선택<br><i>4</i>KPI 카드 · 레이아웃 정리</td>
+      <td class="api"><code>vite.config.js</code> (프록시 /api · /ai)<br><code>useAsync.js</code> <code>toRows.js</code> <code>CachedBanner</code> <code>SkuPicker</code><br><code>GET /actuals</code> (최근 14일 실적)</td>
+      <td><ul class="chk"><li>실적 실선 03/17~03/30 + 예측 점선 03/31~04/06 이 이어진다</li><li>FastAPI 끄면 노란 CACHED 배너, 차트는 유지</li><li>빠른 연속 클릭에도 화면이 어긋나지 않는다 (alive)</li></ul></td></tr>
+    <tr class="g2"><td class="t"><span class="n">05</span><h3>예측 정확도 모니터링과 경보</h3><p>매일 자동으로 쌓이는 기록</p></td>
+      <td class="k"><i>1</i>오차 지표 · 매칭 규칙 · 제외 규칙 확정<br><i>2</i>정확도 계산 · <code>prediction_metric</code> UPSERT<br><i>3</i>지표 API · 모니터링 화면<br><i>4</i>임계값 설정과 2일 연속 경보</td>
+      <td class="api"><code>metrics.py</code> <code>alerts.py</code> <code>backfill_metrics.py</code> <code>MonitoringPage</code><br><code>POST /metrics/compute</code> <code>GET /metrics/accuracy</code> <code>GET /alerts</code></td>
+      <td><ul class="chk"><li>지표 <span class="num">402</span>건 · 경보 <span class="num">22</span>건 (WARN 13 · CRITICAL 9)</li><li>평일 MAPE <span class="num">11.1%</span> · 주말 <span class="num">18.9%</span> (bias +130 ~ +253)</li><li>horizon 1 · 3 · 7일 = 13.3 · 13.1 · 12.2% — 이론과 반대, 토론거리</li><li>음료 <span class="num">30.4%</span> vs 전체 13.6% · 평일 9% 초과 25일 중 24일</li></ul></td></tr>
+    <tr class="g2"><td class="t"><span class="n">06</span><h3>데이터 · 컨셉 드리프트 진단</h3><p>무엇을 고칠지 아는 것</p></td>
+      <td class="k"><i>1</i>정확도 하락 원인 구분 (품질 · 데이터 · 컨셉)<br><i>2</i>데이터 드리프트 측정 PSI<br><i>3</i>잔차 분석 · 컨셉 드리프트 가설<br><i>4</i>진단 자동화 · 일일 드리프트 리포트</td>
+      <td class="api"><code>drift.py</code> (PSI · 잔차 · summarize) <code>DriftPage</code><br><code>POST /drift/compute</code> <code>GET /drift/report</code></td>
+      <td><ul class="chk"><li>전체 qty PSI <span class="num">0.08</span> 안정 · 음료 <span class="num">2.61</span> 경고</li><li>음료 잔차 꾸준히 + (+150) → 계속 과소예측</li><li>요일 잔차 토 <span class="num">+235</span> · 일 <span class="num">+149</span> → 주말 급등의 원인</li><li>scope 마다 다른 요약 문장 (관찰 · 재학습 검토)</li></ul></td></tr>
+    <tr class="g3"><td class="t"><span class="n">07</span><h3>재학습 파이프라인과 버저닝</h3><p>검증 후 교체 · 언제든 롤백</p></td>
+      <td class="k"><i>1</i>재학습 시점 · 데이터 범위 정책<br><i>2</i>재학습 파이프라인 <code>train.py</code> · v2<br><i>3</i>챔피언 · 챌린저 검증과 교체<br><i>4</i>스케줄러로 새벽 배치 5단계 자동화</td>
+      <td class="api"><code>train.py --recent-months 1 --recent-factor 25</code><br><code>compare_models.py</code> <code>scheduler.py</code> (APScheduler)<br><code>GET /model/list</code> <code>POST /model/activate</code></td>
+      <td><ul class="chk"><li>v2 standby 등록 · 섀도 기간 v1 · v2 함께 예측</li><li>모니터링 탭: 운영 v1 실선 + 섀도 v2 점선</li><li>경보는 운영 모델 지표로만 판단</li><li>판정 <b>교체 보류</b> (+0.26%p · bias 증가) · 교체 · 롤백 연습</li></ul></td></tr>
+    <tr class="g4"><td class="t"><span class="n">08</span><h3>안전재고 · 재주문점 · EOQ</h3><p>예측을 발주량으로</p></td>
+      <td class="k"><i>1</i>재고 판단 개념 · 서비스 수준 결정<br><i>2</i>안전재고 · 재주문점 계산<br><i>3</i>EOQ · MOQ · 팔레트 → 현실 발주량<br><i>4</i>발주 제안 서비스와 화면</td>
+      <td class="api"><code>inventory.py</code> (σ = 예측 오차) <code>suggest.py</code> <code>OrdersPage</code><br><code>GET /inventory/suggest?base_date=</code></td>
+      <td><ul class="chk"><li>A-102: Z <span class="num">1.6449</span> · SS <span class="num">252</span> · ROP <span class="num">3,402</span> · EOQ <span class="num">1,812 → 1,840</span></li><li>L 7 → 28 일 때 SS 252 → 505 (√L, 4배 아닌 2배)</li><li>같은 서비스 수준이라도 품목별 SS 41 ~ 3,569</li><li>3/31 발주 필요 <span class="num">66</span>건 · 위험 <span class="num">3</span>건</li></ul></td></tr>
+    <tr class="g4"><td class="t"><span class="n">09</span><h3>발주 · 배차 연계와 시뮬레이션</h3><p>업무 잇기 · 더 나은 판단</p></td>
+      <td class="k"><i>1</i>발주 승인 · 상태 관리 · 발주서<br><i>2</i>배차 계산 · 적재 계획<br><i>3</i>시나리오 시뮬레이션 · 의사결정 표<br><i>4</i>조정 이력 분석 · 제안 수용률</td>
+      <td class="api"><code>orders</code> <code>dispatch</code> <code>simulate</code><br><code>POST /orders/approve</code> <code>GET /orders</code><br><code>GET /dispatch/plan</code> <code>POST /simulate</code></td>
+      <td><ul class="chk"><li>입고 예정 = 영업일 기준 3/31 + 7 → 4/09 · 승인 후 66 → 65건</li><li>재승인 409 · 제안 없는 품목 404</li><li>배차 <span class="num">52</span>대 · 적재율 <span class="num">90.1%</span> · 박스당 <span class="num">362.8</span>원</li><li>B-100 서비스 수준 90 → 99% · 평균 재고 8,582 → 10,418</li></ul></td></tr>
+    <tr class="g4"><td class="t"><span class="n">10</span><h3>KPI 관리와 운영 리포트</h3><p>측정하고 보고하고 개선</p></td>
+      <td class="k"><i>1</i>물류 KPI 체계 · 정의표<br><i>2</i>KPI 계산 · 대시보드 완성<br><i>3</i>운영 리포트 자동 생성 · 주간 리포트<br><i>4</i>성과 정리 · 포트폴리오</td>
+      <td class="api"><code>kpi.py</code> (KPI_SPECS 6종) <code>report.py</code> <code>weekly.html</code> <code>KpiPage</code><br><code>POST /kpi/compute</code> <code>GET /kpi/daily</code> <code>GET /report/weekly.html</code></td>
+      <td><ul class="chk"><li>KPI 6개 중 <span class="num">5</span>개 달성 · 예측 MAPE 만 미달</li><li>헤드라인: "예측 MAPE 14.35% — 목표(11%)보다 30.5% 높아 미달" (붉게)</li><li>승인하면 KPI 자동 재집계 · 빠진 지표는 회색 카드로 안내</li></ul></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ========== 시스템 구조와 API ========== -->
+<section class="two">
+  <div class="panel">
+    <div class="sec-h"><h2>시스템 구조</h2><span>세 서버 · 한 DB · 역할 경계</span></div>
+    <div class="arch">
+      <div class="node"><h4>React 대시보드</h4><span class="port">:5173 · Vite 프록시</span>
+        <ul><li>수요 예측 탭 (4회차)</li><li>모니터링 탭 (5 · 7회차)</li><li>발주 제안 탭 (8 · 9회차)</li><li>KPI 탭 (10회차)</li></ul></div>
+      <div class="arrow"><svg viewBox="0 0 26 40"><path d="M1 20H19"/><polygon points="19,15 25,20 19,25"/></svg></div>
+      <div class="node"><h4>Spring Boot 업무 서버</h4><span class="port">:8080 · /api</span>
+        <ul><li>업무 규칙과 화면용 응답 조립</li><li>타임아웃 · 재시도 · 폴백</li><li>LIVE / CACHED 구분</li><li>사용자 잘못(404 · 422)은 그대로</li></ul></div>
+      <div class="arrow"><svg viewBox="0 0 26 40"><path d="M1 20H19"/><polygon points="19,15 25,20 19,25"/></svg></div>
+      <div class="node"><h4>FastAPI AI 서버</h4><span class="port">:8000 · /ai · Swagger /docs</span>
+        <ul><li>모델 상주 · 예측 · 배치</li><li>정확도 · 경보 · 드리프트</li><li>재학습 버전 관리 · 교체</li><li>재고 · 발주 · 배차 · 시뮬레이션 · KPI</li></ul></div>
+    </div>
+    <div class="apis">
+      <div class="api" style="--c:var(--p1)"><b>1 · 2 · 4회차</b><code>GET /health</code><code>GET /model/info</code><code>GET /skus</code><code>POST /predict</code><code>POST /predict/batch</code><code>GET /actuals</code></div>
+      <div class="api" style="--c:var(--p2)"><b>5 · 6회차</b><code>POST /metrics/compute</code><code>GET /metrics/accuracy</code><code>GET /alerts</code><code>POST /drift/compute</code><code>GET /drift/report</code></div>
+      <div class="api" style="--c:var(--p3)"><b>7회차</b><code>GET /model/list</code><code>POST /model/activate</code><span style="color:var(--sub)">교체 · 롤백 모두 이 API</span></div>
+      <div class="api" style="--c:var(--p4)"><b>8 · 9회차</b><code>GET /inventory/suggest</code><code>POST /orders/approve</code><code>GET /orders</code><code>GET /dispatch/plan</code><code>POST /simulate</code></div>
+      <div class="api" style="--c:var(--p4)"><b>10회차</b><code>POST /kpi/compute</code><code>GET /kpi/daily</code><code>GET /report/weekly</code><code>GET /report/weekly.html</code></div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="sec-h"><h2>DB 테이블</h2><span>smartlogi.db (SQLite · PostgreSQL 호환) · 색 = 처음 쓰는 단계</span></div>
+    <div class="db">
+      <div class="tb" style="--c:var(--p1)"><code>sku</code><span>120품목 · 품목군 · 등급</span></div>
+      <div class="tb" style="--c:var(--p1)"><code>sales_actual</code><span>일별 출고 실적</span></div>
+      <div class="tb" style="--c:var(--p1)"><code>calendar</code><span>요일 · 휴일</span></div>
+      <div class="tb" style="--c:var(--p1)"><code>promotion_plan</code><span>행사 계획</span></div>
+      <div class="tb" style="--c:var(--p1)"><code>model_version</code><span>active · standby · retired</span></div>
+      <div class="tb" style="--c:var(--p1)"><code>prediction_result</code><span>predicted_at · target_date</span></div>
+      <div class="tb" style="--c:var(--p2)"><code>prediction_metric</code><span>날짜×버전×horizon×scope</span></div>
+      <div class="tb" style="--c:var(--p2)"><code>alert</code><span>WARN · CRITICAL · 조치</span></div>
+      <div class="tb" style="--c:var(--p2)"><code>drift_report</code><span>피처별 PSI · 요약</span></div>
+      <div class="tb" style="--c:var(--p4)"><code>daily_stock</code><span>일별 재고</span></div>
+      <div class="tb" style="--c:var(--p4)"><code>order_suggestion</code><span>SS · ROP · 제안량 · 승인</span></div>
+      <div class="tb" style="--c:var(--p4)"><code>purchase_order</code><span>발주서 · 입고 예정</span></div>
+      <div class="tb" style="--c:var(--p4)"><code>kpi_daily</code><span>KPI 6종 · 목표</span></div>
+      <div class="tb" style="--c:var(--line);border-style:dashed"><span><b style="color:var(--p1)">■</b> 서빙 <b style="color:var(--p2)">■</b> 모니터링 <b style="color:var(--p4)">■</b> 업무 연계</span></div>
+    </div>
+    <div class="sec-h" style="margin-top:4px"><h2>매일 새벽 배치</h2><span>scheduler.py · 단계마다 재시도 2회 · 최종 실패 시 담당자 알림</span></div>
+    <div class="batch">
+      <div class="step"><span class="i">1</span><b>정확도 계산</b>어제 실적 ↔ 예측 매칭<span class="w">5회차</span></div>
+      <div class="step"><span class="i">2</span><b>드리프트 점검</b>피처별 PSI 저장<span class="w">6회차</span></div>
+      <div class="step"><span class="i">3</span><b>예측 생성</b>active + standby(섀도)<span class="w">2 · 7회차</span></div>
+      <div class="step"><span class="i">4</span><b>경보 판단</b>2일 연속 초과<span class="w">5회차</span></div>
+      <div class="step"><span class="i">5</span><b>KPI 집계</b>6종 · 목표 대비<span class="w">10회차</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 운영 순환 + 데이터 기간 ========== -->
+<section class="two">
+  <div class="panel">
+    <div class="sec-h"><h2>모델 운영 순환</h2><span>경보는 끝이 아니라 시작</span></div>
+    <div class="loop">
+      <div style="--c:var(--p2)"><b>① 경보 수신</b>1일 앞 MAPE 가 2일 연속 9% 이상. 13% 이상이면 CRITICAL. 조치 문구 포함</div>
+      <div style="--c:var(--p2)"><b>② 원인 진단</b>데이터 품질 → 데이터 드리프트(PSI) → 컨셉 드리프트(잔차 · bias) 순으로</div>
+      <div style="--c:var(--p3)"><b>③ 재학습</b>v2 학습 → standby 등록 → 섀도 예측으로 같은 기간 병행</div>
+      <div style="--c:var(--p3)"><b>④ 교체 판정</b>같은 날 · 같은 horizon 비교 → 기준 통과 시 사람이 activate, 문제 시 롤백</div>
+    </div>
+    <div class="sec-h" style="margin-top:4px"><h2>설계 원칙</h2></div>
+    <div class="loop" style="grid-template-columns:repeat(3,1fr)">
+      <div style="--c:var(--navy)"><b>배치 예측이 기본</b>새벽에 전 품목을 미리 계산해 저장하고, 화면은 저장값을 읽는다</div>
+      <div style="--c:var(--navy)"><b>AI 서버가 죽어도 화면은 산다</b>폴백한 값은 source 와 기준 시각으로 알린다</div>
+      <div style="--c:var(--navy)"><b>판단은 사람이</b>모델 교체 · 발주 승인은 판정을 보고 사람이 실행한다</div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="sec-h"><h2>실습 데이터 기간</h2><span>시간 순서를 지켜 나눈다 · 정답을 본 기간으로 평가하지 않는다</span></div>
+    <!-- 축: 2026-02-20(0%) ~ 2026-04-07(100%), 46일 -->
+    <div class="tl">
+      <div class="bar ghost" style="left:0%;width:28.3%;top:8px">v1 학습 2023.04 ~ 03.04 →</div>
+      <div class="bar" style="background:var(--p1);left:28.3%;width:56.5%;top:8px">v1 운영 · 배치 예측 03.05 ~ 03.30</div>
+      <div class="bar ghost" style="left:0%;width:15.2%;top:32px">v2 학습 ~02.26</div>
+      <div class="bar" style="background:var(--p3);left:15.2%;width:30.5%;top:32px">v2 홀드아웃 02.27 ~ 03.12</div>
+      <div class="bar" style="background:var(--p3);left:45.7%;width:39.1%;top:32px;opacity:.75">섀도 비교 03.13 ~ 03.30</div>
+      <div class="bar" style="background:var(--p2);left:30.4%;width:54.4%;top:56px">정확도 백필 03.06 ~ 03.30</div>
+      <div class="bar" style="background:var(--p4);left:84.8%;width:15.2%;top:56px">기준일 03.31</div>
+      <div class="axis"></div>
+      <span class="tick" style="left:0%">02.20</span><span class="tick" style="left:15.2%">02.27</span><span class="tick" style="left:28.3%">03.05</span>
+      <span class="tick" style="left:45.7%">03.13</span><span class="tick" style="left:63%">03.21</span><span class="tick" style="left:84.8%">03.31</span>
+    </div>
+    <div class="sec-h" style="margin-top:4px"><h2>꼭 기억할 공식과 기준</h2></div>
+    <div class="formulas">
+      <div class="fx" style="--c:var(--p2)"><span class="k">MAPE</span><span class="e">mean(|A−P|÷A)×100</span><span class="n">실적 5 미만 제외 · WAPE 함께</span></div>
+      <div class="fx" style="--c:var(--p2)"><span class="k">bias</span><span class="e">mean(A − P)</span><span class="n">+ 과소예측 · − 과대예측</span></div>
+      <div class="fx" style="--c:var(--p2)"><span class="k">PSI</span><span class="e">0.1 · 0.25</span><span class="n">안정 · 주의 · 경고 경계</span></div>
+      <div class="fx" style="--c:var(--p3)"><span class="k">교체 기준</span><span class="e">≥14일 · ≥0.5%p</span><span class="n">승률 ≥50% · 군별 악화 ≤1%p</span></div>
+      <div class="fx" style="--c:var(--p4)"><span class="k">안전재고</span><span class="e">Z × σ × √L</span><span class="n">σ 는 예측 오차의 표준편차</span></div>
+      <div class="fx" style="--c:var(--p4)"><span class="k">재주문점</span><span class="e">d × L + SS</span><span class="n">가용재고 ≤ ROP → 제안</span></div>
+      <div class="fx" style="--c:var(--p4)"><span class="k">EOQ</span><span class="e">√(2DS ÷ H)</span><span class="n">→ MOQ → 팔레트 40 올림</span></div>
+      <div class="fx" style="--c:var(--p4)"><span class="k">제안 수용률</span><span class="e">무조정 승인 ÷ 제안</span><span class="n">시스템 신뢰도 · 목표 80%</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 재고 등급 · KPI · 실측 ========== -->
+<section class="three">
+  <div class="panel">
+    <div class="sec-h"><h2>KPI 6종</h2><span>10회차 · 2026-03-31 실측</span></div>
+    <table class="mini">
+      <thead><tr><th>KPI</th><th>계산</th><th>목표</th><th>3/31</th><th>판정</th></tr></thead>
+      <tbody>
+        <tr><td>재고회전율</td><td>30일 출고금액 ÷ 평균 재고금액</td><td class="r">≥ 45회</td><td class="r">50.8</td><td><span class="pill ok">달성</span></td></tr>
+        <tr><td>결품률</td><td>수요를 못 채운 품목 비율</td><td class="r">≤ 6.0%</td><td class="r">5.83</td><td><span class="pill ok">달성</span></td></tr>
+        <tr><td>평균 적재율</td><td>실적재 ÷ 적재능력 (7일)</td><td class="r">≥ 90%</td><td class="r">90.1</td><td><span class="pill ok">달성</span></td></tr>
+        <tr><td>박스당 운임</td><td>총 운임 ÷ 출고 박스</td><td class="r">≤ 400원</td><td class="r">362.6</td><td><span class="pill ok">달성</span></td></tr>
+        <tr><td>예측 MAPE</td><td>운영 모델 · 1일 앞 · 7일</td><td class="r">≤ 11%</td><td class="r">14.35</td><td><span class="pill bad">미달</span></td></tr>
+        <tr><td>제안 수용률</td><td>무조정 승인 ÷ 제안</td><td class="r">≥ 80%</td><td class="r">100</td><td><span class="pill ok">달성</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel">
+    <div class="sec-h"><h2>재고 등급과 서비스 수준</h2><span>8회차</span></div>
+    <table class="mini">
+      <thead><tr><th>등급</th><th>서비스 수준</th><th>Z</th><th>뜻</th></tr></thead>
+      <tbody>
+        <tr><td>A</td><td class="r">98%</td><td class="r">2.05</td><td>결품 손실이 큰 품목</td></tr>
+        <tr><td>B</td><td class="r">95%</td><td class="r">1.65</td><td>20번 중 1번 모자랄 수 있다</td></tr>
+        <tr><td>C</td><td class="r">90%</td><td class="r">1.28</td><td>회전 느린 일반 품목</td></tr>
+      </tbody>
+    </table>
+    <div class="sec-h" style="margin-top:4px"><h2>경보 기준</h2><span>5회차 · config.py</span></div>
+    <table class="mini">
+      <tbody>
+        <tr><td>제외 규칙</td><td>실적 5박스 미만은 MAPE 에서 제외</td></tr>
+        <tr><td>최소 표본</td><td>10건 미만이면 기록하지 않음</td></tr>
+        <tr><td>WARN · CRITICAL</td><td>9% · 13% · 2일 연속일 때만</td></tr>
+        <tr><td>화면 기준선</td><td>11% (경보 판단과 별개)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel">
+    <div class="sec-h"><h2>실측 결과 요약</h2><span>실습 데이터 2026-03</span></div>
+    <div class="real">
+      <div class="metric warn"><span class="v">13.5%</span><span class="l">1일 앞 MAPE (3/13~3/30)</span></div>
+      <div class="metric warn"><span class="v">30.8%</span><span class="l">음료 MAPE · 주말 ×2.1</span></div>
+      <div class="metric warn"><span class="v">2.68</span><span class="l">음료 qty PSI (3/31)</span></div>
+      <div class="metric"><span class="v">8.96%</span><span class="l">v2 홀드아웃 MAPE</span></div>
+      <div class="metric"><span class="v">+0.26</span><span class="l">섀도 개선 %p → 교체 보류</span></div>
+      <div class="metric good"><span class="v">−1.2%</span><span class="l">같은 기간 안전재고 감소</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="foot"><span>부산IT교육센터 · 라이스리치AI</span><span>교안 7A-01 ~ 7A-10 · 실습 소스 7A_03 ~ 7A_10 · 평가지 7A v2</span></div>
+</div>
+</div>
+
+</body></html>

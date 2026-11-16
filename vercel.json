@@ -24,6 +24,11 @@
       "source": "/logistic",
       "destination": "/logistic/",
       "permanent": true
+    },
+    {
+      "source": "/logistic_detail",
+      "destination": "/logistic_detail/",
+      "permanent": true
     }
   ],
   "rewrites": [
