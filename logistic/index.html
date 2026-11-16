@@ -1,0 +1,263 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>7A 스마트물류 예측 관리 과목 지도</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* layout: 한 장짜리 포스터 — 위 4개 단계 레인(10회차) · 가운데 시스템 구조와 새벽 배치 · 아래 핵심 공식과 실측 결과 */
+:root{
+  --bg:#F3F6F7; --paper:#FFFFFF; --ink:#13283A; --sub:#566B7B; --line:#D5DFE5; --soft:#EAF0F3;
+  --navy:#0B2B4C;
+  --p1:#0E7C80; --p1s:#E3F2F2;   /* 서빙 */
+  --p2:#B7791F; --p2s:#FBF1E0;   /* 모니터링 */
+  --p3:#4F5FB0; --p3s:#E9EBF8;   /* 재학습 */
+  --p4:#B8503C; --p4s:#F8E8E4;   /* 업무 연계 */
+  --ok:#2E8B57; --bad:#B8503C;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1820; --paper:#15222D; --ink:#E4ECF1; --sub:#9AB0BF; --line:#2A3B48; --soft:#1B2B37; --navy:#0A2238;
+  --p1:#4FC1C4; --p1s:#14343A; --p2:#E3A94B; --p2s:#3A2E19; --p3:#97A4F0; --p3s:#262B4A; --p4:#EE8A74; --p4s:#3D2620;
+  --ok:#5CC48A; --bad:#EE8A74; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0E1820; --paper:#15222D; --ink:#E4ECF1; --sub:#9AB0BF; --line:#2A3B48; --soft:#1B2B37; --navy:#0A2238;
+  --p1:#4FC1C4; --p1s:#14343A; --p2:#E3A94B; --p2s:#3A2E19; --p3:#97A4F0; --p3s:#262B4A; --p4:#EE8A74; --p4s:#3D2620;
+  --ok:#5CC48A; --bad:#EE8A74; color-scheme:dark }
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);word-break:keep-all;overflow-wrap:anywhere;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px}
+.scroll{overflow-x:auto}
+.poster{width:1600px;margin:0 auto;background:var(--paper);border:1px solid var(--line);padding:28px 32px 24px;display:grid;gap:18px}
+h1,h2,h3{margin:0;text-wrap:balance}
+.mono{font-family:var(--f-mono)}
+
+/* header */
+.head{display:grid;grid-template-columns:1fr auto;align-items:end;gap:24px;border-bottom:3px solid var(--navy);padding-bottom:14px}
+.eyebrow{font-size:12px;letter-spacing:.08em;color:var(--sub);font-weight:600}
+.head h1{font-size:34px;font-weight:700;color:var(--ink);margin-top:4px}
+.head h1 span{color:var(--p1)}
+.facts{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;max-width:760px}
+.fact{border:1px solid var(--line);background:var(--soft);padding:6px 10px;font-size:12.5px;line-height:1.35}
+.fact b{display:block;font-size:10.5px;color:var(--sub);font-weight:600;letter-spacing:.04em}
+
+/* phase lanes */
+.lanes{display:grid;grid-template-columns:4fr 2fr 1fr 3fr;gap:10px}
+.lane{display:grid;grid-template-rows:auto 1fr;gap:8px;min-width:0}
+.lane-h{display:flex;align-items:baseline;gap:10px;padding:8px 12px;color:#fff;font-weight:700;font-size:15px}
+.lane-h small{font-weight:500;font-size:12px;opacity:.92}
+.l1 .lane-h{background:var(--p1)} .l2 .lane-h{background:var(--p2)} .l3 .lane-h{background:var(--p3)} .l4 .lane-h{background:var(--p4)}
+.cards{display:grid;gap:8px;grid-auto-flow:column;grid-auto-columns:1fr}
+.card{border:1px solid var(--line);border-top:4px solid var(--c);background:var(--paper);padding:10px 11px 11px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.l1 .card{--c:var(--p1);--cs:var(--p1s)} .l2 .card{--c:var(--p2);--cs:var(--p2s)} .l3 .card{--c:var(--p3);--cs:var(--p3s)} .l4 .card{--c:var(--p4);--cs:var(--p4s)}
+.card .no{font-family:var(--f-mono);font-size:12px;color:var(--c);font-weight:500}
+.card h3{font-size:15px;line-height:1.3}
+.card ul{margin:0;padding-left:15px;font-size:12px;line-height:1.5;color:var(--ink)}
+.card li::marker{color:var(--c)}
+.card .out{margin-top:auto;background:var(--cs);padding:6px 8px;font-size:11.5px;line-height:1.45}
+.card .out b{color:var(--c);font-size:10.5px;letter-spacing:.04em;display:block}
+.card code{font-family:var(--f-mono);font-size:11px}
+
+/* middle */
+.mid{display:grid;grid-template-columns:1.25fr 1fr;gap:14px}
+.panel{border:1px solid var(--line);padding:14px 16px;display:grid;gap:10px;align-content:start;min-width:0}
+.panel h2{font-size:16px;display:flex;gap:8px;align-items:center}
+.panel h2 .tag{font-size:11px;font-weight:600;color:var(--sub);border:1px solid var(--line);padding:1px 6px}
+.arch{display:grid;grid-template-columns:1fr 30px 1fr 30px 1fr 30px 1.7fr;align-items:stretch}
+.node{border:1.5px solid var(--navy);background:var(--soft);padding:9px 10px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.node h4{margin:0;font-size:14px}
+.node .port{font-family:var(--f-mono);font-size:11px;color:var(--sub)}
+.node p{margin:0;font-size:11.5px;line-height:1.45}
+.node .s{font-family:var(--f-mono);font-size:10.5px;color:var(--sub)}
+.arrow{display:flex;align-items:center;justify-content:center}
+.arrow svg{width:30px;height:40px}
+.arrow svg path{stroke:var(--navy);fill:none;stroke-width:1.6}
+.arrow svg polygon{fill:var(--navy)}
+.tables{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px 8px;font-family:var(--f-mono);font-size:10px}
+.tables span{display:flex;gap:5px;align-items:center;white-space:nowrap}
+.tables i{width:8px;height:8px;display:inline-block;flex:none}
+.d1{background:var(--p1)} .d2{background:var(--p2)} .d3{background:var(--p3)} .d4{background:var(--p4)}
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.rule{background:var(--soft);padding:7px 9px;font-size:11.5px;line-height:1.45}
+.rule b{display:block;font-size:11px;color:var(--navy)}
+
+.batch{display:grid;grid-template-columns:repeat(5,1fr);gap:0;counter-reset:step}
+.step{position:relative;padding:9px 10px 9px 12px;border:1px solid var(--line);border-left:none;background:var(--paper);font-size:11.5px;line-height:1.4;min-width:0}
+.step:first-child{border-left:1px solid var(--line)}
+.step b{display:block;font-size:13px;margin-bottom:2px}
+.step .w{font-family:var(--f-mono);font-size:10.5px;color:var(--sub)}
+.step::before{counter-increment:step;content:counter(step);position:absolute;top:-9px;left:8px;background:var(--navy);color:#fff;font-family:var(--f-mono);font-size:10.5px;width:18px;height:18px;display:grid;place-items:center}
+.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;align-items:stretch}
+.loop div{border:1.5px dashed var(--c);padding:7px 9px;font-size:11.5px;line-height:1.4}
+.loop div b{color:var(--c);display:block;font-size:12.5px}
+
+/* bottom */
+.bottom{display:grid;grid-template-columns:1.5fr 1fr;gap:14px}
+.formulas{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.fx{border-left:3px solid var(--c);background:var(--soft);padding:8px 10px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.fx .k{font-size:10.5px;color:var(--sub);font-weight:600;letter-spacing:.03em}
+.fx .e{font-family:var(--f-mono);font-size:12.5px;font-weight:500;color:var(--ink)}
+.fx .n{font-size:11px;color:var(--sub);line-height:1.4}
+.real{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.metric{border:1px solid var(--line);padding:8px 10px;display:flex;flex-direction:column;gap:2px}
+.metric .v{font-family:var(--f-mono);font-size:19px;font-weight:500;font-variant-numeric:tabular-nums}
+.metric .l{font-size:11px;color:var(--sub);line-height:1.35}
+.good .v{color:var(--ok)} .warn .v{color:var(--bad)}
+.foot{display:flex;justify-content:space-between;font-size:11px;color:var(--sub);border-top:1px solid var(--line);padding-top:8px}
+</style>
+
+<div class="scroll">
+<div class="poster">
+
+  <header class="head">
+    <div>
+      <div class="eyebrow">AI활용 스마트물류 통합관리 플랫폼 과정 · 7. 스마트물류 운영 및 분석</div>
+      <h1>7-A <span>스마트물류 예측 관리</span> — 과목 전체 지도</h1>
+    </div>
+    <div class="facts">
+      <div class="fact"><b>시간</b>40시간 · 10회차 × 4시간</div>
+      <div class="fact"><b>일정</b>2026.10.23 ~ 11.30</div>
+      <div class="fact"><b>무대</b>BSP 스마트물류센터 · 120 SKU · 3년치 출고</div>
+      <div class="fact"><b>스택</b>FastAPI · Spring Boot · React · SQLite</div>
+      <div class="fact"><b>선수 과목</b>4번 AI 모델링 · 수요 예측</div>
+    </div>
+  </header>
+
+  <!-- ===================== 10회차 · 4단계 ===================== -->
+  <section class="lanes">
+    <div class="lane l1">
+      <div class="lane-h">① 서빙 <small>모델을 서비스로 만든다 · 1~4회차</small></div>
+      <div class="cards">
+        <article class="card"><span class="no">01</span><h3>예측 운영의 개념과 아키텍처</h3>
+          <ul><li>노트북 모델 → 운영 서비스</li><li>배치 예측 기본 · AI 서버 분리</li><li>아티팩트 4종 (모델 · 스케일러 · 피처 · 메타)</li><li>학습-서빙 불일치 막기</li></ul>
+          <div class="out"><b>결과물</b>DB 스키마 · <code>GET /health</code></div></article>
+        <article class="card"><span class="no">02</span><h3>FastAPI 예측 API 구현</h3>
+          <ul><li>lifespan 으로 모델 1회 상주</li><li>Pydantic 입력 검증</li><li>오류 코드 404 · 422 · 503</li><li>UPSERT 로 재실행 안전(멱등)</li></ul>
+          <div class="out"><b>결과물</b><code>POST /predict</code> · <code>/predict/batch</code></div></article>
+        <article class="card"><span class="no">03</span><h3>Spring Boot ↔ FastAPI 연계</h3>
+          <ul><li>WebClient · 타임아웃 2초 / 5초</li><li>재시도(backoff) 2회</li><li>폴백: LIVE → CACHED</li><li>없는 SKU 는 폴백 없이 404</li></ul>
+          <div class="out"><b>결과물</b><code>GET /api/forecast</code> · 업무 규칙</div></article>
+        <article class="card"><span class="no">04</span><h3>예측 결과 저장과 React 대시보드</h3>
+          <ul><li>Vite 프록시로 CORS 회피</li><li>로딩 · 성공 · 실패 3상태</li><li>실적 실선 + 예측 점선 연결</li><li>CACHED 배너 · 안전재고선</li></ul>
+          <div class="out"><b>결과물</b>수요 예측 탭 · KPI 카드 자리</div></article>
+      </div>
+    </div>
+
+    <div class="lane l2">
+      <div class="lane-h">② 모니터링 <small>계속 맞는지 지켜본다 · 5~6회차</small></div>
+      <div class="cards">
+        <article class="card"><span class="no">05</span><h3>예측 정확도 모니터링과 경보</h3>
+          <ul><li>MAE · MAPE · WAPE · bias</li><li>horizon 1 · 3 · 7일 따로 측정</li><li>실적 5 미만 제외 · 표본 10건 이상</li><li>2일 연속 초과 경보 9% · 13%</li></ul>
+          <div class="out"><b>결과물</b><code>prediction_metric</code> · 모니터링 탭</div></article>
+        <article class="card"><span class="no">06</span><h3>데이터 · 컨셉 드리프트 진단</h3>
+          <ul><li>데이터 품질 → 데이터 → 컨셉 순</li><li>PSI 0.1 주의 · 0.25 경고</li><li>잔차 분석 · 요일 · 품목군</li><li>조치 결정 (재학습 · 피처 · 데이터)</li></ul>
+          <div class="out"><b>결과물</b><code>drift_report</code> · 진단 화면</div></article>
+      </div>
+    </div>
+
+    <div class="lane l3">
+      <div class="lane-h">③ 재학습 <small>7회차</small></div>
+      <div class="cards">
+        <article class="card"><span class="no">07</span><h3>재학습 파이프라인과 버저닝</h3>
+          <ul><li>학습 · 홀드아웃 · 섀도 시간순 분리</li><li>최근 1개월 가중 학습</li><li>active / standby 버전</li><li>교체 판정 → 승인 · 롤백</li><li>APScheduler 새벽 배치</li></ul>
+          <div class="out"><b>결과물</b><code>compare_models</code> · <code>/model/activate</code></div></article>
+      </div>
+    </div>
+
+    <div class="lane l4">
+      <div class="lane-h">④ 업무 연계 <small>예측을 발주와 KPI 로 · 8~10회차</small></div>
+      <div class="cards">
+        <article class="card"><span class="no">08</span><h3>안전재고 · 재주문점 · EOQ</h3>
+          <ul><li>σ 는 예측 오차에서</li><li>등급별 서비스 수준 A 98 · B 95 · C 90%</li><li>MOQ · 팔레트 단위 올림</li><li>발주 제안 자동 생성</li></ul>
+          <div class="out"><b>결과물</b><code>order_suggestion</code> · 발주 제안 탭</div></article>
+        <article class="card"><span class="no">09</span><h3>발주 · 배차 연계와 시뮬레이션</h3>
+          <ul><li>제안 → 승인 → 발주서 → 입고</li><li>가용재고로 중복 발주 방지</li><li>예측 물량으로 차량 · 적재율</li><li>서비스 수준 시나리오 비교</li></ul>
+          <div class="out"><b>결과물</b><code>purchase_order</code> · 의사결정 표</div></article>
+        <article class="card"><span class="no">10</span><h3>KPI 관리와 운영 리포트</h3>
+          <ul><li>KPI 6종 · 목표 · 방향</li><li>센터장용 / 모델 담당자용</li><li>헤드라인은 미달 지표부터</li><li>주간 HTML 리포트</li></ul>
+          <div class="out"><b>결과물</b><code>kpi_daily</code> · KPI 탭 · 주간 리포트</div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 시스템 구조 + 운영 흐름 ===================== -->
+  <section class="mid">
+    <div class="panel">
+      <h2>시스템 구조 <span class="tag">1~4회차에 세우고 끝까지 씀</span></h2>
+      <div class="arch">
+        <div class="node"><h4>React 대시보드</h4><span class="port">:5173 · Vite</span>
+          <p>수요 예측 · 모니터링 · 발주 제안 · KPI 4개 탭</p><span class="s">useAsync · toRows</span></div>
+        <div class="arrow"><svg viewBox="0 0 34 40"><path d="M2 20H26"/><polygon points="26,15 33,20 26,25"/></svg></div>
+        <div class="node"><h4>Spring Boot 업무 서버</h4><span class="port">:8080 · /api</span>
+          <p>업무 규칙 · 폴백 · 화면용 응답 조립</p><span class="s">ForecastClient · Service</span></div>
+        <div class="arrow"><svg viewBox="0 0 34 40"><path d="M2 20H26"/><polygon points="26,15 33,20 26,25"/></svg></div>
+        <div class="node"><h4>FastAPI AI 서버</h4><span class="port">:8000 · /ai</span>
+          <p>예측 · 정확도 · 드리프트 · 재학습 · 재고 · KPI</p><span class="s">ridge_window v1 / v2</span></div>
+        <div class="arrow"><svg viewBox="0 0 34 40"><path d="M2 20H26"/><polygon points="26,15 33,20 26,25"/></svg></div>
+        <div class="node"><h4>DB · smartlogi.db</h4><span class="port">SQLite (PostgreSQL 호환)</span>
+          <div class="tables">
+            <span><i class="d1"></i>sales_actual</span><span><i class="d1"></i>prediction_result</span>
+            <span><i class="d1"></i>model_version</span><span><i class="d2"></i>prediction_metric</span>
+            <span><i class="d2"></i>alert</span><span><i class="d2"></i>drift_report</span>
+            <span><i class="d4"></i>order_suggestion</span><span><i class="d4"></i>purchase_order</span>
+            <span><i class="d4"></i>daily_stock</span><span><i class="d4"></i>kpi_daily</span>
+          </div></div>
+      </div>
+      <div class="rules">
+        <div class="rule"><b>예측은 배치가 기본</b>새벽에 전 품목을 미리 계산해 저장하고, 화면은 저장값을 읽는다.</div>
+        <div class="rule"><b>AI 서버가 죽어도 화면은 산다</b>타임아웃 · 재시도 뒤 DB 값으로 대체하고 source 로 알린다.</div>
+        <div class="rule"><b>판단은 사람이</b>모델 교체 · 발주 승인은 판정 결과를 보고 사람이 실행한다.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>매일 새벽 배치 <span class="tag">7회차 스케줄러로 자동화</span></h2>
+      <div class="batch">
+        <div class="step"><b>정확도 계산</b>어제 실적 ↔ 예측 매칭<br><span class="w">5회차</span></div>
+        <div class="step"><b>드리프트 점검</b>피처별 PSI<br><span class="w">6회차</span></div>
+        <div class="step"><b>예측 생성</b>active + standby(섀도)<br><span class="w">2 · 7회차</span></div>
+        <div class="step"><b>경보 판단</b>2일 연속 초과<br><span class="w">5회차</span></div>
+        <div class="step"><b>KPI 집계</b>6종 · 목표 대비<br><span class="w">10회차</span></div>
+      </div>
+      <h2 style="margin-top:4px">모델 운영 순환 <span class="tag">경보는 끝이 아니라 시작</span></h2>
+      <div class="loop">
+        <div style="--c:var(--p2)"><b>경보 수신</b>MAPE 2일 연속 임계 초과</div>
+        <div style="--c:var(--p2)"><b>원인 진단</b>품질 · 데이터 · 컨셉 드리프트 구분</div>
+        <div style="--c:var(--p3)"><b>재학습</b>v2 학습 → standby 등록 → 섀도 예측</div>
+        <div style="--c:var(--p3)"><b>교체 판정</b>같은 날 · 같은 horizon 비교 → 교체 또는 보류</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 공식 + 실측 ===================== -->
+  <section class="bottom">
+    <div class="panel">
+      <h2>꼭 기억할 기준과 공식</h2>
+      <div class="formulas">
+        <div class="fx" style="--c:var(--p2)"><span class="k">MAPE · 5회차</span><span class="e">mean(|A−P| ÷ A) × 100</span><span class="n">품목 크기와 무관한 비교. 실적 작을 때 튐 → WAPE 함께</span></div>
+        <div class="fx" style="--c:var(--p2)"><span class="k">bias · 5회차</span><span class="e">mean(A − P)</span><span class="n">+ 면 과소예측(결품 위험), − 면 과대예측</span></div>
+        <div class="fx" style="--c:var(--p2)"><span class="k">경보 · 5회차</span><span class="e">WARN 9% · CRIT 13%</span><span class="n">2일 연속 초과만. 임계값은 과거 분포로 다시 정한다</span></div>
+        <div class="fx" style="--c:var(--p2)"><span class="k">PSI · 6회차</span><span class="e">&lt;0.1 · 0.1~0.25 · ≥0.25</span><span class="n">안정 · 주의 · 경고. 정확도와 함께 본다</span></div>
+        <div class="fx" style="--c:var(--p3)"><span class="k">교체 기준 · 7회차</span><span class="e">≥14일 · ≥0.5%p 개선</span><span class="n">승률 · 품목군 악화 ≤1%p · bias 미악화</span></div>
+        <div class="fx" style="--c:var(--p4)"><span class="k">안전재고 · 8회차</span><span class="e">SS = Z × σ × √L</span><span class="n">95% → Z 1.65, 98% → Z 2.05</span></div>
+        <div class="fx" style="--c:var(--p4)"><span class="k">재주문점 · 8회차</span><span class="e">ROP = d × L + SS</span><span class="n">가용재고 ≤ ROP 이면 발주 제안</span></div>
+        <div class="fx" style="--c:var(--p4)"><span class="k">EOQ · 8회차</span><span class="e">√(2 × D × S ÷ H)</span><span class="n">→ MOQ 확인 → 팔레트(40) 올림</span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>실습 데이터 실측 결과 <span class="tag">2026-03 기준</span></h2>
+      <div class="real">
+        <div class="metric warn"><span class="v">13.5%</span><span class="l">1일 앞 MAPE (3/13~3/30) · 평일 11% 안팎</span></div>
+        <div class="metric warn"><span class="v">30.8%</span><span class="l">음료 MAPE · 주말 수요 ×2.1 컨셉 드리프트</span></div>
+        <div class="metric warn"><span class="v">PSI 2.68</span><span class="l">음료 qty (3/31) · 경고 수준</span></div>
+        <div class="metric"><span class="v">교체 보류</span><span class="l">v2 섀도 비교 +0.26%p · bias 증가</span></div>
+        <div class="metric good"><span class="v">5 / 6</span><span class="l">KPI 달성 (3/31) · 예측 MAPE 14.35% 만 미달</span></div>
+        <div class="metric good"><span class="v">−1.2%</span><span class="l">같은 기간 비교 안전재고 감소</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot"><span>부산IT교육센터 · 라이스리치AI</span><span>실습 소스 7A_03 ~ 7A_10 · 교안 7A-01 ~ 7A-10</span></div>
+</div>
+</div>
+
+</body></html>

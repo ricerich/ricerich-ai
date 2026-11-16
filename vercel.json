@@ -19,6 +19,11 @@
       "source": "/deep_learning_short",
       "destination": "/deep_learning_short/",
       "permanent": true
+    },
+    {
+      "source": "/logistic",
+      "destination": "/logistic/",
+      "permanent": true
     }
   ],
   "rewrites": [
