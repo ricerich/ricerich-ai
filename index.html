@@ -85,6 +85,12 @@
   .thumb img{width:100%;height:100%;object-fit:cover;display:block}
   .thumb:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.14)}
   @media (max-width:640px){.thumb{width:140px}}
+  .course-subs{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:8px 18px;margin-top:12px}
+  .course-subs li{padding-left:12px;border-left:3px solid var(--accent-soft)}
+  .course-subs b{display:block;font-size:.92rem}
+  .course-subs i{font-style:normal;font-weight:500;color:var(--muted);font-size:.8rem;margin-left:4px}
+  .course-subs span{display:block;color:var(--muted);font-size:.85rem;line-height:1.55}
+  @media (max-width:640px){.course-subs{grid-template-columns:1fr}}
 
   .contact{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
   @media (max-width:760px){.contact{grid-template-columns:1fr}}
@@ -201,7 +207,13 @@
             <a class="thumb" href="/logistic_visual/" target="_blank" rel="noopener noreferrer"><img src="/img/thumb_logistic_visual.jpg" alt="설비 계산 시각화 화면 미리보기" width="160" height="100" loading="lazy"></a>
             <a class="thumb" href="/logistic_quiz/" target="_blank" rel="noopener noreferrer"><img src="/img/thumb_logistic_quiz.jpg" alt="용어 퀴즈 화면 미리보기" width="160" height="100" loading="lazy"></a>
           </div></div><span class="tag">720시간</span></div>
-        <div class="course"><div><h3>AI·데이터 기반 해양·수산 서비스 개발</h3><p>해양수산 데이터 수집·구축, CNN·RNN·RAG 모델, Spring Boot·FastAPI·React 서비스 구현 — 어장 위치 추천 프로젝트</p></div><span class="tag">720시간</span></div>
+        <div class="course"><div><h3>AI·데이터 기반 해양·수산 서비스 개발</h3><p>해양수산 공공 데이터를 직접 모아 저장하고, RAG와 딥러닝으로 현장 서비스를 만드는 과정입니다. 담당 4과목 145시간 동안 국립수산과학원·국립해양조사원·기상청의 실제 API 응답으로 수집부터 서비스 구현, 설계 발표까지 진행합니다.</p>
+          <ul class="course-subs">
+            <li><b>빅데이터 수집·저장 <i>40h</i></b><span>기관 3곳 OpenAPI 자동 수집 · MariaDB 데이터 마트 · Spring Boot 저장 API · Parquet·DuckDB</span></li>
+            <li><b>AI 서비스 데이터 구축 및 RAG 활용 <i>30h</i></b><span>특보·법령 문서 코퍼스 · 임베딩·BM25 검색 · LLM 3종 · FastAPI·React 현장 어시스턴트</span></li>
+            <li><b>인공지능 서비스 구현 <i>40h</i></b><span>LSTM·1D-CNN 24시간 뒤 수온 예측 · FastAPI 모델 서빙 · React 예측 화면 · Spring 예측 기록</span></li>
+            <li><b>프로젝트 — 어장 위치 추천 <i>35h</i></b><span>위판·관측·낚시지수·해상예보 수집 → 통합 테이블 → 학습셋 → 순위 모델 → 추천 API 설계</span></li>
+          </ul></div><span class="tag">720시간</span></div>
         <div class="course"><div><h3>산업 특화 AI</h3><p>스마트팩토리 등 제조 도메인 AI 활용</p></div><span class="tag">맞춤형</span></div>
       </div>
     </div>
