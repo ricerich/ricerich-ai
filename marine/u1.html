@@ -1,0 +1,124 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>단원 1 빅데이터 수집 · 저장</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--a:#0369A1;--s:#E0F0FA;--ink:#0F1B2D;--mute:#5B6778;--line:#D9E0E8;--bg:#F6F8FA}
+body{width:1600px;height:1130px;background:var(--bg);font-family:'Pretendard','Malgun Gothic','Apple SD Gothic Neo','Noto Sans CJK KR',sans-serif;color:var(--ink);
+ padding:26px 30px 22px;display:flex;flex-direction:column;gap:12px;overflow:hidden;letter-spacing:-.01em}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.badge{display:inline-block;background:var(--a);color:#fff;font-weight:700;font-size:14px;padding:4px 10px;border-radius:4px;margin-right:10px;vertical-align:5px}
+h1{font-size:31px;font-weight:800;letter-spacing:-.025em}
+.sub{font-size:14px;color:var(--mute);margin-top:6px;font-weight:500}
+.goal{max-width:700px;text-align:right}
+.goal b{display:block;font-size:11px;letter-spacing:.08em;color:var(--a);font-weight:700;margin-bottom:3px}
+.goal p{font-size:15px;font-weight:600;line-height:1.4}
+.chips{display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-end;margin-top:7px}
+.chip{font-size:11px;font-weight:600;padding:2px 7px;border:1px solid var(--line);background:#fff;border-radius:10px;color:#334155}
+/* timeline */
+.tl{display:flex;height:30px;border-radius:5px;overflow:hidden;gap:2px}
+.tl div{display:flex;align-items:center;justify-content:center;gap:6px;color:#fff;font-size:11.5px;font-weight:700;white-space:nowrap;overflow:hidden}
+.tl i{font-style:normal;font-weight:500;opacity:.85}
+/* phases */
+.ph{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:14px}
+.ph>div{border-top:3px solid var(--a);padding-top:4px;font-size:13px;font-weight:700;color:var(--a)}
+.ph span{color:var(--mute);font-weight:500;margin-left:6px}
+.ph>div.alt{border-top-color:var(--ink);color:var(--ink)}
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:14px;flex:1;min-height:0}
+.card{flex:1;min-width:0;background:#fff;border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;position:relative}
+.card+.card::before{content:'';position:absolute;left:-12px;top:44px;border:5px solid transparent;border-left:8px solid #94A3B8}
+.ch{padding:9px 11px 8px;border-bottom:1px solid var(--line)}
+.code{display:flex;justify-content:space-between;align-items:baseline}
+.code b{font-size:13px;font-weight:800;color:var(--a)}
+.code span{font-size:11px;color:var(--mute);font-weight:600}
+.ct{font-size:14.5px;font-weight:700;line-height:1.3;margin-top:4px;min-height:38px}
+.hrs{display:flex;gap:2px;margin-top:6px}
+.hrs u{width:9px;height:5px;background:var(--a);border-radius:1px;text-decoration:none}
+.cb{padding:10px 11px;flex:1;display:flex;flex-direction:column;gap:10px}
+.lbl{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--mute);margin-bottom:3px}
+ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+li{font-size:12.8px;line-height:1.45;padding-left:10px;position:relative;color:#1E293B}
+li::before{content:'';position:absolute;left:0;top:7px;width:4px;height:4px;border-radius:50%;background:var(--a)}
+.lab{background:#F1F5F9;border-radius:5px;padding:6px 8px}
+.lab code{font-family:Consolas,'D2Coding','DejaVu Sans Mono',monospace;font-size:10.8px;font-weight:600;color:var(--ink);display:block;word-break:break-all}
+.lab small{font-size:10.8px;color:var(--mute);display:block;margin-top:2px;line-height:1.35;word-break:break-all}
+.num{background:var(--s);border-left:3px solid var(--a);border-radius:0 5px 5px 0;padding:7px 8px;font-size:12.4px;font-weight:600;line-height:1.42}
+.fw{display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:12px;line-height:1.35}
+.fw b{color:var(--a);font-weight:700;white-space:nowrap}
+.fw span{color:#1E293B}
+.out{margin-top:auto;font-size:11.6px;line-height:1.42;color:#334155;border-top:1px dashed var(--line);padding-top:7px}
+/* bottom */
+.bt{display:flex;gap:14px;height:262px}
+.fl{flex:1.75;background:#fff;border:1px solid var(--line);border-radius:8px;padding:11px 14px;display:flex;flex-direction:column}
+.sd{flex:1;background:var(--ink);color:#fff;border-radius:8px;padding:12px 16px;display:flex;flex-direction:column}
+.bh{font-size:14px;font-weight:800;margin-bottom:9px}
+.sd .bh{color:#fff}
+.cols{display:flex;flex:1;align-items:stretch;gap:0}
+.col{flex:1;display:flex;flex-direction:column;min-width:0}
+.col>b{font-size:10.5px;font-weight:700;letter-spacing:.05em;color:var(--a);margin-bottom:5px;text-align:center}
+.stack{flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.node{border:1.5px solid var(--a);border-radius:6px;padding:6px 8px;background:#fff;text-align:center}
+.node.k{background:var(--s)}
+.node strong{display:block;font-size:12.3px;font-weight:700;line-height:1.25}
+.node em{display:block;font-style:normal;font-size:10.8px;color:var(--mute);line-height:1.3;margin-top:2px}
+.arr{width:26px;display:flex;align-items:center;justify-content:center;padding-top:16px}
+.arr::before{content:'';width:15px;height:2px;background:#64748B;box-shadow:none;position:relative}
+.arr span{width:0;height:0;border:5px solid transparent;border-left:7px solid #64748B;margin-left:-1px}
+.pl{display:flex;flex-direction:column;gap:9px;flex:1;justify-content:center}
+.pl div b{display:block;font-size:13.5px;font-weight:700}
+.pl div span{display:block;font-size:12px;color:#B8C4D4;line-height:1.4;margin-top:1px}
+.pl div{padding-left:11px;border-left:3px solid var(--a)}
+.tb{width:100%;border-collapse:collapse;font-size:12px}
+.tb td{padding:6px 0;border-bottom:1px solid #2A3A52;vertical-align:top;line-height:1.4}
+.tb td:first-child{color:#B8C4D4;width:44%;padding-right:10px}
+.tb td:last-child{font-weight:600}
+.bars{display:flex;flex-direction:column;gap:7px;flex:1;justify-content:center}
+.bar{display:flex;align-items:center;gap:8px;font-size:12px}
+.bar>span:first-child{width:132px;color:#B8C4D4;text-align:right;flex:none}
+.bar .t{flex:1;height:15px;background:#22324A;border-radius:3px;position:relative}
+.bar .t i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:#64748B}
+.bar.hi .t i{background:var(--a)}
+.bar.hi>span:first-child{color:#fff;font-weight:700}
+.bar b{width:40px;font-weight:700;font-variant-numeric:tabular-nums}
+.note{font-size:11.5px;color:#B8C4D4;margin-top:8px;line-height:1.4}
+.ft{display:flex;justify-content:space-between;font-size:10.5px;color:var(--mute)}
+html{background:#E5E9EF}body{margin:0 auto;box-shadow:0 2px 16px rgba(15,27,45,.12)}@page{size:1600px 1130px;margin:0}@media print{html{background:none}body{box-shadow:none;zoom:1!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style></head><body style="--n:7">
+<div class="hd"><div><h1><span class="badge">단원 1</span>빅데이터 수집 · 저장</h1><div class="sub">40시간 · 7회차 · 2026-10-21 ~ 11-03 · 교안 191장 · 실습 프로젝트 7개</div></div>
+<div class="goal"><b>이 과목이 끝나면</b><p>기관 3곳의 해양 데이터를 자동으로 모아, 언제든 다시 만들 수 있는 데이터 마트로</p><div class="chips"><span class="chip">Python</span><span class="chip">requests</span><span class="chip">pandas</span><span class="chip">APScheduler</span><span class="chip">MariaDB</span><span class="chip">Spring Boot 4.1 · JPA</span><span class="chip">Parquet</span><span class="chip">DuckDB</span></div></div></div>
+<div class="tl"><div style="flex:3;background:var(--a)" title="U1-01">U1-01 <i>3h</i></div><div style="flex:8;background:var(--a)" title="U1-02">U1-02 <i>8h</i></div><div style="flex:8;background:var(--a)" title="U1-03">U1-03 <i>8h</i></div><div style="flex:1;background:var(--a)" title="U1-04"><i>1h</i></div><div style="flex:7;background:var(--ink)" title="U1-05">U1-05 <i>7h</i></div><div style="flex:8;background:var(--ink)" title="U1-06">U1-06 <i>8h</i></div><div style="flex:5;background:var(--ink)" title="U1-07">U1-07 <i>5h</i></div></div><div class="ph"><div class="" style="grid-column:span 4">수집<span>원천 → 정제</span></div><div class="alt" style="grid-column:span 3">저장<span>서비스 저장소 → 마트 운영</span></div></div><div class="cards"><div class="card"><div class="ch">
+<div class="code"><b>U1-01</b><span>10/21 · 3시간 · 24장</span></div>
+<div class="ct">해양수산 데이터와 첫 OpenAPI 호출</div><div class="hrs"><u></u><u></u><u></u></div></div>
+<div class="cb"><div><div class="lbl">수업 흐름</div><div class="fw"><b>6교시</b><span>데이터 지도·수온</span><b>7교시</b><span>OpenAPI·첫 호출</span><b>8교시</b><span>파싱·DataFrame·미션</span></div></div><div><div class="lbl">배우는 것</div><ul><li>해양 데이터 지도 — 기관별 데이터 · 5가지 모양</li><li>OpenAPI = 주소 + 서비스 ID + 인증키</li><li>JSON · XML 파싱, resultCode 확인</li><li>표층 · 정상값만 남기기 (rpr_yn)</li></ul></div>
+<div class="lab"><div class="lbl" style="margin-bottom:1px">실습</div><code>u1_s01_first_api</code><small>nifs_client.py · step1~5</small></div>
+<div class="num">기준값 — 고수온주의보 28℃ · 적조주의보 100 · 경보 1,000 개체/mL</div><div class="out">미션: 부산·경남 연안 28℃ 고수온 체크 → busan_now.csv</div></div></div><div class="card"><div class="ch">
+<div class="code"><b>U1-02</b><span>10/26 · 8시간 · 31장</span></div>
+<div class="ct">연안정지관측 30일 반복 수집</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div></div>
+<div class="cb"><div><div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>기간 데이터 받기</span><b>3~4교시</b><span>나눠서 반복 수집</span><b>5~6교시</b><span>실패에 강한 수집기</span><b>7~8교시</b><span>합치기·좌표·품질</span></div></div><div><div class="lbl">배우는 것</div><ul><li>sdate · edate 기간 요청, date_chunks 로 나눠 받기</li><li>원본은 raw/ 에 남기고 받은 기간은 건너뛰기</li><li>일시적 실패만 지수 백오프 재시도 + logging</li><li>좌표 결합 · 품질 3종(결측 · 범위 · 급변) flag</li></ul></div>
+<div class="lab"><div class="lbl" style="margin-bottom:1px">실습</div><code>u1_s02_period_collector</code><small>call() · date_chunks()</small></div>
+<div class="num">재시도는 일시적 실패만 2초 · 4초 — 의심값은 지우지 않고 flag</div><div class="out">미션: 해역별 30일 수온 요약 → coo_30days.csv</div></div></div><div class="card"><div class="ch">
+<div class="code"><b>U1-03</b><span>10/27 · 8시간 · 34장</span></div>
+<div class="ct">여러 기관 수집 · 교차 검증 · 자동화</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div></div>
+<div class="cb"><div><div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>문장 데이터 수집</span><b>3~4교시</b><span>형식이 다른 기관들</span><b>5~6교시</b><span>두 기관 교차 검증</span><b>7~8교시</b><span>스케줄러 자동화</span></div></div><div><div class="lbl">배우는 것</div><ul><li>적조 · 해파리 특보 목록 → 상세 → JSONL 문서</li><li>기상청 텍스트 · 공공데이터포털 래퍼를 모두 표로</li><li>하버사인 거리로 짝짓고 하루 평균으로 교차 검증</li><li>APScheduler 주기 수집 + safe()</li></ul></div>
+<div class="lab"><div class="lbl" style="margin-bottom:1px">실습</div><code>u1_s03_multi_source</code><small>collectors.py · step6_scheduler</small></div>
+<div class="num">한 번에 — 부이 96행 · 조위관측소 수온 672행 · 교차 검증 3쌍</div><div class="out">미션: cross_check() 를 매일 12:00 cron 으로 기록</div></div></div><div class="card"><div class="ch">
+<div class="code"><b>U1-04</b><span>10/28 1교시 · 1시간 · 9장</span></div>
+<div class="ct">수집 파이프라인 정리</div><div class="hrs"><u></u></div></div>
+<div class="cb"><div><div class="lbl">수업 흐름</div><div class="fw"><b>1교시</b><span>패키지 · JOBS · CLI · 실습</span></div></div><div><div class="lbl">배우는 것</div><ul><li>step 파일 15개 → marine_collector 패키지</li><li>JOBS 목록 하나를 CLI · run all · 스케줄러가 공유</li><li>clean 표 열 이름 통일 = 저장 단원과의 약속</li><li>실패는 로그 + 종료 코드 1</li></ul></div>
+<div class="lab"><div class="lbl" style="margin-bottom:1px">실습</div><code>u1_s04_pipeline</code><small>python -m marine_collector run all</small></div>
+<div class="num">run all — 작업 7개 · 실패 없음 / 키 없으면 실패 목록 + 종료 코드 1</div><div class="out">결과: 작업 7개 · 설정 한 벌 · 수동 실행 = 스케줄 실행</div></div></div><div class="card"><div class="ch">
+<div class="code"><b>U1-05</b><span>10/28 2~8교시 · 7시간 · 32장</span></div>
+<div class="ct">해양 데이터 저장 설계와 MariaDB 적재</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div></div>
+<div class="cb"><div><div class="lbl">수업 흐름</div><div class="fw"><b>2~3교시</b><span>저장 설계 · ERD</span><b>4~5교시</b><span>MariaDB DDL</span><b>6~7교시</b><span>파이썬 적재</span><b>8교시</b><span>검증 · 미션</span></div></div><div><div class="lbl">배우는 것</div><ul><li>원천 · 정제 · 서비스 3계층</li><li>ERD 7테이블 — source · station · observation · marine_weather · alert_doc …</li><li>DECIMAL · DATETIME · ENUM · JSON 검사 · utf8mb4</li><li>ON DUPLICATE KEY UPDATE 멱등 적재 · NaN ≠ NULL</li></ul></div>
+<div class="lab"><div class="lbl" style="margin-bottom:1px">실습</div><code>u1_s05_storage</code><small>DDL · load_*() · load_log</small></div>
+<div class="num">(출처, 코드) 자연키 + station_id 대리키 → 같은 자료 두 번 넣어도 한 줄</div><div class="out">미션: 유의파고 1.5m↑ 시간 수 + 그날 최대 풍속 SQL</div></div></div><div class="card"><div class="ch">
+<div class="code"><b>U1-06</b><span>11/02 · 8시간 · 31장</span></div>
+<div class="ct">Spring Boot 저장 서비스 · Parquet · DuckDB</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div></div>
+<div class="cb"><div><div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>프로젝트 · 엔티티</span><b>3~4교시</b><span>조회 API</span><b>5교시</b><span>적재 API</span><b>6~8교시</b><span>Parquet · DuckDB</span></div></div><div><div class="lbl">배우는 것</div><ul><li>Boot 4.1 · Gradle · Java 21 · ddl-auto=validate</li><li>조회 API 6 (쿼리 메서드 · JPQL+DTO) + 적재 API 1 (upsert)</li><li>ProblemDetail · @WebMvcTest · useAffectedRows</li><li>MariaDB → Parquet 레이크 → DuckDB 로 파일에 SQL</li></ul></div>
+<div class="lab"><div class="lbl" style="margin-bottom:1px">실습</div><code>u1_s06_spring_duckdb</code><small>marine-api · lake/</small></div>
+<div class="num">105만 행: CSV 37.8MB → Parquet 3.7MB, 엔진까지 바꾸면 10배↑ 빠름</div><div class="out">미션: DuckDB 윈도 함수로 학습용 특징 표 (전날 · 변화 · 7일 평균)</div></div></div><div class="card"><div class="ch">
+<div class="code"><b>U1-07</b><span>11/03 1~5교시 · 5시간 · 30장</span></div>
+<div class="ct">데이터 마트 완성과 운영</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u></div></div>
+<div class="cb"><div><div class="lbl">수업 흐름</div><div class="fw"><b>1교시</b><span>뷰</span><b>2교시</b><span>집계 테이블</span><b>3교시</b><span>보간 정책</span><b>4교시</b><span>데이터 사전</span><b>5교시</b><span>백업 · 점검</span></div></div><div><div class="lbl">배우는 것</div><ul><li>뷰 5개 — v_obs_ok · v_daily_station · v_latest_ok · v_freshness …</li><li>mart_daily_temp 집계 테이블 upsert 갱신</li><li>보간 정책: 짧은 빈칸만 (interpolate(limit) 함정)</li><li>데이터 사전 · mariadb-dump 백업 · 복원 · 점검 리포트</li></ul></div>
+<div class="lab"><div class="lbl" style="margin-bottom:1px">실습</div><code>u1_s07_mart</code><small>fill_short_gaps() · 운영 JOBS</small></div>
+<div class="num">마트 완성 — 테이블 8 · 뷰 5 · 데이터 사전 · 백업 → 복원 → 비교</div><div class="out">운영 일정: 02:10 백업 · 08:30 점검 · 12:30 마트 갱신</div></div></div></div>
+<div class="bt"><div class="fl"><div class="bh">완성된 구조 — 단원 1 의 산출물</div><div class="cols"><div class="col"><b>출처 3곳</b><div class="stack"><div class="node"><strong>국립수산과학원</strong><em>실시간 수온 · 연안정지 · 적조 · 해파리</em></div><div class="node"><strong>국립해양조사원</strong><em>조위관측소 수온 (공공데이터포털)</em></div><div class="node"><strong>기상청 API허브</strong><em>해양기상부이</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>수집</b><div class="stack"><div class="node k"><strong>marine_collector</strong><em>작업 7개 · CLI · 스케줄 · 로그</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>원천 · 정제</b><div class="stack"><div class="node"><strong>data/raw</strong><em>기간별 원본 그대로</em></div><div class="node"><strong>data/clean</strong><em>열 이름 통일 + 품질 flag</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>서비스 저장소</b><div class="stack"><div class="node k"><strong>MariaDB marine_mart</strong><em>테이블 8 · 뷰 5 · upsert · load_log</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>쓰는 곳</b><div class="stack"><div class="node"><strong>Spring Boot marine-api :8080</strong><em>조회 6 · 적재 1</em></div><div class="node"><strong>Parquet + DuckDB</strong><em>분석 · 학습용 특징 표</em></div><div class="node"><strong>단원 2 · 3</strong><em>RAG 특보 문서 · 실시간 수온 · LSTM</em></div></div></div></div></div><div class="sd"><div class="bh">40시간 동안 지킨 원칙</div><div class="pl"><div><b>원본은 고치지 않는다</b><span>잘못되면 위층을 지우고 다시 만든다</span></div><div><b>다시 넣어도 안전하게</b><span>자연키 + ON DUPLICATE KEY UPDATE</span></div><div><b>의심값은 지우지 않고 표시</b><span>결측 · 범위 · 급변 → flag</span></div><div><b>키는 코드 밖에</b><span>.env 환경 변수 · 기관 서비스마다 키</span></div></div></div></div>
+<div class="ft"><span>AI·데이터 기반 해양·수산 서비스 개발자 과정 · 라이스리치AI · 부산IT교육센터</span><span>회차 막대 폭 = 수업 시간 · 숫자는 교안 실습의 실제 실행 결과</span></div>
+<script>function fit(){document.body.style.zoom=Math.min(1,(innerWidth-16)/1600)}addEventListener("resize",fit);fit()</script></body></html>

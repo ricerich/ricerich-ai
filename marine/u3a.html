@@ -1,0 +1,119 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>단원 3 · A 인공지능 서비스 구현 — 수온 예측</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--a:#0F766E;--s:#DDF3EF;--ink:#0F1B2D;--mute:#5B6778;--line:#D9E0E8;--bg:#F6F8FA}
+body{width:1600px;height:1130px;background:var(--bg);font-family:'Pretendard','Malgun Gothic','Apple SD Gothic Neo','Noto Sans CJK KR',sans-serif;color:var(--ink);
+ padding:26px 30px 22px;display:flex;flex-direction:column;gap:12px;overflow:hidden;letter-spacing:-.01em}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.badge{display:inline-block;background:var(--a);color:#fff;font-weight:700;font-size:14px;padding:4px 10px;border-radius:4px;margin-right:10px;vertical-align:5px}
+h1{font-size:31px;font-weight:800;letter-spacing:-.025em}
+.sub{font-size:14px;color:var(--mute);margin-top:6px;font-weight:500}
+.goal{max-width:700px;text-align:right}
+.goal b{display:block;font-size:11px;letter-spacing:.08em;color:var(--a);font-weight:700;margin-bottom:3px}
+.goal p{font-size:15px;font-weight:600;line-height:1.4}
+.chips{display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-end;margin-top:7px}
+.chip{font-size:11px;font-weight:600;padding:2px 7px;border:1px solid var(--line);background:#fff;border-radius:10px;color:#334155}
+/* timeline */
+.tl{display:flex;height:30px;border-radius:5px;overflow:hidden;gap:2px}
+.tl div{display:flex;align-items:center;justify-content:center;gap:6px;color:#fff;font-size:11.5px;font-weight:700;white-space:nowrap;overflow:hidden}
+.tl i{font-style:normal;font-weight:500;opacity:.85}
+/* phases */
+.ph{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:14px}
+.ph>div{border-top:3px solid var(--a);padding-top:4px;font-size:13px;font-weight:700;color:var(--a)}
+.ph span{color:var(--mute);font-weight:500;margin-left:6px}
+.ph>div.alt{border-top-color:var(--ink);color:var(--ink)}
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:14px;flex:1;min-height:0}
+.card{flex:1;min-width:0;background:#fff;border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;position:relative}
+.card+.card::before{content:'';position:absolute;left:-12px;top:44px;border:5px solid transparent;border-left:8px solid #94A3B8}
+.ch{padding:9px 11px 8px;border-bottom:1px solid var(--line)}
+.code{display:flex;justify-content:space-between;align-items:baseline}
+.code b{font-size:13px;font-weight:800;color:var(--a)}
+.code span{font-size:11px;color:var(--mute);font-weight:600}
+.ct{font-size:14.5px;font-weight:700;line-height:1.3;margin-top:4px;min-height:38px}
+.hrs{display:flex;gap:2px;margin-top:6px}
+.hrs u{width:9px;height:5px;background:var(--a);border-radius:1px;text-decoration:none}
+.cb{padding:10px 11px;flex:1;display:flex;flex-direction:column;gap:10px}
+.lbl{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--mute);margin-bottom:3px}
+ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+li{font-size:12.8px;line-height:1.45;padding-left:10px;position:relative;color:#1E293B}
+li::before{content:'';position:absolute;left:0;top:7px;width:4px;height:4px;border-radius:50%;background:var(--a)}
+.lab{background:#F1F5F9;border-radius:5px;padding:6px 8px}
+.lab code{font-family:Consolas,'D2Coding','DejaVu Sans Mono',monospace;font-size:10.8px;font-weight:600;color:var(--ink);display:block;word-break:break-all}
+.lab small{font-size:10.8px;color:var(--mute);display:block;margin-top:2px;line-height:1.35;word-break:break-all}
+.num{background:var(--s);border-left:3px solid var(--a);border-radius:0 5px 5px 0;padding:7px 8px;font-size:12.4px;font-weight:600;line-height:1.42}
+.fw{display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:12px;line-height:1.35}
+.fw b{color:var(--a);font-weight:700;white-space:nowrap}
+.fw span{color:#1E293B}
+.out{margin-top:auto;font-size:11.6px;line-height:1.42;color:#334155;border-top:1px dashed var(--line);padding-top:7px}
+/* bottom */
+.bt{display:flex;gap:14px;height:262px}
+.fl{flex:1.75;background:#fff;border:1px solid var(--line);border-radius:8px;padding:11px 14px;display:flex;flex-direction:column}
+.sd{flex:1;background:var(--ink);color:#fff;border-radius:8px;padding:12px 16px;display:flex;flex-direction:column}
+.bh{font-size:14px;font-weight:800;margin-bottom:9px}
+.sd .bh{color:#fff}
+.cols{display:flex;flex:1;align-items:stretch;gap:0}
+.col{flex:1;display:flex;flex-direction:column;min-width:0}
+.col>b{font-size:10.5px;font-weight:700;letter-spacing:.05em;color:var(--a);margin-bottom:5px;text-align:center}
+.stack{flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.node{border:1.5px solid var(--a);border-radius:6px;padding:6px 8px;background:#fff;text-align:center}
+.node.k{background:var(--s)}
+.node strong{display:block;font-size:12.3px;font-weight:700;line-height:1.25}
+.node em{display:block;font-style:normal;font-size:10.8px;color:var(--mute);line-height:1.3;margin-top:2px}
+.arr{width:26px;display:flex;align-items:center;justify-content:center;padding-top:16px}
+.arr::before{content:'';width:15px;height:2px;background:#64748B;box-shadow:none;position:relative}
+.arr span{width:0;height:0;border:5px solid transparent;border-left:7px solid #64748B;margin-left:-1px}
+.pl{display:flex;flex-direction:column;gap:9px;flex:1;justify-content:center}
+.pl div b{display:block;font-size:13.5px;font-weight:700}
+.pl div span{display:block;font-size:12px;color:#B8C4D4;line-height:1.4;margin-top:1px}
+.pl div{padding-left:11px;border-left:3px solid var(--a)}
+.tb{width:100%;border-collapse:collapse;font-size:12px}
+.tb td{padding:6px 0;border-bottom:1px solid #2A3A52;vertical-align:top;line-height:1.4}
+.tb td:first-child{color:#B8C4D4;width:44%;padding-right:10px}
+.tb td:last-child{font-weight:600}
+.bars{display:flex;flex-direction:column;gap:7px;flex:1;justify-content:center}
+.bar{display:flex;align-items:center;gap:8px;font-size:12px}
+.bar>span:first-child{width:132px;color:#B8C4D4;text-align:right;flex:none}
+.bar .t{flex:1;height:15px;background:#22324A;border-radius:3px;position:relative}
+.bar .t i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:#64748B}
+.bar.hi .t i{background:var(--a)}
+.bar.hi>span:first-child{color:#fff;font-weight:700}
+.bar b{width:40px;font-weight:700;font-variant-numeric:tabular-nums}
+.note{font-size:11.5px;color:#B8C4D4;margin-top:8px;line-height:1.4}
+.ft{display:flex;justify-content:space-between;font-size:10.5px;color:var(--mute)}
+html{background:#E5E9EF}body{margin:0 auto;box-shadow:0 2px 16px rgba(15,27,45,.12)}@page{size:1600px 1130px;margin:0}@media print{html{background:none}body{box-shadow:none;zoom:1!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style></head><body style="--n:6">
+<div class="hd"><div><h1><span class="badge">단원 3 · A</span>인공지능 서비스 구현 — 수온 예측</h1><div class="sub">40시간 · 6회차 · 2026-10-30 ~ 11-16 · 교안 138장 · 실습 u3_ai · u3_service</div></div>
+<div class="goal"><b>이 과목이 끝나면</b><p>가덕도의 지난 72시간 관측으로 24시간 뒤 수온을 예측하고, 화면에 보여 주고, 실제 성적까지 기록하는 서비스</p><div class="chips"><span class="chip">국립해양조사원 dtRecent 1시간</span><span class="chip">4곳 × 652일</span><span class="chip">pandas</span><span class="chip">PyTorch</span><span class="chip">LSTM</span><span class="chip">1D-CNN</span><span class="chip">torch.export</span><span class="chip">FastAPI · pytest</span><span class="chip">React 19 + SVG</span><span class="chip">Spring Boot 4.1</span></div></div></div>
+<div class="tl"><div style="flex:2;background:var(--a)" title="U3-A1">U3-A1 <i>2h</i></div><div style="flex:8;background:var(--a)" title="U3-A2">U3-A2 <i>8h</i></div><div style="flex:8;background:var(--ink)" title="U3-A3">U3-A3 <i>8h</i></div><div style="flex:8;background:var(--ink)" title="U3-A4">U3-A4 <i>8h</i></div><div style="flex:8;background:var(--a)" title="U3-A5">U3-A5 <i>8h</i></div><div style="flex:6;background:var(--a)" title="U3-A6">U3-A6 <i>6h</i></div></div><div class="ph"><div class="" style="grid-column:span 2">데이터 · 문제<span>품질 → 창 → 기준선</span></div><div class="alt" style="grid-column:span 2">모델<span>LSTM ↔ 1D-CNN · 경보</span></div><div class="" style="grid-column:span 2">서비스<span>서빙 → 화면 · 기록</span></div></div><div class="cards"><div class="card"><div class="ch">
+<div class="code"><b>U3-A1</b><span>10/30 7~8교시 · 2시간 · 25장</span></div>
+<div class="ct">시간별 수온 데이터로 예측 문제 세우기</div><div class="hrs"><u></u><u></u></div></div>
+<div class="cb"><div><div class="lbl">수업 흐름</div><div class="fw"><b>7교시 전반</b><span>단원 3 지도 · 자료</span><b>7교시 후반</b><span>품질 점검 · 정리</span><b>8교시 전반</b><span>수온의 리듬</span><b>8교시 후반</b><span>문제 정의 · 미션</span></div></div><div><div class="lbl">배우는 것</div><ul><li>통영 · 부산 · 가덕도 · 포항 1시간 관측 읽기</li><li>reindex 로 빠진 시각 · 고장 0.0 · 가덕도 &#x27;오전 8시&#x27; 튐</li><li>짧은 빈칸만 채움 · 계절 · 하루 주기 · 기온 시차</li><li>문제: 지난 72시간 → 24시간 뒤 · 시간순 분할</li></ul></div>
+<div class="lab"><div class="lbl" style="margin-bottom:1px">실습</div><code>u3_ai</code><small>a1_explore · a1_mission_report</small></div>
+<div class="num">학습 관측소 = 가덕도 (결측 0.29% · 28℃↑ 351시간)</div><div class="out">미션: 4곳 점검표로 관측소 고르기</div></div></div><div class="card"><div class="ch">
+<div class="code"><b>U3-A2</b><span>11/05 · 8시간 · 25장</span></div>
+<div class="ct">전처리 · 슬라이딩 윈도우 · 기준선 · Dataset</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div></div>
+<div class="cb"><div><div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>특성 만들기</span><b>3~4교시</b><span>나누기 · 정규화 · 누수</span><b>5~6교시</b><span>윈도우 · 기준선</span><b>7~8교시</b><span>Dataset · 학습 루프 · 미션</span></div></div><div><div class="lbl">배우는 것</div><ul><li>풍향 → 바람 벡터(u, v) · 시각 · 날짜 sin/cos · 특성 12개</li><li>시간순 3구간 · 학습 구간으로만 정규화 · 누수 실험</li><li>슬라이딩 윈도우 72h × 12특성 → 창 15,553개</li><li>기준선 3종 · Dataset · DataLoader · 학습 루프 4줄</li></ul></div>
+<div class="lab"><div class="lbl" style="margin-bottom:1px">실습</div><code>u3_ai</code><small>marine_ts/prepare.py · baselines.py</small></div>
+<div class="num">시험 MAE — 그대로 0.481 · 하루 평균 0.596 · 선형 0.457(경보 놓침 107)</div><div class="out">결론: &#x27;지금 그대로&#x27;가 넘기 어려운 점수</div></div></div><div class="card"><div class="ch">
+<div class="code"><b>U3-A3</b><span>11/06 · 8시간 · 18장</span></div>
+<div class="ct">LSTM 수온 예측 — 기억하는 신경망</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div></div>
+<div class="cb"><div><div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>RNN · LSTM 모양</span><b>3~4교시</b><span>단변량 · 다변량</span><b>5~6교시</b><span>씨앗 · 24시간 · 저장</span><b>7~8교시</b><span>설정 고르기 미션</span></div></div><div><div class="lbl">배우는 것</div><ul><li>RNN · LSTM 의 (B, T, F) 모양 · LSTMForecaster</li><li>단변량 → 다변량 · 조기 종료 fit() · set_seed</li><li>앞으로 24시간 전부를 한 번에 예측</li><li>모델 + .json(정규화 · 특성 순서) 함께 저장</li></ul></div>
+<div class="lab"><div class="lbl" style="margin-bottom:1px">실습</div><code>u3_ai</code><small>models.py · train.py · lstm_v1</small></div>
+<div class="num">시험 MAE 0.452 ± 0.013 vs 그대로 0.481 — 2~22시간 뒤에서 이김</div><div class="out">미션: 8가지 설정 중 검증으로만 하나 고르기</div></div></div><div class="card"><div class="ch">
+<div class="code"><b>U3-A4</b><span>11/12 · 8시간 · 24장</span></div>
+<div class="ct">1D-CNN 비교 · 다른 관측소 · 고수온 경보</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div></div>
+<div class="cb"><div><div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>1D-CNN 구조</span><b>3교시</b><span>CNN vs LSTM</span><b>4~5교시</b><span>다른 관측소</span><b>6교시</b><span>고수온 경보</span><b>7~8교시</b><span>기록 · 미션</span></div></div><div><div class="lbl">배우는 것</div><ul><li>팽창 · 인과 합성곱 — 보는 범위 31시간</li><li>같은 조건 · 씨앗 3개로 공정 비교</li><li>가덕도 모델을 다른 관측소에 그대로 쓰면?</li><li>경보 가중 손실 vs 문턱 · 실험 기록 CSV</li></ul></div>
+<div class="lab"><div class="lbl" style="margin-bottom:1px">실습</div><code>u3_ai</code><small>cnn_v1 · explog.py · experiments.csv</small></div>
+<div class="num">CNN 0.470 ≈ LSTM 0.452 · 통영에 그대로 0.370 vs 그대로 0.186</div><div class="out">발견: float32 로 28.0℃ 가 사라지는 버그 → 반올림</div></div></div><div class="card"><div class="ch">
+<div class="code"><b>U3-A5</b><span>11/13 · 8시간 · 23장</span></div>
+<div class="ct">모델 서빙 — FastAPI 수온 예측 API</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div></div>
+<div class="cb"><div><div class="lbl">수업 흐름</div><div class="fw"><b>1교시</b><span>저장 형식</span><b>2~3교시</b><span>서비스용 예측기</span><b>4~5교시</b><span>FastAPI</span><b>6~7교시</b><span>최신 관측 · pytest</span><b>8교시</b><span>미션</span></div></div><div><div class="lbl">배우는 것</div><ul><li>state_dict vs torch.export(.pt2)</li><li>학습과 같은 함수로 서비스용 예측기 · 창 2,520개 대조</li><li>/health · /predict/latest · POST /predict (400 · 422 · 503)</li><li>공공데이터포털 &#x27;지금&#x27; 관측으로 예측 · pytest</li></ul></div>
+<div class="lab"><div class="lbl" style="margin-bottom:1px">실습</div><code>u3_ai</code><small>serve.py · source.py · api/main.py</small></div>
+<div class="num">어긋남 29/2,520 → &#x27;8시 당김&#x27; 규칙으로 0 · 여름 840회 MAE 0.466 vs 0.478</div><div class="out">미션: 놓침 18 vs 헛경보 29 — 누구 입장에서 고르나</div></div></div><div class="card"><div class="ch">
+<div class="code"><b>U3-A6</b><span>11/16 1~6교시 · 6시간 · 23장</span></div>
+<div class="ct">예측 화면 · 예측 기록 · 통합 점검</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u></div></div>
+<div class="cb"><div><div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>화면 · 타입 · 그래프</span><b>3교시</b><span>경보 · 안내 · 모바일</span><b>4교시</b><span>Spring 기록 · 채점</span><b>5교시</b><span>통합 점검</span><b>6교시</b><span>미션</span></div></div><div><div class="lbl">배우는 것</div><ul><li>pydantic 응답 → TypeScript 타입</li><li>라이브러리 없이 SVG — 관측 · 예측 · 오차 띠 · 28℃ 선</li><li>경보 단계 · 기준 시각 당김 안내 · 모바일</li><li>Spring forecast_log 저장 → 목표 시각 뒤 채점</li></ul></div>
+<div class="lab"><div class="lbl" style="margin-bottom:1px">실습</div><code>u3_web · marine-forecast-api</code><small>a6_integration_check.py</small></div>
+<div class="num">통합 점검 14개 OK · 7/20~8/20 기록 MAE 0.588 vs 그대로 0.602</div><div class="out">미션: 현장(양식장) 사용자의 첫 화면 다시 배치</div></div></div></div>
+<div class="bt"><div class="fl"><div class="bh">완성된 구조 — 수온 예측 서비스 (세 서버)</div><div class="cols"><div class="col"><b>자료</b><div class="stack"><div class="node"><strong>공공데이터포털</strong><em>조위관측소 최신 관측 dtRecent</em></div><div class="node"><strong>sample / live</strong><em>SampleSource · LiveSource</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>정리 · 창</b><div class="stack"><div class="node"><strong>marine_ts</strong><em>clean · add_features · prepare</em></div><div class="node"><strong>Predictor</strong><em>BUFFER 24h · 8시 당김</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>모델 · API</b><div class="stack"><div class="node"><strong>lstm_v1.pt2 · cnn_v1</strong><em>모델 + .json 한 몸</em></div><div class="node"><strong>FastAPI :8001</strong><em>/predict/latest · /observations</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>화면</b><div class="stack"><div class="node k"><strong>React :5173 u3_web</strong><em>관측 · 예측 · 28℃ 선 · 경보 단계</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>기록 · 채점</b><div class="stack"><div class="node"><strong>Spring Boot :8082</strong><em>marine-forecast-api</em></div><div class="node"><strong>MariaDB forecast_log</strong><em>예측 한 줄 · 실제값은 나중에</em></div></div></div></div></div><div class="sd"><div class="bh">40시간 동안 정직하게 잰 것</div><table class="tb"><tr><td>LSTM vs 그대로 (시험 MAE)</td><td>0.452 vs 0.481 — 작지만 있다</td></tr><tr><td>CNN vs LSTM</td><td>비슷 — 차이 = 씨앗 흔들림</td></tr><tr><td>다른 관측소에 그대로</td><td>통영 0.370 vs 0.186 — 못 쓴다</td></tr><tr><td>28℃ 경보</td><td>놓침 ↔ 헛경보 맞바꿈 · &#x27;그대로&#x27;가 강하다</td></tr><tr><td>서비스 기록 7/20~8/20</td><td>0.588 vs 0.602 — 오르는 철엔 하루 늦다</td></tr></table><div class="note">좋은 AI 서비스 = 좋은 모델 + 학습과 같은 입력 + 모르는 것을 알리는 화면 + 실제 성적을 남기는 기록</div></div></div>
+<div class="ft"><span>AI·데이터 기반 해양·수산 서비스 개발자 과정 · 라이스리치AI · 부산IT교육센터</span><span>회차 막대 폭 = 수업 시간 · 숫자는 교안 실습의 실제 실행 결과</span></div>
+<script>function fit(){document.body.style.zoom=Math.min(1,(innerWidth-16)/1600)}addEventListener("resize",fit);fit()</script></body></html>

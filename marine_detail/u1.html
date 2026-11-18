@@ -1,0 +1,183 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>단원 1 빅데이터 수집 · 저장 — 상세판</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--a:#0369A1;--s:#E0F0FA;--ink:#0F1B2D;--mute:#5B6778;--line:#D9E0E8;--bg:#F6F8FA}
+body{width:1600px;height:1130px;background:var(--bg);font-family:'Pretendard','Malgun Gothic','Apple SD Gothic Neo','Noto Sans CJK KR',sans-serif;color:var(--ink);
+ padding:26px 30px 22px;display:flex;flex-direction:column;gap:12px;overflow:hidden;letter-spacing:-.01em}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.badge{display:inline-block;background:var(--a);color:#fff;font-weight:700;font-size:14px;padding:4px 10px;border-radius:4px;margin-right:10px;vertical-align:5px}
+h1{font-size:31px;font-weight:800;letter-spacing:-.025em}
+.sub{font-size:14px;color:var(--mute);margin-top:6px;font-weight:500}
+.goal{max-width:700px;text-align:right}
+.goal b{display:block;font-size:11px;letter-spacing:.08em;color:var(--a);font-weight:700;margin-bottom:3px}
+.goal p{font-size:15px;font-weight:600;line-height:1.4}
+.chips{display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-end;margin-top:7px}
+.chip{font-size:11px;font-weight:600;padding:2px 7px;border:1px solid var(--line);background:#fff;border-radius:10px;color:#334155}
+/* timeline */
+.tl{display:flex;height:30px;border-radius:5px;overflow:hidden;gap:2px}
+.tl div{display:flex;align-items:center;justify-content:center;gap:6px;color:#fff;font-size:11.5px;font-weight:700;white-space:nowrap;overflow:hidden}
+.tl i{font-style:normal;font-weight:500;opacity:.85}
+/* phases */
+.ph{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:14px}
+.ph>div{border-top:3px solid var(--a);padding-top:4px;font-size:13px;font-weight:700;color:var(--a)}
+.ph span{color:var(--mute);font-weight:500;margin-left:6px}
+.ph>div.alt{border-top-color:var(--ink);color:var(--ink)}
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:14px;flex:1;min-height:0}
+.card{flex:1;min-width:0;background:#fff;border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;position:relative}
+.card+.card::before{content:'';position:absolute;left:-12px;top:44px;border:5px solid transparent;border-left:8px solid #94A3B8}
+.ch{padding:9px 11px 8px;border-bottom:1px solid var(--line)}
+.code{display:flex;justify-content:space-between;align-items:baseline}
+.code b{font-size:13px;font-weight:800;color:var(--a)}
+.code span{font-size:11px;color:var(--mute);font-weight:600}
+.ct{font-size:14.5px;font-weight:700;line-height:1.3;margin-top:4px;min-height:38px}
+.hrs{display:flex;gap:2px;margin-top:6px}
+.hrs u{width:9px;height:5px;background:var(--a);border-radius:1px;text-decoration:none}
+.cb{padding:10px 11px;flex:1;display:flex;flex-direction:column;gap:10px}
+.lbl{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--mute);margin-bottom:3px}
+ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+li{font-size:12.8px;line-height:1.45;padding-left:10px;position:relative;color:#1E293B}
+li::before{content:'';position:absolute;left:0;top:7px;width:4px;height:4px;border-radius:50%;background:var(--a)}
+.lab{background:#F1F5F9;border-radius:5px;padding:6px 8px}
+.lab code{font-family:Consolas,'D2Coding','DejaVu Sans Mono',monospace;font-size:10.8px;font-weight:600;color:var(--ink);display:block;word-break:break-all}
+.lab small{font-size:10.8px;color:var(--mute);display:block;margin-top:2px;line-height:1.35;word-break:break-all}
+.num{background:var(--s);border-left:3px solid var(--a);border-radius:0 5px 5px 0;padding:7px 8px;font-size:12.4px;font-weight:600;line-height:1.42}
+.fw{display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:12px;line-height:1.35}
+.fw b{color:var(--a);font-weight:700;white-space:nowrap}
+.fw span{color:#1E293B}
+.out{margin-top:auto;font-size:11.6px;line-height:1.42;color:#334155;border-top:1px dashed var(--line);padding-top:7px}
+/* bottom */
+.bt{display:flex;gap:14px;height:262px}
+.fl{flex:1.75;background:#fff;border:1px solid var(--line);border-radius:8px;padding:11px 14px;display:flex;flex-direction:column}
+.sd{flex:1;background:var(--ink);color:#fff;border-radius:8px;padding:12px 16px;display:flex;flex-direction:column}
+.bh{font-size:14px;font-weight:800;margin-bottom:9px}
+.sd .bh{color:#fff}
+.cols{display:flex;flex:1;align-items:stretch;gap:0}
+.col{flex:1;display:flex;flex-direction:column;min-width:0}
+.col>b{font-size:10.5px;font-weight:700;letter-spacing:.05em;color:var(--a);margin-bottom:5px;text-align:center}
+.stack{flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.node{border:1.5px solid var(--a);border-radius:6px;padding:6px 8px;background:#fff;text-align:center}
+.node.k{background:var(--s)}
+.node strong{display:block;font-size:12.3px;font-weight:700;line-height:1.25}
+.node em{display:block;font-style:normal;font-size:10.8px;color:var(--mute);line-height:1.3;margin-top:2px}
+.arr{width:26px;display:flex;align-items:center;justify-content:center;padding-top:16px}
+.arr::before{content:'';width:15px;height:2px;background:#64748B;box-shadow:none;position:relative}
+.arr span{width:0;height:0;border:5px solid transparent;border-left:7px solid #64748B;margin-left:-1px}
+.pl{display:flex;flex-direction:column;gap:9px;flex:1;justify-content:center}
+.pl div b{display:block;font-size:13.5px;font-weight:700}
+.pl div span{display:block;font-size:12px;color:#B8C4D4;line-height:1.4;margin-top:1px}
+.pl div{padding-left:11px;border-left:3px solid var(--a)}
+.tb{width:100%;border-collapse:collapse;font-size:12px}
+.tb td{padding:6px 0;border-bottom:1px solid #2A3A52;vertical-align:top;line-height:1.4}
+.tb td:first-child{color:#B8C4D4;width:44%;padding-right:10px}
+.tb td:last-child{font-weight:600}
+.bars{display:flex;flex-direction:column;gap:7px;flex:1;justify-content:center}
+.bar{display:flex;align-items:center;gap:8px;font-size:12px}
+.bar>span:first-child{width:132px;color:#B8C4D4;text-align:right;flex:none}
+.bar .t{flex:1;height:15px;background:#22324A;border-radius:3px;position:relative}
+.bar .t i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:#64748B}
+.bar.hi .t i{background:var(--a)}
+.bar.hi>span:first-child{color:#fff;font-weight:700}
+.bar b{width:40px;font-weight:700;font-variant-numeric:tabular-nums}
+.note{font-size:11.5px;color:#B8C4D4;margin-top:8px;line-height:1.4}
+.ft{display:flex;justify-content:space-between;font-size:10.5px;color:var(--mute)}
+
+body{height:auto!important;overflow:visible!important}
+.rows{display:flex;flex-direction:column;gap:12px}
+.band{display:flex;align-items:center;gap:10px;margin-top:6px}
+.band b{font-size:15px;font-weight:800;color:var(--a)}
+.band span{font-size:13px;color:var(--mute);font-weight:500}
+.band i{flex:1;height:2px;background:var(--a);opacity:.35}
+.band.alt b{color:var(--ink)}.band.alt i{background:var(--ink)}
+.row{display:grid;grid-template-columns:270px 1fr 400px;background:#fff;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.row>div{padding:13px 15px}
+.m{background:var(--s);border-right:1px solid var(--line)}
+.m .code b{font-size:15px}
+.m .ct{font-size:17px;min-height:0;margin-top:5px}
+.m .hrs{margin:8px 0 10px}
+.m .fw{font-size:12.4px;gap:4px 9px}
+.m .lbl{margin-top:11px}
+.lrn{list-style:none;counter-reset:n}
+.lrn li{padding-left:10px;font-size:12.6px}
+.lrn li::before{top:8px}
+.sec{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:10px 14px;align-content:start}
+.sec>div{border-top:2px solid var(--line);padding-top:6px}
+.sec h4{font-size:12.6px;font-weight:800;color:var(--ink);margin-bottom:5px}
+.sec h4 small{font-weight:600;color:var(--a);margin-right:5px}
+.sec ol{list-style:none;display:flex;flex-direction:column;gap:3px}
+.sec ol li{font-size:12.2px;line-height:1.4;color:#334155;padding-left:9px;position:relative}
+.sec ol li::before{content:'';position:absolute;left:0;top:7px;width:4px;height:1.5px;background:#94A3B8}
+.sec ol li.hot{color:var(--ink);font-weight:600}
+.sec ol li.hot::before{background:var(--a);height:4px;width:4px;border-radius:50%;top:6px}
+.r{border-left:1px solid var(--line);display:flex;flex-direction:column;gap:9px}
+.qs{counter-reset:q;list-style:none;display:flex;flex-direction:column;gap:4px}
+.qs li{counter-increment:q;font-size:11.8px;line-height:1.42;padding-left:18px;color:#334155}
+.qs li::before{content:counter(q);position:absolute;left:0;top:1px;width:13px;height:13px;border-radius:50%;background:var(--ink);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.task{font-size:12px;line-height:1.45;background:#FFF8E6;border:1px solid #F3E2B3;border-radius:5px;padding:6px 8px;color:#5B4A1A}
+.task b{font-weight:700;color:#7A5B00;margin-right:4px}
+.mis{font-size:12.4px;line-height:1.45;font-weight:600}
+.legend{display:flex;gap:16px;font-size:11.5px;color:var(--mute);align-items:center}
+.legend em{font-style:normal;display:inline-flex;align-items:center;gap:5px}
+.legend em::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--a)}
+.bt{height:auto!important}
+.fl{min-height:250px}
+.kt{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 15px}
+.kt table{width:100%;border-collapse:collapse;font-size:12.4px}
+.kt th{text-align:left;font-size:11px;color:var(--mute);font-weight:700;border-bottom:1.5px solid var(--ink);padding:5px 8px}
+.kt td{padding:6px 8px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.kt td:first-child{font-weight:600}
+.kt tr.hl td{background:var(--s)}
+.lastrow{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
+html{background:#E5E9EF}body{margin:0 auto;box-shadow:0 2px 16px rgba(15,27,45,.12)}@page{size:1600px 2400px;margin:0}@media print{html{background:none}body{box-shadow:none;zoom:1!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}.row{break-inside:avoid}}</style></head><body style="--n:7">
+<div class="hd"><div><h1><span class="badge">단원 1</span>빅데이터 수집 · 저장 <span style="font-size:17px;color:var(--mute);font-weight:600">상세판</span></h1><div class="sub">40시간 · 7회차 · 2026-10-21 ~ 11-03 · 교안 191장 · 실습 프로젝트 7개</div></div>
+<div class="goal"><b>이 과목이 끝나면</b><p>기관 3곳의 해양 데이터를 자동으로 모아, 언제든 다시 만들 수 있는 데이터 마트로</p><div class="chips"><span class="chip">Python</span><span class="chip">requests</span><span class="chip">pandas</span><span class="chip">APScheduler</span><span class="chip">MariaDB</span><span class="chip">Spring Boot 4.1 · JPA</span><span class="chip">Parquet</span><span class="chip">DuckDB</span></div></div></div>
+<div class="tl"><div style="flex:3;background:var(--a)" title="U1-01">U1-01 <i>3h</i></div><div style="flex:8;background:var(--a)" title="U1-02">U1-02 <i>8h</i></div><div style="flex:8;background:var(--a)" title="U1-03">U1-03 <i>8h</i></div><div style="flex:1;background:var(--a)" title="U1-04"><i>1h</i></div><div style="flex:7;background:var(--ink)" title="U1-05">U1-05 <i>7h</i></div><div style="flex:8;background:var(--ink)" title="U1-06">U1-06 <i>8h</i></div><div style="flex:5;background:var(--ink)" title="U1-07">U1-07 <i>5h</i></div></div><div class="legend"><span>● 굵은 장 제목 = 실제 데이터로 겪은 함정 · 버그 · 발견</span><span>노란 상자 = 다음 회차 전 과제 · 준비</span></div><div class="rows"><div class="band"><b>수집</b><span>원천 → 정제 · 20시간 · 4회차</span><i></i></div><div class="row">
+<div class="m"><div class="code"><b>U1-01</b><span>10/21 · 3시간 · 24장</span></div>
+<div class="ct">해양수산 데이터와 첫 OpenAPI 호출</div><div class="hrs"><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>6교시</b><span>데이터 지도·수온</span><b>7교시</b><span>OpenAPI·첫 호출</span><b>8교시</b><span>파싱·DataFrame·미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>해양 데이터는 기관별로 흩어져 있고, 국립수산과학원 OpenAPI가 수온·특보·관측을 한곳에서 준다</li><li>OpenAPI = 주소 + 서비스 ID + 인증키, 응답은 JSON 또는 XML</li><li>find_items · ElementTree · pandas로 받은 값을 믿을 수 있는 표로 만든다</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>해양수산 데이터 지도</h4><ol><li class="">바다를 재는 기관과 받을 수 있는 데이터</li><li class="">해양 데이터는 다섯 가지 모양으로 옵니다</li><li class="hot">왜 하필 수온부터 받을까</li><li class="">같은 관측소도 깊이마다 수온이 다릅니다</li></ol></div><div><h4><small>02</small>OpenAPI 이해</h4><ol><li class="">OpenAPI는 &#x27;주소로 쓰는 주문서&#x27;입니다</li><li class="">요청 주소를 조각내서 읽어 봅시다</li><li class="">인증키는 비밀번호처럼 다룹니다</li><li class="">risaList 응답 필드 사전</li><li class="hot">실제 응답으로 확인한 것 (2026-10-13)</li><li class="">같은 관측 한 건, 두 가지 그릇</li></ol></div><div><h4><small>03</small>파이썬으로 첫 호출</h4><ol><li class="">실습 프로젝트 구조</li><li class="">실습 1 · 첫 호출 — 응답의 뼈대부터 봅니다</li><li class="">실습 2 · JSON에서 관측 레코드만 꺼내기</li><li class="">실습 3 · 같은 데이터를 XML로 파싱하기</li><li class="">실습 4 · 표로 바꾸고 믿을 수 있는 값만 남기기</li><li class="">이렇게 실패하면, 이렇게 고칩니다</li><li class="">실습 5 · 미션: 부산·경남 연안 고수온 체크</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u1_s01_first_api</code><small>nifs_client.py · step1~5</small></div>
+<div class="num">기준값 — 고수온주의보 28℃ · 적조주의보 100 · 경보 1,000 개체/mL</div><div class="mis">미션: 부산·경남 연안 28℃ 고수온 체크 → busan_now.csv</div><div class="task"><b>과제</b>인증키 승인을 확인하고, 실제 키(USE_SAMPLE=0)로 step1~5를 다시 실행해 실제 관측소 이름을 기록해 오세요.</div></div></div><div class="row">
+<div class="m"><div class="code"><b>U1-02</b><span>10/26 · 8시간 · 31장</span></div>
+<div class="ct">연안정지관측 30일 반복 수집</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>기간 데이터 받기</span><b>3~4교시</b><span>나눠서 반복 수집</span><b>5~6교시</b><span>실패에 강한 수집기</span><b>7~8교시</b><span>합치기·좌표·품질</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>sdate·edate(yyyymmdd)로 기간을 주문하고, date_chunks로 나눠 받는다</li><li>원본은 raw/에 기간별로 남기고, 받은 기간은 건너뛴다</li><li>일시적 실패만 2초·4초 간격으로 재시도하고, 과정은 로그로 남긴다</li><li>좌표를 붙이고, 의심값은 지우지 않고 flag로 표시한다</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>기간 데이터 받기</h4><ol><li class="">실시간 수온과 연안정지관측은 무엇이 다른가</li><li class="">cooList 요청 주소 — 날짜 두 개가 더 붙습니다</li><li class="">cooList 응답 필드 사전</li><li class="hot">실제 응답으로 확인한 것 — cooList (2026-10-13)</li><li class="">파이썬으로 날짜 다루기 — date · timedelta · strftime</li><li class="">실습 1 · 최근 7일을 한 번에 요청하기</li></ol></div><div><h4><small>02</small>나눠서 반복 수집</h4><ol><li class="hot">왜 한 번에 받지 않고 나눠 받을까</li><li class="">기간을 자르는 함수 — date_chunks</li><li class="">원본부터 저장합니다 — 가공은 그다음</li><li class="">실습 3 · 30일 반복 수집 루프</li></ol></div><div><h4><small>03</small>실패에 강한 수집기</h4><ol><li class="hot">모든 실패를 다시 시도하면 안 됩니다</li><li class="">기다리는 시간을 두 배씩 — 지수 백오프</li><li class="">call() — 재시도가 들어간 호출 함수</li><li class="">print 대신 logging — 수집 기록을 파일로</li><li class="">직접 해 보기 · 일부러 실패시켜 보기</li></ol></div><div><h4><small>04</small>합치기 · 좌표 · 품질 점검</h4><ol><li class="">관측소 정보(cooCode)로 좌표를 받습니다</li><li class="">원본 파일 합치기 — concat 과 중복 제거</li><li class="">품질 점검 세 가지 — 결측 · 범위 · 급변</li><li class="">급변은 &#x27;하루만 튀었다가 돌아온 값&#x27;입니다</li><li class="">QC Level과 flag — 지우지 말고 표시합니다</li><li class="">결과 파일 — output/coo_30days.csv</li><li class="">실습 6 · 미션: 해역별 30일 수온 요약</li><li class="">그래프로 보면 품질 점검이 보입니다</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u1_s02_period_collector</code><small>call() · date_chunks()</small></div>
+<div class="num">재시도는 일시적 실패만 2초 · 4초 — 의심값은 지우지 않고 flag</div><div class="mis">미션: 해역별 30일 수온 요약 → coo_30days.csv</div><div class="task"><b>과제</b>실제 키(NIFS_KEY_COO)로 step3~5를 돌리고, 관측소가 몇 곳 오는지·빈 수온이 있는지 확인해 오세요.</div></div></div><div class="row">
+<div class="m"><div class="code"><b>U1-03</b><span>10/27 · 8시간 · 34장</span></div>
+<div class="ct">여러 기관 수집 · 교차 검증 · 자동화</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>문장 데이터 수집</span><b>3~4교시</b><span>형식이 다른 기관들</span><b>5~6교시</b><span>두 기관 교차 검증</span><b>7~8교시</b><span>스케줄러 자동화</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>문장 데이터는 &#x27;목록 → 상세&#x27;로 받아 JSONL 문서로 쌓는다</li><li>JSON·텍스트·표준 래퍼 — 기관별 클라이언트가 모두 DataFrame으로</li><li>가까운 관측소·같은 날짜(하루 평균)끼리 비교하고, 차이는 지우지 않고 기록한다</li><li>APScheduler + safe() + 건너뛰기 = 사람 없이 도는 수집기</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>문장 데이터 수집</h4><ol><li class="">숫자만으로는 답할 수 없는 질문이 있습니다</li><li class="">목록 → 상세, 두 번에 나눠 받는 패턴</li><li class="">적조정보 API 명세</li><li class="">필드 여러 개를 &#x27;문서&#x27; 하나로 합칩니다</li><li class="">문서는 JSONL로 — 한 줄에 문서 하나</li><li class="">실습 1 · 적조 특보 문서 수집</li><li class="">실습 2 · 해파리 특보에 같은 패턴 적용</li></ol></div><div><h4><small>02</small>형식이 다른 기관들</h4><ol><li class="">같은 &#x27;수온&#x27;도 기관마다 담는 그릇이 다릅니다</li><li class="">기상청 API허브 — 주소 형식과 한도</li><li class="">텍스트 응답을 표로 — parse_text()</li><li class="hot">실제 응답으로 확인한 것 — 기상청 (2026-10-14)</li><li class="">실습 3 · 해양기상부이 지점·일별 평균</li><li class="">공공데이터포털 API는 이렇게 준비합니다</li><li class="hot">응답 구조와 결과 코드 — 실제로 확인한 것</li><li class="">실습 4 · 국립해양조사원 조위관측소 수온</li></ol></div><div><h4><small>03</small>두 기관 교차 검증</h4><ol><li class="hot">같은 바다, 다른 숫자 — 왜 비교할까</li><li class="">거리로 짝짓기 — 하버사인 공식</li><li class="">같은 날짜끼리 비교 — 하루 평균에 맞춘다</li><li class="">실습 5 · 교차 검증 결과</li><li class="">차이가 크면 어떻게 할까</li></ol></div><div><h4><small>04</small>스케줄러 자동화</h4><ol><li class="">무엇을 얼마나 자주 받을까</li><li class="">APScheduler — 스케줄러 · 작업 · 트리거</li><li class="">실습 6 · step6_scheduler.py</li><li class="">데모 실행 — 40초 동안 무슨 일이 있었나</li><li class="">자동 수집을 운영할 때 체크리스트</li><li class="">미션 · 교차 검증도 자동으로 쌓기</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u1_s03_multi_source</code><small>collectors.py · step6_scheduler</small></div>
+<div class="num">한 번에 — 부이 96행 · 조위관측소 수온 672행 · 교차 검증 3쌍</div><div class="mis">미션: cross_check() 를 매일 12:00 cron 으로 기록</div><div class="task"><b>과제</b>기상청·공공데이터포털 키를 발급받고, 실제 응답 한 번으로 config 의 열·필드 이름을 맞춰 오세요.</div></div></div><div class="row">
+<div class="m"><div class="code"><b>U1-04</b><span>10/28 1교시 · 1시간 · 9장</span></div>
+<div class="ct">수집 파이프라인 정리</div><div class="hrs"><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1교시</b><span>패키지 · JOBS · CLI · 실습</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>step 파일 15개 → marine_collector 패키지</li><li>JOBS 목록 하나를 CLI · run all · 스케줄러가 공유</li><li>clean 표 열 이름 통일 = 저장 단원과의 약속</li><li>실패는 로그 + 종료 코드 1</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>수업 구성</h4><ol><li class="">패키지 구조 — 파일마다 맡은 일 하나</li><li class="">JOBS — 이름표 한 장을 모두가 본다</li><li class="">argparse 로 명령 만들기</li><li class="">clean 표 규격 — 저장 단원과의 약속</li><li class="">config.py — 국립수산과학원 키는 서비스마다</li><li class="">실습 · run all 과 일부러 실패시키기</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u1_s04_pipeline</code><small>python -m marine_collector run all</small></div>
+<div class="num">run all — 작업 7개 · 실패 없음 / 키 없으면 실패 목록 + 종료 코드 1</div><div class="mis">결과: 작업 7개 · 설정 한 벌 · 수동 실행 = 스케줄 실행</div></div></div><div class="band alt"><b>저장</b><span>서비스 저장소 → 마트 운영 · 20시간 · 3회차</span><i></i></div><div class="row">
+<div class="m"><div class="code"><b>U1-05</b><span>10/28 2~8교시 · 7시간 · 32장</span></div>
+<div class="ct">해양 데이터 저장 설계와 MariaDB 적재</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>2~3교시</b><span>저장 설계 · ERD</span><b>4~5교시</b><span>MariaDB DDL</span><b>6~7교시</b><span>파이썬 적재</span><b>8교시</b><span>검증 · 미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>원천 · 정제 · 서비스 3계층 — DB 는 언제든 다시 만들 수 있게</li><li>출처 · 관측소 · 관측값 … 7개 테이블, (출처, 코드) 자연키 + station_id 대리키</li><li>DECIMAL · DATETIME/TIMESTAMP · ENUM · JSON 검사 열 · utf8mb4</li><li>ON DUPLICATE KEY UPDATE 로 멱등 적재, 건수는 load_log 에</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>저장 설계</h4><ol><li class="">CSV 파일로 충분하지 않은 이유</li><li class="">데이터에서 명사를 뽑으면 테이블이 됩니다</li><li class="">marine_mart ERD</li><li class="">관측소 키 — 코드가 기관마다 다릅니다</li><li class="">관측값의 &#x27;같은 행&#x27; 기준 = 다시 넣어도 안전한 이유</li><li class="">넓은 표로 할까, 긴 표로 할까</li></ol></div><div><h4><small>02</small>MariaDB DDL</h4><ol><li class="">자료형 고르기 — 해양 데이터에 맞게</li><li class="">DDL ① 데이터베이스 · 출처 · 관측소</li><li class="">DDL ② 관측값 — 유일 키와 인덱스</li><li class="">인덱스가 어떤 조회를 빠르게 하나</li><li class="">MariaDB 의 JSON — 검사가 붙은 긴 문자열</li><li class="">외래키가 정하는 적재 순서</li><li class="">실습 1·2 · 접속과 스키마 만들기</li></ol></div><div><h4><small>03</small>파이썬 적재</h4><ol><li class="">파이썬과 MariaDB — 쓰기와 읽기를 나눕니다</li><li class="hot">함정: pandas 의 NaN 은 DB 의 NULL 이 아닙니다</li><li class="">INSERT … ON DUPLICATE KEY UPDATE</li><li class="">새로 · 갱신 · 그대로 — 건수 세기</li><li class="">관측소 번호 찾기 — 코드를 station_id 로</li><li class="">실습 3~5 · 수집 → 관측소 → 관측값 두 번</li><li class="">값이 바뀌면 그 행만 갱신됩니다</li><li class="">실습 6 · 특보 문서 적재</li></ol></div><div><h4><small>04</small>검증과 미션</h4><ol><li class="">실습 7 · 적재 검증 쿼리</li><li class="">시간대와 문자셋 — 조용히 틀리는 두 가지</li><li class="">미션 · 해양기상 적재와 &#x27;파도 높은 시간&#x27;</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u1_s05_storage</code><small>DDL · load_*() · load_log</small></div>
+<div class="num">(출처, 코드) 자연키 + station_id 대리키 → 같은 자료 두 번 넣어도 한 줄</div><div class="mis">미션: 유의파고 1.5m↑ 시간 수 + 그날 최대 풍속 SQL</div><div class="task"><b>과제</b>실제 키로 수집 → 적재까지 돌리고, load_log 와 해역별 평균 쿼리 결과를 캡처해 오세요.</div></div></div><div class="row">
+<div class="m"><div class="code"><b>U1-06</b><span>11/02 · 8시간 · 31장</span></div>
+<div class="ct">Spring Boot 저장 서비스 · Parquet · DuckDB</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>프로젝트 · 엔티티</span><b>3~4교시</b><span>조회 API</span><b>5교시</b><span>적재 API</span><b>6~8교시</b><span>Parquet · DuckDB</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>Boot 4.1: starter-webmvc · webmvc-test, Jackson 3, Java 21</li><li>ddl-auto=validate — 테이블 주인은 파이썬, Spring 은 검사만</li><li>쿼리 메서드 · JPQL+DTO · 네이티브 upsert, 오류는 ProblemDetail</li><li>useAffectedRows=true — 같은 요청 두 번으로 검증</li><li>서비스는 MariaDB, 분석은 Parquet + DuckDB</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>Spring Boot 4.1 프로젝트</h4><ol><li class="">프로젝트 구조</li><li class="">build.gradle — Boot 4 에서 달라진 이름</li><li class="">application.properties — 접속 정보는 환경 변수로</li><li class="">엔티티 — 이미 있는 테이블에 맞춰 매핑</li><li class="">DB 값 &#x27;ok&#x27; ↔ 자바 enum OK — AttributeConverter</li><li class="">기동 — validate 가 실패하면 무엇이 보이나</li></ol></div><div><h4><small>02</small>조회 API</h4><ol><li class="">리포지토리 — 쿼리를 쓰는 세 가지 방법</li><li class="">JPQL — 관측소별 &#x27;가장 최근 정상 수온&#x27;</li><li class="">서비스 — 조회 전용 트랜잭션과 규칙</li><li class="">컨트롤러와 API 목록</li><li class="">실습 · 브라우저와 curl 로 호출해 보기</li><li class="">오류도 약속된 모양으로 — ProblemDetail</li><li class="">DB 없이 컨트롤러만 시험 — @WebMvcTest</li></ol></div><div><h4><small>03</small>적재 API</h4><ol><li class="">DB 직접(5회차) vs API 로 보내기</li><li class="">요청 본문과 검증 — record + @Valid</li><li class="hot">함정: MariaDB 드라이버는 &#x27;찾은 행 수&#x27;를 돌려줍니다</li><li class="">트랜잭션 — 전부 들어가거나, 하나도 안 들어가거나</li><li class="">실습 · 파이썬 수집기에서 API 로 보내기</li></ol></div><div><h4><small>04</small>Parquet · DuckDB 분석 저장소</h4><ol><li class="">서비스 DB 와 분석 저장소는 하는 일이 다릅니다</li><li class="">MariaDB → Parquet 데이터 레이크</li><li class="">DuckDB — 파일에 바로 SQL</li><li class="">커지면 차이가 납니다 — 105만 행 벤치마크</li><li class="">미션 · DuckDB 윈도 함수로 학습용 표 만들기</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u1_s06_spring_duckdb</code><small>marine-api · lake/</small></div>
+<div class="num">105만 행: CSV 37.8MB → Parquet 3.7MB, 엔진까지 바꾸면 10배↑ 빠름</div><div class="mis">미션: DuckDB 윈도 함수로 학습용 특징 표 (전날 · 변화 · 7일 평균)</div><div class="task"><b>과제</b>해역별 평균을 MariaDB · API · DuckDB 세 곳에서 구해 같은지 캡처해 오세요.</div></div></div><div class="row">
+<div class="m"><div class="code"><b>U1-07</b><span>11/03 1~5교시 · 5시간 · 30장</span></div>
+<div class="ct">데이터 마트 완성과 운영</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1교시</b><span>뷰</span><b>2교시</b><span>집계 테이블</span><b>3교시</b><span>보간 정책</span><b>4교시</b><span>데이터 사전</span><b>5교시</b><span>백업 · 점검</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>뷰 5개 — v_obs_ok · v_daily_station · v_latest_ok · v_freshness …</li><li>mart_daily_temp 집계 테이블 upsert 갱신</li><li>보간 정책: 짧은 빈칸만 (interpolate(limit) 함정)</li><li>데이터 사전 · mariadb-dump 백업 · 복원 · 점검 리포트</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>뷰</h4><ol><li class="">뷰 = 이름 붙인 SELECT</li><li class="">뷰 위에 뷰 — 관측소별 · 해역별 일평균</li><li class="">윈도 함수로 &#x27;관측소마다 가장 최근 값&#x27;</li><li class="">v_freshness — 데이터가 &#x27;살아 있는지&#x27;</li></ol></div><div><h4><small>02</small>집계 테이블</h4><ol><li class="">뷰로 할까, 테이블로 저장할까</li><li class="">mart_daily_temp — 설명(COMMENT)까지 DDL 에</li><li class="">갱신 흐름 — 뷰에서 읽고, 달력을 채우고, upsert</li></ol></div><div><h4><small>03</small>결측 보간 정책</h4><ol><li class="">빈칸을 대하는 네 가지 방법</li><li class="">우리의 보간 정책 — 네 줄</li><li class="hot">함정: interpolate(limit=2) 의 진짜 뜻</li><li class="">빈칸 길이를 직접 센다 — fill_short_gaps()</li><li class="">결과 확인 — 가덕도(예시) 10/06 ~ 10/10</li></ol></div><div><h4><small>04</small>데이터 사전</h4><ol><li class="">데이터 사전이 필요한 사람들</li><li class="">information_schema 에서 뽑아 Markdown 으로</li><li class="">실습 4 결과 — 테이블 8개 · 뷰 5개</li><li class="hot">실제로 겪은 사고 — 설명이 깨져 저장됐다</li></ol></div><div><h4><small>05</small>백업 · 점검 · 운영</h4><ol><li class="">백업의 세 가지 질문</li><li class="">mariadb-dump — 비밀번호는 옵션 파일로</li><li class="">실습 5 · 백업 → 복원 → 비교</li><li class="">미션 · 데이터 마트 점검 리포트</li><li class="">하루의 운영 일정</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u1_s07_mart</code><small>fill_short_gaps() · 운영 JOBS</small></div>
+<div class="num">마트 완성 — 테이블 8 · 뷰 5 · 데이터 사전 · 백업 → 복원 → 비교</div><div class="mis">운영 일정: 02:10 백업 · 08:30 점검 · 12:30 마트 갱신</div><div class="task"><b>과제</b>데이터 사전의 빈 설명을 채우고, 실제 키로 하루를 돌린 뒤 점검 리포트를 캡처해 오세요.</div></div></div></div><div class="bt"><div class="fl"><div class="bh">완성된 구조 — 단원 1 의 산출물</div><div class="cols"><div class="col"><b>출처 3곳</b><div class="stack"><div class="node"><strong>국립수산과학원</strong><em>실시간 수온 · 연안정지 · 적조 · 해파리</em></div><div class="node"><strong>국립해양조사원</strong><em>조위관측소 수온 (공공데이터포털)</em></div><div class="node"><strong>기상청 API허브</strong><em>해양기상부이</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>수집</b><div class="stack"><div class="node k"><strong>marine_collector</strong><em>작업 7개 · CLI · 스케줄 · 로그</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>원천 · 정제</b><div class="stack"><div class="node"><strong>data/raw</strong><em>기간별 원본 그대로</em></div><div class="node"><strong>data/clean</strong><em>열 이름 통일 + 품질 flag</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>서비스 저장소</b><div class="stack"><div class="node k"><strong>MariaDB marine_mart</strong><em>테이블 8 · 뷰 5 · upsert · load_log</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>쓰는 곳</b><div class="stack"><div class="node"><strong>Spring Boot marine-api :8080</strong><em>조회 6 · 적재 1</em></div><div class="node"><strong>Parquet + DuckDB</strong><em>분석 · 학습용 특징 표</em></div><div class="node"><strong>단원 2 · 3</strong><em>RAG 특보 문서 · 실시간 수온 · LSTM</em></div></div></div></div></div><div class="sd"><div class="bh">40시간 동안 지킨 원칙</div><div class="pl"><div><b>원본은 고치지 않는다</b><span>잘못되면 위층을 지우고 다시 만든다</span></div><div><b>다시 넣어도 안전하게</b><span>자연키 + ON DUPLICATE KEY UPDATE</span></div><div><b>의심값은 지우지 않고 표시</b><span>결측 · 범위 · 급변 → flag</span></div><div><b>키는 코드 밖에</b><span>.env 환경 변수 · 기관 서비스마다 키</span></div></div></div></div>
+<div class="kt"><div class="bh">U1-06 · marine-api 의 API 목록</div><table><tr><th>메서드 · 주소</th><th>하는 일</th><th>방식</th></tr><tr class=""><td>GET /api/stations?source=&amp;seaArea=</td><td>관측소 목록</td><td>쿼리 메서드</td></tr><tr class=""><td>GET /api/stations/{id}</td><td>관측소 하나</td><td>findById</td></tr><tr class=""><td>GET /api/stations/{id}/observations</td><td>기간별 관측값</td><td>쿼리 메서드</td></tr><tr class=""><td>GET /api/observations/latest</td><td>관측소별 최근 수온</td><td>JPQL + DTO</td></tr><tr class=""><td>GET /api/observations/sea-area-stats</td><td>해역별 평균·최저·최고</td><td>JPQL 집계</td></tr><tr class=""><td>GET /api/alerts?q=&amp;page=</td><td>특보 문서 검색</td><td>JPQL + Pageable</td></tr><tr class=""><td>POST /api/observations</td><td>관측값 적재</td><td>네이티브 upsert</td></tr></table></div><div class="ft"><span>AI·데이터 기반 해양·수산 서비스 개발자 과정 · 라이스리치AI · 부산IT교육센터 · 상세판</span><span>장 제목·숫자·질문은 교안 슬라이드에서 그대로 옮김</span></div><script>function fit(){document.body.style.zoom=Math.min(1,(innerWidth-16)/1600)}addEventListener("resize",fit);fit()</script></body></html>

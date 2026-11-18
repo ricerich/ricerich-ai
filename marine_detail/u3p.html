@@ -1,0 +1,183 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>단원 3 · P 프로젝트 — 해양 환경 데이터 기반 어장 위치 추천 — 상세판</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--a:#C2410C;--s:#FCEBDD;--ink:#0F1B2D;--mute:#5B6778;--line:#D9E0E8;--bg:#F6F8FA}
+body{width:1600px;height:1130px;background:var(--bg);font-family:'Pretendard','Malgun Gothic','Apple SD Gothic Neo','Noto Sans CJK KR',sans-serif;color:var(--ink);
+ padding:26px 30px 22px;display:flex;flex-direction:column;gap:12px;overflow:hidden;letter-spacing:-.01em}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.badge{display:inline-block;background:var(--a);color:#fff;font-weight:700;font-size:14px;padding:4px 10px;border-radius:4px;margin-right:10px;vertical-align:5px}
+h1{font-size:31px;font-weight:800;letter-spacing:-.025em}
+.sub{font-size:14px;color:var(--mute);margin-top:6px;font-weight:500}
+.goal{max-width:700px;text-align:right}
+.goal b{display:block;font-size:11px;letter-spacing:.08em;color:var(--a);font-weight:700;margin-bottom:3px}
+.goal p{font-size:15px;font-weight:600;line-height:1.4}
+.chips{display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-end;margin-top:7px}
+.chip{font-size:11px;font-weight:600;padding:2px 7px;border:1px solid var(--line);background:#fff;border-radius:10px;color:#334155}
+/* timeline */
+.tl{display:flex;height:30px;border-radius:5px;overflow:hidden;gap:2px}
+.tl div{display:flex;align-items:center;justify-content:center;gap:6px;color:#fff;font-size:11.5px;font-weight:700;white-space:nowrap;overflow:hidden}
+.tl i{font-style:normal;font-weight:500;opacity:.85}
+/* phases */
+.ph{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:14px}
+.ph>div{border-top:3px solid var(--a);padding-top:4px;font-size:13px;font-weight:700;color:var(--a)}
+.ph span{color:var(--mute);font-weight:500;margin-left:6px}
+.ph>div.alt{border-top-color:var(--ink);color:var(--ink)}
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:14px;flex:1;min-height:0}
+.card{flex:1;min-width:0;background:#fff;border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;position:relative}
+.card+.card::before{content:'';position:absolute;left:-12px;top:44px;border:5px solid transparent;border-left:8px solid #94A3B8}
+.ch{padding:9px 11px 8px;border-bottom:1px solid var(--line)}
+.code{display:flex;justify-content:space-between;align-items:baseline}
+.code b{font-size:13px;font-weight:800;color:var(--a)}
+.code span{font-size:11px;color:var(--mute);font-weight:600}
+.ct{font-size:14.5px;font-weight:700;line-height:1.3;margin-top:4px;min-height:38px}
+.hrs{display:flex;gap:2px;margin-top:6px}
+.hrs u{width:9px;height:5px;background:var(--a);border-radius:1px;text-decoration:none}
+.cb{padding:10px 11px;flex:1;display:flex;flex-direction:column;gap:10px}
+.lbl{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--mute);margin-bottom:3px}
+ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+li{font-size:12.8px;line-height:1.45;padding-left:10px;position:relative;color:#1E293B}
+li::before{content:'';position:absolute;left:0;top:7px;width:4px;height:4px;border-radius:50%;background:var(--a)}
+.lab{background:#F1F5F9;border-radius:5px;padding:6px 8px}
+.lab code{font-family:Consolas,'D2Coding','DejaVu Sans Mono',monospace;font-size:10.8px;font-weight:600;color:var(--ink);display:block;word-break:break-all}
+.lab small{font-size:10.8px;color:var(--mute);display:block;margin-top:2px;line-height:1.35;word-break:break-all}
+.num{background:var(--s);border-left:3px solid var(--a);border-radius:0 5px 5px 0;padding:7px 8px;font-size:12.4px;font-weight:600;line-height:1.42}
+.fw{display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:12px;line-height:1.35}
+.fw b{color:var(--a);font-weight:700;white-space:nowrap}
+.fw span{color:#1E293B}
+.out{margin-top:auto;font-size:11.6px;line-height:1.42;color:#334155;border-top:1px dashed var(--line);padding-top:7px}
+/* bottom */
+.bt{display:flex;gap:14px;height:262px}
+.fl{flex:1.75;background:#fff;border:1px solid var(--line);border-radius:8px;padding:11px 14px;display:flex;flex-direction:column}
+.sd{flex:1;background:var(--ink);color:#fff;border-radius:8px;padding:12px 16px;display:flex;flex-direction:column}
+.bh{font-size:14px;font-weight:800;margin-bottom:9px}
+.sd .bh{color:#fff}
+.cols{display:flex;flex:1;align-items:stretch;gap:0}
+.col{flex:1;display:flex;flex-direction:column;min-width:0}
+.col>b{font-size:10.5px;font-weight:700;letter-spacing:.05em;color:var(--a);margin-bottom:5px;text-align:center}
+.stack{flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.node{border:1.5px solid var(--a);border-radius:6px;padding:6px 8px;background:#fff;text-align:center}
+.node.k{background:var(--s)}
+.node strong{display:block;font-size:12.3px;font-weight:700;line-height:1.25}
+.node em{display:block;font-style:normal;font-size:10.8px;color:var(--mute);line-height:1.3;margin-top:2px}
+.arr{width:26px;display:flex;align-items:center;justify-content:center;padding-top:16px}
+.arr::before{content:'';width:15px;height:2px;background:#64748B;box-shadow:none;position:relative}
+.arr span{width:0;height:0;border:5px solid transparent;border-left:7px solid #64748B;margin-left:-1px}
+.pl{display:flex;flex-direction:column;gap:9px;flex:1;justify-content:center}
+.pl div b{display:block;font-size:13.5px;font-weight:700}
+.pl div span{display:block;font-size:12px;color:#B8C4D4;line-height:1.4;margin-top:1px}
+.pl div{padding-left:11px;border-left:3px solid var(--a)}
+.tb{width:100%;border-collapse:collapse;font-size:12px}
+.tb td{padding:6px 0;border-bottom:1px solid #2A3A52;vertical-align:top;line-height:1.4}
+.tb td:first-child{color:#B8C4D4;width:44%;padding-right:10px}
+.tb td:last-child{font-weight:600}
+.bars{display:flex;flex-direction:column;gap:7px;flex:1;justify-content:center}
+.bar{display:flex;align-items:center;gap:8px;font-size:12px}
+.bar>span:first-child{width:132px;color:#B8C4D4;text-align:right;flex:none}
+.bar .t{flex:1;height:15px;background:#22324A;border-radius:3px;position:relative}
+.bar .t i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:#64748B}
+.bar.hi .t i{background:var(--a)}
+.bar.hi>span:first-child{color:#fff;font-weight:700}
+.bar b{width:40px;font-weight:700;font-variant-numeric:tabular-nums}
+.note{font-size:11.5px;color:#B8C4D4;margin-top:8px;line-height:1.4}
+.ft{display:flex;justify-content:space-between;font-size:10.5px;color:var(--mute)}
+
+body{height:auto!important;overflow:visible!important}
+.rows{display:flex;flex-direction:column;gap:12px}
+.band{display:flex;align-items:center;gap:10px;margin-top:6px}
+.band b{font-size:15px;font-weight:800;color:var(--a)}
+.band span{font-size:13px;color:var(--mute);font-weight:500}
+.band i{flex:1;height:2px;background:var(--a);opacity:.35}
+.band.alt b{color:var(--ink)}.band.alt i{background:var(--ink)}
+.row{display:grid;grid-template-columns:270px 1fr 400px;background:#fff;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.row>div{padding:13px 15px}
+.m{background:var(--s);border-right:1px solid var(--line)}
+.m .code b{font-size:15px}
+.m .ct{font-size:17px;min-height:0;margin-top:5px}
+.m .hrs{margin:8px 0 10px}
+.m .fw{font-size:12.4px;gap:4px 9px}
+.m .lbl{margin-top:11px}
+.lrn{list-style:none;counter-reset:n}
+.lrn li{padding-left:10px;font-size:12.6px}
+.lrn li::before{top:8px}
+.sec{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:10px 14px;align-content:start}
+.sec>div{border-top:2px solid var(--line);padding-top:6px}
+.sec h4{font-size:12.6px;font-weight:800;color:var(--ink);margin-bottom:5px}
+.sec h4 small{font-weight:600;color:var(--a);margin-right:5px}
+.sec ol{list-style:none;display:flex;flex-direction:column;gap:3px}
+.sec ol li{font-size:12.2px;line-height:1.4;color:#334155;padding-left:9px;position:relative}
+.sec ol li::before{content:'';position:absolute;left:0;top:7px;width:4px;height:1.5px;background:#94A3B8}
+.sec ol li.hot{color:var(--ink);font-weight:600}
+.sec ol li.hot::before{background:var(--a);height:4px;width:4px;border-radius:50%;top:6px}
+.r{border-left:1px solid var(--line);display:flex;flex-direction:column;gap:9px}
+.qs{counter-reset:q;list-style:none;display:flex;flex-direction:column;gap:4px}
+.qs li{counter-increment:q;font-size:11.8px;line-height:1.42;padding-left:18px;color:#334155}
+.qs li::before{content:counter(q);position:absolute;left:0;top:1px;width:13px;height:13px;border-radius:50%;background:var(--ink);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.task{font-size:12px;line-height:1.45;background:#FFF8E6;border:1px solid #F3E2B3;border-radius:5px;padding:6px 8px;color:#5B4A1A}
+.task b{font-weight:700;color:#7A5B00;margin-right:4px}
+.mis{font-size:12.4px;line-height:1.45;font-weight:600}
+.legend{display:flex;gap:16px;font-size:11.5px;color:var(--mute);align-items:center}
+.legend em{font-style:normal;display:inline-flex;align-items:center;gap:5px}
+.legend em::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--a)}
+.bt{height:auto!important}
+.fl{min-height:250px}
+.kt{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 15px}
+.kt table{width:100%;border-collapse:collapse;font-size:12.4px}
+.kt th{text-align:left;font-size:11px;color:var(--mute);font-weight:700;border-bottom:1.5px solid var(--ink);padding:5px 8px}
+.kt td{padding:6px 8px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.kt td:first-child{font-weight:600}
+.kt tr.hl td{background:var(--s)}
+.lastrow{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
+html{background:#E5E9EF}body{margin:0 auto;box-shadow:0 2px 16px rgba(15,27,45,.12)}@page{size:1600px 2400px;margin:0}@media print{html{background:none}body{box-shadow:none;zoom:1!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}.row{break-inside:avoid}}</style></head><body style="--n:7">
+<div class="hd"><div><h1><span class="badge">단원 3 · P</span>프로젝트 — 해양 환경 데이터 기반 어장 위치 추천 <span style="font-size:17px;color:var(--mute);font-weight:600">상세판</span></h1><div class="sub">35시간 · 7회차 · 2026-11-03 ~ 11-17 · 교안 147장 · 완성 참고 프로젝트 fishing_ground_reco · UI 제외</div></div>
+<div class="goal"><b>이 과목이 끝나면</b><p>“내일 방어는 어느 권역이 평소보다 잘 잡힐까?” → 고등어 · 방어 · 삼치, 권역 14곳 중 Top-3 + 이유 · 경고</p><div class="chips"><span class="chip">위판 실적 API</span><span class="chip">조위관측소 14곳</span><span class="chip">바다낚시지수</span><span class="chip">기상청 해상예보</span><span class="chip">MariaDB</span><span class="chip">scikit-learn</span><span class="chip">P@3 · 부트스트랩</span></div></div></div>
+<div class="tl"><div style="flex:3;background:var(--a)" title="U3-P1">U3-P1 <i>3h</i></div><div style="flex:8;background:var(--a)" title="U3-P2">U3-P2 <i>8h</i></div><div style="flex:4;background:var(--a)" title="U3-P3">U3-P3 <i>4h</i></div><div style="flex:3;background:var(--ink)" title="U3-P4">U3-P4 <i>3h</i></div><div style="flex:8;background:var(--ink)" title="U3-P5">U3-P5 <i>8h</i></div><div style="flex:8;background:var(--ink)" title="U3-P6">U3-P6 <i>8h</i></div><div style="flex:1;background:var(--ink)" title="U3-P7"><i>1h</i></div></div><div class="legend"><span>● 굵은 장 제목 = 실제 데이터로 겪은 함정 · 버그 · 발견</span><span>노란 상자 = 다음 회차 전 과제 · 준비</span></div><div class="rows"><div class="band"><b>데이터 수집 및 서비스 기획</b><span>15시간 · 15시간 · 3회차</span><i></i></div><div class="row">
+<div class="m"><div class="code"><b>U3-P1</b><span>11/03 6~8교시 · 3시간 · 22장</span></div>
+<div class="ct">문제 정의와 데이터 지도</div><div class="hrs"><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>6교시</b><span>문제 정의 · 위판 자료</span><b>7교시</b><span>낚시지수 · 21개월 이력</span><b>8교시</b><span>정답 정하기 · 기획서</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>어장 = 권역 (위판장이 있는 항구 근처 바다) — 대리 지표의 한계</li><li>위판 API: 문자열 · 100건 · 포함 검색</li><li>낚시지수 = 파도 · 바람 → 비교 기준선</li><li>정답 후보 ② 평소 대비 · 채점 Hit@3</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>수업 구성</h4><ol><li class="">프로젝트 35시간 지도</li><li class="">어떤 서비스인가 — 사용자와 질문</li><li class="">가장 큰 문제 — &#x27;어디서 잡혔나&#x27;가 없다</li></ol></div><div><h4><small>02</small>위판 자료</h4><ol><li class="">위판 API — 받아 보고 알게 된 규칙</li><li class="">실습 1 · p1_step1_auction_day.py — 하루치 위판</li><li class="">건별 → 하루 집계 — 프로젝트의 기본 단위</li></ol></div><div><h4><small>03</small>이미 있는 추천 — 바다낚시지수</h4><ol><li class="">바다낚시지수 — 등급을 정하는 것은 파도와 바람</li><li class="">우리 해역의 오늘 — 같은 날, 장소마다 다르다</li></ol></div><div><h4><small>04</small>21개월 위판 이력</h4><ol><li class="">계절 — 세 어종이 다른 달에 많다</li><li class="">위판장 → 권역 14곳 — 좌표는 조위관측소로</li><li class="">권역별 비중 — 어종마다 &#x27;본거지&#x27;가 다르다</li><li class="">하루 단위로 보면 — 0 이 많고, 흔들림이 크다</li></ol></div><div><h4><small>05</small>정답 정하기와 기획서</h4><ol><li class="">정답(라벨) 후보 — 무엇을 &#x27;좋은 어장&#x27;이라 부를까</li><li class="">추천의 모양과 채점 — 지금 정해 둔다</li><li class="">미션 · 팀 기획서 1~4절</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>fishing_ground_reco</code><small>p1_step1_auction_day …</small></div>
+<div class="num">21개월 위판 — 고등어 106,245톤 · 삼치 32,077 · 방어 23,657</div><div class="mis">결과: 기획서 1~4절 · 라벨 = 평소 대비 · 채점 Hit@3</div><div class="task"><b>준비</b>공공데이터포털에서 「위판장별 위탁판매 현황」 활용 신청 (승인까지 시간이 걸릴 수 있음) · 기상청 API허브 키 확인.</div></div></div><div class="row">
+<div class="m"><div class="code"><b>U3-P2</b><span>11/04 · 8시간 · 24장</span></div>
+<div class="ct">수집기 4종 — 위판 · 관측 · 낚시지수 · 해상예보</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>공통 뼈대 · 위판</span><b>3~4교시</b><span>권역 관측 14곳</span><b>5~6교시</b><span>낚시지수 · 해상예보</span><b>7~8교시</b><span>매일 실행 · 로그 미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>요청 하나 = 파일 하나 · 반쪽 파일 막기 · 로그</li><li>위판은 며칠에 걸쳐 채워진다 → 최근 7일 다시</li><li>관측소가 늘면 고장 모양도 는다 → 규칙 + 검사</li><li>지난 자료 없는 예보는 오늘부터 쌓기</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>공통 뼈대와 위판 이력</h4><ol><li class="">공통 뼈대 — reco/collect/common.py</li><li class="">위판 수집기 — 페이지 넘기기와 &#x27;정확히 같은 이름&#x27;</li><li class="">실습 1 · p2_step1_auction.py — 한 주 받기</li><li class="hot">★ 위판 자료는 며칠에 걸쳐 채워진다</li></ol></div><div><h4><small>02</small>권역 관측 14곳</h4><ol><li class="">권역 ↔ 조위관측소 14곳</li><li class="">관측소가 늘면 고장 모양도 늘어난다</li><li class="">실습 2 · 권역 × 하루 요약</li></ol></div><div><h4><small>03</small>지난 자료가 없는 것 — 오늘부터 쌓기</h4><ol><li class="">바다낚시지수 스냅숏 — 날짜 이름으로 쌓기</li><li class="">기상청 해상예보 — 규칙이 또 다르다</li><li class="">numEf → 어느 날 오전/오후?</li><li class="">학습은 관측으로, 서비스는 예보로</li><li class="">강사 PC 점검 · p2_kma_check.py</li></ol></div><div><h4><small>04</small>매일 실행과 로그 점검</h4><ol><li class="">매일 한 번 — p2_run_daily.py</li><li class="">자동 검사 — 네트워크 없이 6개</li><li class="">미션 · p2_mission_log_report.py — 수집 로그 점검표</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>reco/collect/</code><small>common.py · collect_log.jsonl</small></div>
+<div class="num">발견: 위판은 며칠에 걸쳐 채워진다 → 최근 7일 다시 받기</div><div class="mis">미션: 수집 로그 점검표 (출처별 행 · 시간 · 빠진 날)</div><div class="task"><b>숙제</b>p2_run_daily.py 를 11/05 ~ 11/08 매일 실행(작업 스케줄러) — 낚시지수 · 해상예보는 이때 쌓인 것만 쓸 수 있다.</div></div></div><div class="row">
+<div class="m"><div class="code"><b>U3-P3</b><span>11/09 1~4교시 · 4시간 · 18장</span></div>
+<div class="ct">데이터 명세 · 붙이기 · EDA · 기획서 v1.0</div><div class="hrs"><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1교시</b><span>데이터 명세</span><b>2교시</b><span>붙이기 · 0 펼치기</span><b>3교시</b><span>EDA ① 수온 · 계절</span><b>4교시</b><span>EDA ② 0 인 날 · 기획서</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>명세: 숫자는 코드가, 뜻은 사람이</li><li>붙이기: 권역 · 날짜, 빠진 날은 0 으로 펼치기</li><li>수온 효과의 큰 부분은 계절 — 같은 달 안에서 보기</li><li>0 인 날: 일요일 · 돌풍 · 돌풍 다음 날</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>데이터 명세</h4><ol><li class="">데이터 명세 — 자동 초안 + 사람의 설명</li></ol></div><div><h4><small>02</small>위판 × 관측 붙이기</h4><ol><li class="">붙이는 열쇠 — 권역 · 날짜</li><li class="">권역 × 품목 — 위판 있는 날 %</li></ol></div><div><h4><small>03</small>탐색 ① 수온과 위판</h4><ol><li class="">수온 구간별 위판 — 품목마다 모양이 다르다</li><li class="">숫자로 보면 — 대표 세 곳</li><li class="hot">함정 — 수온일까, 계절일까?</li></ol></div><div><h4><small>04</small>탐색 ② 위판이 0 인 날</h4><ol><li class="">요일 — 일요일은 적고 월요일은 많다</li><li class="">바람 — 돌풍이 세면 0 이 늘고, 다음 날도 줄어든다</li></ol></div><div><h4><small>05</small>미션 · 기획서 v1.0</h4><ol><li class="">위판장 → 권역표 검토 — docs/위판장_권역표.csv</li><li class="">기획서 v1.0 — 5~9절을 오늘 숫자로</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>docs/</code><small>데이터명세_초안.md · 위판장_권역표.csv</small></div>
+<div class="mis">결과: 기획서 v1.0 (데이터 · 결과 모양 · 평가 · 위험 · 일정)</div><div class="task"><b>준비</b>단원 1 U1-05 의 MariaDB 가 켜져 있는지 확인 (없으면 SQLite 로 대신 진행 가능).</div></div></div><div class="band alt"><b>데이터 구축 및 AI 모델 설계</b><span>20시간 · 20시간 · 4회차</span><i></i></div><div class="row">
+<div class="m"><div class="code"><b>U3-P4</b><span>11/09 5~7교시 · 3시간 · 14장</span></div>
+<div class="ct">통합 테이블 설계 — MariaDB</div><div class="hrs"><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>5교시</b><span>설계 · ERD · DDL</span><b>6교시</b><span>적재 · 점검</span><b>7교시</b><span>뷰 vs 테이블 미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>기준 · 사실 · 학습용 — 테이블 10개 · 뷰 3개</li><li>기본키 + ON DUPLICATE KEY UPDATE = 다시 넣어도 하나</li><li>달력 CROSS JOIN 으로 &#x27;안 팔린 날 0&#x27;</li><li>뷰는 쿼리, 자주 쓰는 큰 조인은 테이블로</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>설계</h4><ol><li class="">세 종류의 테이블 — 단원 1 의 3계층을 다시</li><li class="">ERD — 권역(area)이 모든 것을 잇는다</li><li class="">DDL — 기본키가 &#x27;다시 넣어도 중복 없음&#x27;을 만든다</li><li class="">달력 테이블 — &#x27;안 팔린 날&#x27;을 DB 에서 만들기</li></ol></div><div><h4><small>02</small>적재와 점검</h4><ol><li class="">적재 순서 — 가리켜지는 쪽 먼저</li><li class="">점검 — DB 와 pandas 가 같은 답을 내나</li></ol></div><div><h4><small>03</small>미션 — 뷰 vs 테이블</h4><ol><li class="">같은 결과, 0.1초 vs 24초</li><li class="">미션 질문</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>sql/</code><small>01_schema.sql · 02_views.sql · ERD</small></div>
+<div class="num">테이블 10 · 뷰 3 — 같은 결과 뷰 24초 vs 테이블 0.1초</div><div class="mis">미션: 뷰 vs 테이블, EXPLAIN 으로 이유 찾기</div><div><div class="lbl">미션 질문</div><ol class="qs"><li style="position:relative">뷰 쪽 EXPLAIN 의 key 는? 그 열쇠로 한 번 찾을 때 실제로 몇 행이 나올까? (힌트: 하루에 권역 · 품목이 몇 개)</li><li style="position:relative">area_sales 를 다시 채우는 것을 잊으면 무슨 일이 생기나? 어떻게 막을까?</li><li style="position:relative">sea_forecast 의 기본키에서 tm_fc 를 빼면 무엇을 잃나?</li><li style="position:relative">calendar.holiday 를 채워 보기 — 2025 · 2026 설 · 추석은? 위판이 정말 줄었나 SQL 로</li><li style="position:relative">(도전) 위판장마다 &#x27;평소(최근 28일 중앙값)&#x27;를 SQL 로 — 윈도 함수가 필요하다 (P5 에서 pandas 로 다시)</li></ol></div></div></div><div class="row">
+<div class="m"><div class="code"><b>U3-P5</b><span>11/10 · 8시간 · 26장</span></div>
+<div class="ct">학습셋 — 라벨 · 특성 · 누수 막기</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>라벨 · 뺄 날</span><b>3교시</b><span>요일 보정</span><b>4~5교시</b><span>특성 15개</span><b>6교시</b><span>누수 실험</span><b>7~8교시</b><span>저장 · 미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>라벨 = 평소(28일 중앙값) × 1.5 × 요일 보정</li><li>판단할 수 없는 날은 0 이 아니라 NaN</li><li>특성은 어제까지 + 오늘 달력, log1p 로 눈금 맞추기</li><li>누수 하나로 AUC 0.814 → 0.886 (가짜)</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>라벨 — 무엇을 맞힐까</h4><ol><li class="">질문을 한 줄로 — 한 행 = 권역 × 품목 × 날짜</li><li class="">평소 = 어제까지 28일, 팔린 날의 중앙값</li><li class="">날마다 라벨 붙이기 — 방어 · 포항·영덕</li><li class="">판단할 수 없는 날은 0 이 아니라 &#x27;빼기&#x27;(NaN)</li><li class="">p5_step1_label.py — 한 주를 손으로 확인</li></ol></div><div><h4><small>02</small>요일 보정</h4><ol><li class="">요일마다 &#x27;좋은 날&#x27; 비율이 다르다 → 문턱을 요일마다</li><li class="">보정값은 학습 구간(~2026-03-31)에서만 구한다</li></ol></div><div><h4><small>03</small>특성 — 그때 알 수 있는 것만</h4><ol><li class="">시점 그림 — D 날 아침, 추천을 낼 때 무엇이 있나</li><li class="">특성 15개 (+ 예보 대용 1개)</li><li class="">평소 대비는 log 로 눌러 쓴다 — log1p</li><li class="">하나씩 볼 때 — 어떤 특성이 &#x27;좋은 날&#x27;을 가르나</li></ol></div><div><h4><small>04</small>누수 실험</h4><ol><li class="">특성 하나만 바꿔 본다 — 7일 평균의 &#x27;창 위치&#x27;</li><li class="">누수가 숨어드는 곳 — 점검표</li></ol></div><div><h4><small>05</small>학습셋 저장</h4><ol><li class="">시간순 분할 — 단원 3 AI 트랙과 같은 날짜</li><li class="">학습셋 명세 — 코드가 만드는 문서</li></ol></div><div><h4><small>06</small>미션 — 좋은 라벨이란</h4><ol><li class="">12가지 라벨을 만들어 비교한다</li><li class="">미션 질문</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>reco/trainset.py</code><small>train_set.csv · 학습셋_명세.md</small></div>
+<div class="num">20,681행 · 좋은 날 30.9% · 누수 하나로 AUC 0.814 → 0.886(가짜)</div><div class="mis">미션: 라벨 12가지를 만들어 비교</div><div><div class="lbl">미션 질문</div><ol class="qs"><li style="position:relative">문턱 2.0 · 평소 14일이 &#x27;어제 좋으면 오늘도&#x27;가 가장 낮다(45%). 그럼 가장 좋은 라벨인가? 무엇을 잃나?</li><li style="position:relative">일요일을 빼지 않고 0 으로 두면 좋은 날 비율과 요일 효과는? (label() 의 한 줄을 지우고 다시)</li><li style="position:relative">돌풍 기준 14m/s 를 10 · 18 로 바꾸면 빠지는 행은? P3 의 &#x27;돌풍 다음 날 0 비율 43%&#x27;도 빼야 할까?</li><li style="position:relative">누수 특성을 하나 더 만들어 AUC 를 재 보라 — 예: 오늘 위판 건수(n), 전체 기간 평년</li><li style="position:relative">(도전) &#x27;좋은 날&#x27; 대신 상위 3권역 안에 드는가(순위 라벨)로 바꾸면? P6 의 Hit@3 과 어떻게 이어지나</li></ol></div><div class="task"><b>숙제</b>팀이 고른 라벨로 train_set.csv 를 다시 만들어 오기 (build_trainset(threshold, window, weekday_adjust)) — P6 은 각 팀의 학습셋으로 시작한다.</div></div></div><div class="row">
+<div class="m"><div class="code"><b>U3-P6</b><span>11/11 · 8시간 · 27장</span></div>
+<div class="ct">모델 설계 · 순위 평가 · 추천 API</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>순위 평가 · 기준선</span><b>3~4교시</b><span>모델 3종 · 비교</span><b>5교시</b><span>무엇을 보나</span><b>6~7교시</b><span>고르기 · API</span><b>8교시</b><span>미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>순위 평가: 주 지표 P@3 · 무작위와 규칙부터</li><li>0.01 차이는 부트스트랩 구간으로 판단</li><li>바다 특성만 &lt; 무작위 · 힘은 최근 위판</li><li>예보는 특성보다 경고 규칙 · 응답에 근거와 빠진 이유</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>순위로 평가하기</h4><ol><li class="">서비스의 답은 확률이 아니라 &#x27;권역 순위&#x27;</li><li class="">하루 하나를 손으로 채점 — 방어 · 2026-04-03</li><li class="">규칙 기준선 — 모델은 이것들을 이겨야 한다</li></ol></div><div><h4><small>02</small>모델 3종</h4><ol><li class="">같은 학습셋 · 같은 잣대, 성격이 다른 모델 3개</li><li class="">결과 — 모델 셋 다 규칙과 0.01 안팎</li><li class="">0.01 차이는 진짜인가 — 묶음 다시 뽑기(부트스트랩)</li><li class="">어디서 차이가 나나 — 품목별 · 요일별 P@3</li></ol></div><div><h4><small>03</small>모델은 무엇을 보나</h4><ol><li class="">특성 묶음 빼 보기 — 바다 특성만으로는?</li><li class="">섞어 보기(permutation) — 모델은 무엇에 기대나</li><li class="">&#x27;완벽한 예보&#x27;가 있다면? — 오늘 돌풍(f_gust_today)</li></ol></div><div><h4><small>04</small>고르기 · 시험 · 저장</h4><ol><li class="">고르는 규칙을 먼저 정하고 나서 test 를 연다</li><li class="">최종 모델 저장 — train + val 로 다시 학습</li></ol></div><div><h4><small>05</small>추천 API 설계</h4><ol><li class="">recommend() — 요청 하나가 응답이 되기까지</li><li class="">응답 본문 — 사용자가 &#x27;왜?&#x27;를 물을 수 있게</li><li class="">오류 · 대체 · 미리 계산</li><li class="">지켜보기와 한계 — 설계서에 적을 것</li></ol></div><div><h4><small>06</small>미션 — 서비스 위험을 숫자로</h4><ol><li class="">A) 작은 권역 빼기 · B) 덜 채워진 &#x27;어제&#x27;</li><li class="">미션 질문</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>models/reco_v1</code><small>rank.py · recommend.py · 추천API_설계.md</small></div>
+<div class="num">시험 P@3 로지스틱 0.606 vs 규칙 0.601 · 차 +0.005 [−0.022, +0.032]</div><div class="mis">미션: 작은 권역 빼기 · 덜 채워진 &#x27;어제&#x27; 처리</div><div><div class="lbl">미션 질문</div><ol class="qs"><li style="position:relative">min_usual_kg 를 몇으로 할까? 정확도와 &#x27;추천 3곳의 평소 위판량&#x27; 중 무엇을 우선하나 — 사용자(P1 페르소나)를 근거로</li><li style="position:relative">덜 채워진 어제: 그대로 쓸까, D−2 를 쓸까, 추천 시각을 늦출까? 각각 무엇을 잃나</li><li style="position:relative">모델이 규칙과 같다면 왜 모델을 쓰나? 안 쓴다면 무엇을 잃나 (근거 문장 · 확장성 · 운영 비용)</li><li style="position:relative">바다 특성이 쓸모 있으려면 라벨을 어떻게 바꿔야 할까? (예: 평소 대비 대신 &#x27;절대량&#x27; · 주 단위)</li><li style="position:relative">(도전) 최근 위판 4개만 쓰는 로지스틱으로 다시 — 15개와 시험 P@3 를 부트스트랩으로 비교</li></ol></div><div class="task"><b>숙제</b>기획서 6 · 7절 + docs/추천API_설계.md 를 팀 결정(min_usual_kg · 어제 처리)으로 고쳐 오기. 발표 슬라이드 10장 이내.</div></div></div><div class="row">
+<div class="m"><div class="code"><b>U3-P7</b><span>11/17 1교시 · 1시간 · 16장</span></div>
+<div class="ct">설계 발표 — 어장 위치 추천</div><div class="hrs"><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>0~5분</b><span>진행 안내 · 평가 기준</span><b>5~55분</b><span>팀 발표 5팀 × 10분</span><b>55~60분</b><span>총평 · 예시 발표 비교</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>팀 발표 5팀 × 10분 · 슬라이드 10장</li><li>평가표 6항목 100점 (모델 평가 25%)</li><li>강사 예시 발표 ①~⑧ · 하지 말 것</li><li>서로 묻기 — 예상 질문 6개</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>수업 구성</h4><ol><li class="">슬라이드 10장 — 권장 순서</li><li class="">하지 말 것 — 그리고 대신 할 말</li><li class="">강사 예시 발표</li><li class="">① 문제 · 사용자 · &#x27;어장&#x27;의 정의</li><li class="hot">② 데이터 지도 — 실제로 만난 문제</li><li class="">③ 저장 설계 — 테이블 10개 · 뷰 3개</li><li class="">④ 라벨과 특성 — 그날 알 수 있는 것만</li><li class="">⑤ 규칙 vs 모델 — 같은 수준이다</li><li class="">⑥ 무엇이 맞히나 — 최근 위판, 바다는 아직</li><li class="">⑦ 추천 API — 근거 · 경고 · 빠진 이유까지</li><li class="">⑧ 한계와 다음 할 일</li><li class="">마무리</li><li class="">서로 묻기 — 예상 질문</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>docs/</code><small>발표_가이드.md · 발표_평가표.xlsx</small></div>
+<div class="mis">결론: 기준선부터 재고, 모르는 것은 말한다</div></div></div></div><div class="bt"><div class="fl"><div class="bh">완성된 구조 — 수집 → 구축 → 모델 → 추천 API</div><div class="cols"><div class="col"><b>출처 4곳</b><div class="stack"><div class="node"><strong>위판 실적</strong><em>해양수산부 · 하루 × 품목</em></div><div class="node"><strong>조위관측소 14곳</strong><em>국립해양조사원 · 권역 관측</em></div><div class="node"><strong>낚시지수 · 해상예보</strong><em>오늘부터 쌓는 스냅숏</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>수집</b><div class="stack"><div class="node"><strong>data/raw</strong><em>요청 하나 = 파일 하나</em></div><div class="node"><strong>collect_log</strong><em>성공 · 실패 · 시간</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>구축</b><div class="stack"><div class="node"><strong>MariaDB</strong><em>기준 · 사실 · 학습용 · 테이블 10</em></div><div class="node"><strong>area_day</strong><em>권역 × 품목 × 날짜</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>학습셋 · 모델</b><div class="stack"><div class="node"><strong>train_set.csv</strong><em>라벨 + 특성 15</em></div><div class="node"><strong>models/reco_v1</strong><em>로지스틱 (규칙 대체 가능)</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>추천</b><div class="stack"><div class="node k"><strong>recommend()</strong><em>Top-3 · 이유 · 경고(풍속 14m/s↑) · 제외</em></div></div></div></div></div><div class="sd"><div class="bh">시험 구간 P@3 — 모두 규칙과 같은 수준</div><div class="bars"><div class="bar"><span>무작위</span><div class="t"><i style="width:49.9%"></i></div><b>0.349</b></div><div class="bar"><span>바다 특성만</span><div class="t"><i style="width:46.4%"></i></div><b>0.325</b></div><div class="bar"><span>규칙: 어제 좋았던 곳</span><div class="t"><i style="width:85.9%"></i></div><b>0.601</b></div><div class="bar hi"><span>로지스틱 (선택)</span><div class="t"><i style="width:86.6%"></i></div><b>0.606</b></div><div class="bar"><span>GBM</span><div class="t"><i style="width:84.7%"></i></div><b>0.593</b></div><div class="bar"><span>MLP</span><div class="t"><i style="width:84.4%"></i></div><b>0.591</b></div></div><div class="note">힘은 최근 위판에서 나온다 · 예보는 특성보다 경고 규칙으로</div></div></div>
+<div class="kt"><div class="bh">U3-P7 · 설계 발표 평가표 (100점)</div><table><tr><th>평가 항목</th><th>가중치</th><th>5점이면</th></tr><tr class=""><td>문제 · 대리 지표</td><td>15%</td><td>사용자 한 문장 · &#x27;어장 = 권역&#x27;의 한계 2개 이상</td></tr><tr class=""><td>데이터 · 저장 설계</td><td>15%</td><td>실제로 만난 문제를 숫자로 · ERD · 기본키 이유</td></tr><tr class=""><td>라벨 · 특성 · 누수</td><td>20%</td><td>라벨 · 뺀 날 · 비율 · 특성의 &#x27;언제의 값&#x27; · 누수 실험</td></tr><tr class="hl"><td>모델 평가 (기준선 · 구간)</td><td>25%</td><td>무작위 · 규칙 비교 · P@3 + 95% 구간 · 시험 전에 고르는 규칙</td></tr><tr class=""><td>API · 운영 설계</td><td>15%</td><td>응답 JSON · 오류 · 미리 계산 · 지켜보기</td></tr><tr class=""><td>발표 · 질의응답</td><td>10%</td><td>7분 안 · 질문에 숫자로 답함</td></tr></table></div><div class="ft"><span>AI·데이터 기반 해양·수산 서비스 개발자 과정 · 라이스리치AI · 부산IT교육센터 · 상세판</span><span>장 제목·숫자·질문은 교안 슬라이드에서 그대로 옮김</span></div><script>function fit(){document.body.style.zoom=Math.min(1,(innerWidth-16)/1600)}addEventListener("resize",fit);fit()</script></body></html>

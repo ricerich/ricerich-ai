@@ -1,0 +1,176 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>단원 3 · A 인공지능 서비스 구현 — 수온 예측 — 상세판</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--a:#0F766E;--s:#DDF3EF;--ink:#0F1B2D;--mute:#5B6778;--line:#D9E0E8;--bg:#F6F8FA}
+body{width:1600px;height:1130px;background:var(--bg);font-family:'Pretendard','Malgun Gothic','Apple SD Gothic Neo','Noto Sans CJK KR',sans-serif;color:var(--ink);
+ padding:26px 30px 22px;display:flex;flex-direction:column;gap:12px;overflow:hidden;letter-spacing:-.01em}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.badge{display:inline-block;background:var(--a);color:#fff;font-weight:700;font-size:14px;padding:4px 10px;border-radius:4px;margin-right:10px;vertical-align:5px}
+h1{font-size:31px;font-weight:800;letter-spacing:-.025em}
+.sub{font-size:14px;color:var(--mute);margin-top:6px;font-weight:500}
+.goal{max-width:700px;text-align:right}
+.goal b{display:block;font-size:11px;letter-spacing:.08em;color:var(--a);font-weight:700;margin-bottom:3px}
+.goal p{font-size:15px;font-weight:600;line-height:1.4}
+.chips{display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-end;margin-top:7px}
+.chip{font-size:11px;font-weight:600;padding:2px 7px;border:1px solid var(--line);background:#fff;border-radius:10px;color:#334155}
+/* timeline */
+.tl{display:flex;height:30px;border-radius:5px;overflow:hidden;gap:2px}
+.tl div{display:flex;align-items:center;justify-content:center;gap:6px;color:#fff;font-size:11.5px;font-weight:700;white-space:nowrap;overflow:hidden}
+.tl i{font-style:normal;font-weight:500;opacity:.85}
+/* phases */
+.ph{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:14px}
+.ph>div{border-top:3px solid var(--a);padding-top:4px;font-size:13px;font-weight:700;color:var(--a)}
+.ph span{color:var(--mute);font-weight:500;margin-left:6px}
+.ph>div.alt{border-top-color:var(--ink);color:var(--ink)}
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:14px;flex:1;min-height:0}
+.card{flex:1;min-width:0;background:#fff;border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;position:relative}
+.card+.card::before{content:'';position:absolute;left:-12px;top:44px;border:5px solid transparent;border-left:8px solid #94A3B8}
+.ch{padding:9px 11px 8px;border-bottom:1px solid var(--line)}
+.code{display:flex;justify-content:space-between;align-items:baseline}
+.code b{font-size:13px;font-weight:800;color:var(--a)}
+.code span{font-size:11px;color:var(--mute);font-weight:600}
+.ct{font-size:14.5px;font-weight:700;line-height:1.3;margin-top:4px;min-height:38px}
+.hrs{display:flex;gap:2px;margin-top:6px}
+.hrs u{width:9px;height:5px;background:var(--a);border-radius:1px;text-decoration:none}
+.cb{padding:10px 11px;flex:1;display:flex;flex-direction:column;gap:10px}
+.lbl{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--mute);margin-bottom:3px}
+ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+li{font-size:12.8px;line-height:1.45;padding-left:10px;position:relative;color:#1E293B}
+li::before{content:'';position:absolute;left:0;top:7px;width:4px;height:4px;border-radius:50%;background:var(--a)}
+.lab{background:#F1F5F9;border-radius:5px;padding:6px 8px}
+.lab code{font-family:Consolas,'D2Coding','DejaVu Sans Mono',monospace;font-size:10.8px;font-weight:600;color:var(--ink);display:block;word-break:break-all}
+.lab small{font-size:10.8px;color:var(--mute);display:block;margin-top:2px;line-height:1.35;word-break:break-all}
+.num{background:var(--s);border-left:3px solid var(--a);border-radius:0 5px 5px 0;padding:7px 8px;font-size:12.4px;font-weight:600;line-height:1.42}
+.fw{display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:12px;line-height:1.35}
+.fw b{color:var(--a);font-weight:700;white-space:nowrap}
+.fw span{color:#1E293B}
+.out{margin-top:auto;font-size:11.6px;line-height:1.42;color:#334155;border-top:1px dashed var(--line);padding-top:7px}
+/* bottom */
+.bt{display:flex;gap:14px;height:262px}
+.fl{flex:1.75;background:#fff;border:1px solid var(--line);border-radius:8px;padding:11px 14px;display:flex;flex-direction:column}
+.sd{flex:1;background:var(--ink);color:#fff;border-radius:8px;padding:12px 16px;display:flex;flex-direction:column}
+.bh{font-size:14px;font-weight:800;margin-bottom:9px}
+.sd .bh{color:#fff}
+.cols{display:flex;flex:1;align-items:stretch;gap:0}
+.col{flex:1;display:flex;flex-direction:column;min-width:0}
+.col>b{font-size:10.5px;font-weight:700;letter-spacing:.05em;color:var(--a);margin-bottom:5px;text-align:center}
+.stack{flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.node{border:1.5px solid var(--a);border-radius:6px;padding:6px 8px;background:#fff;text-align:center}
+.node.k{background:var(--s)}
+.node strong{display:block;font-size:12.3px;font-weight:700;line-height:1.25}
+.node em{display:block;font-style:normal;font-size:10.8px;color:var(--mute);line-height:1.3;margin-top:2px}
+.arr{width:26px;display:flex;align-items:center;justify-content:center;padding-top:16px}
+.arr::before{content:'';width:15px;height:2px;background:#64748B;box-shadow:none;position:relative}
+.arr span{width:0;height:0;border:5px solid transparent;border-left:7px solid #64748B;margin-left:-1px}
+.pl{display:flex;flex-direction:column;gap:9px;flex:1;justify-content:center}
+.pl div b{display:block;font-size:13.5px;font-weight:700}
+.pl div span{display:block;font-size:12px;color:#B8C4D4;line-height:1.4;margin-top:1px}
+.pl div{padding-left:11px;border-left:3px solid var(--a)}
+.tb{width:100%;border-collapse:collapse;font-size:12px}
+.tb td{padding:6px 0;border-bottom:1px solid #2A3A52;vertical-align:top;line-height:1.4}
+.tb td:first-child{color:#B8C4D4;width:44%;padding-right:10px}
+.tb td:last-child{font-weight:600}
+.bars{display:flex;flex-direction:column;gap:7px;flex:1;justify-content:center}
+.bar{display:flex;align-items:center;gap:8px;font-size:12px}
+.bar>span:first-child{width:132px;color:#B8C4D4;text-align:right;flex:none}
+.bar .t{flex:1;height:15px;background:#22324A;border-radius:3px;position:relative}
+.bar .t i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:#64748B}
+.bar.hi .t i{background:var(--a)}
+.bar.hi>span:first-child{color:#fff;font-weight:700}
+.bar b{width:40px;font-weight:700;font-variant-numeric:tabular-nums}
+.note{font-size:11.5px;color:#B8C4D4;margin-top:8px;line-height:1.4}
+.ft{display:flex;justify-content:space-between;font-size:10.5px;color:var(--mute)}
+
+body{height:auto!important;overflow:visible!important}
+.rows{display:flex;flex-direction:column;gap:12px}
+.band{display:flex;align-items:center;gap:10px;margin-top:6px}
+.band b{font-size:15px;font-weight:800;color:var(--a)}
+.band span{font-size:13px;color:var(--mute);font-weight:500}
+.band i{flex:1;height:2px;background:var(--a);opacity:.35}
+.band.alt b{color:var(--ink)}.band.alt i{background:var(--ink)}
+.row{display:grid;grid-template-columns:270px 1fr 400px;background:#fff;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.row>div{padding:13px 15px}
+.m{background:var(--s);border-right:1px solid var(--line)}
+.m .code b{font-size:15px}
+.m .ct{font-size:17px;min-height:0;margin-top:5px}
+.m .hrs{margin:8px 0 10px}
+.m .fw{font-size:12.4px;gap:4px 9px}
+.m .lbl{margin-top:11px}
+.lrn{list-style:none;counter-reset:n}
+.lrn li{padding-left:10px;font-size:12.6px}
+.lrn li::before{top:8px}
+.sec{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:10px 14px;align-content:start}
+.sec>div{border-top:2px solid var(--line);padding-top:6px}
+.sec h4{font-size:12.6px;font-weight:800;color:var(--ink);margin-bottom:5px}
+.sec h4 small{font-weight:600;color:var(--a);margin-right:5px}
+.sec ol{list-style:none;display:flex;flex-direction:column;gap:3px}
+.sec ol li{font-size:12.2px;line-height:1.4;color:#334155;padding-left:9px;position:relative}
+.sec ol li::before{content:'';position:absolute;left:0;top:7px;width:4px;height:1.5px;background:#94A3B8}
+.sec ol li.hot{color:var(--ink);font-weight:600}
+.sec ol li.hot::before{background:var(--a);height:4px;width:4px;border-radius:50%;top:6px}
+.r{border-left:1px solid var(--line);display:flex;flex-direction:column;gap:9px}
+.qs{counter-reset:q;list-style:none;display:flex;flex-direction:column;gap:4px}
+.qs li{counter-increment:q;font-size:11.8px;line-height:1.42;padding-left:18px;color:#334155}
+.qs li::before{content:counter(q);position:absolute;left:0;top:1px;width:13px;height:13px;border-radius:50%;background:var(--ink);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.task{font-size:12px;line-height:1.45;background:#FFF8E6;border:1px solid #F3E2B3;border-radius:5px;padding:6px 8px;color:#5B4A1A}
+.task b{font-weight:700;color:#7A5B00;margin-right:4px}
+.mis{font-size:12.4px;line-height:1.45;font-weight:600}
+.legend{display:flex;gap:16px;font-size:11.5px;color:var(--mute);align-items:center}
+.legend em{font-style:normal;display:inline-flex;align-items:center;gap:5px}
+.legend em::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--a)}
+.bt{height:auto!important}
+.fl{min-height:250px}
+.kt{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 15px}
+.kt table{width:100%;border-collapse:collapse;font-size:12.4px}
+.kt th{text-align:left;font-size:11px;color:var(--mute);font-weight:700;border-bottom:1.5px solid var(--ink);padding:5px 8px}
+.kt td{padding:6px 8px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.kt td:first-child{font-weight:600}
+.kt tr.hl td{background:var(--s)}
+.lastrow{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
+html{background:#E5E9EF}body{margin:0 auto;box-shadow:0 2px 16px rgba(15,27,45,.12)}@page{size:1600px 2400px;margin:0}@media print{html{background:none}body{box-shadow:none;zoom:1!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}.row{break-inside:avoid}}</style></head><body style="--n:6">
+<div class="hd"><div><h1><span class="badge">단원 3 · A</span>인공지능 서비스 구현 — 수온 예측 <span style="font-size:17px;color:var(--mute);font-weight:600">상세판</span></h1><div class="sub">40시간 · 6회차 · 2026-10-30 ~ 11-16 · 교안 138장 · 실습 u3_ai · u3_service</div></div>
+<div class="goal"><b>이 과목이 끝나면</b><p>가덕도의 지난 72시간 관측으로 24시간 뒤 수온을 예측하고, 화면에 보여 주고, 실제 성적까지 기록하는 서비스</p><div class="chips"><span class="chip">국립해양조사원 dtRecent 1시간</span><span class="chip">4곳 × 652일</span><span class="chip">pandas</span><span class="chip">PyTorch</span><span class="chip">LSTM</span><span class="chip">1D-CNN</span><span class="chip">torch.export</span><span class="chip">FastAPI · pytest</span><span class="chip">React 19 + SVG</span><span class="chip">Spring Boot 4.1</span></div></div></div>
+<div class="tl"><div style="flex:2;background:var(--a)" title="U3-A1">U3-A1 <i>2h</i></div><div style="flex:8;background:var(--a)" title="U3-A2">U3-A2 <i>8h</i></div><div style="flex:8;background:var(--ink)" title="U3-A3">U3-A3 <i>8h</i></div><div style="flex:8;background:var(--ink)" title="U3-A4">U3-A4 <i>8h</i></div><div style="flex:8;background:var(--a)" title="U3-A5">U3-A5 <i>8h</i></div><div style="flex:6;background:var(--a)" title="U3-A6">U3-A6 <i>6h</i></div></div><div class="legend"><span>● 굵은 장 제목 = 실제 데이터로 겪은 함정 · 버그 · 발견</span><span>노란 상자 = 다음 회차 전 과제 · 준비</span></div><div class="rows"><div class="band"><b>데이터 · 문제</b><span>품질 → 창 → 기준선 · 10시간 · 2회차</span><i></i></div><div class="row">
+<div class="m"><div class="code"><b>U3-A1</b><span>10/30 7~8교시 · 2시간 · 25장</span></div>
+<div class="ct">시간별 수온 데이터로 예측 문제 세우기</div><div class="hrs"><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>7교시 전반</b><span>단원 3 지도 · 자료</span><b>7교시 후반</b><span>품질 점검 · 정리</span><b>8교시 전반</b><span>수온의 리듬</span><b>8교시 후반</b><span>문제 정의 · 미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>다시 색인으로 빠진 시각을 드러낸다</li><li>고장 표시 0.0 · 오전 8시 튐 — 규칙은 데이터를 보고</li><li>짧은 빈칸만 채우고, 긴 빈칸은 지어내지 않는다</li><li>72시간 → 24시간 뒤 · 시간순 분할 · 넘을 점수 0.176℃(통영)</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>자료</h4><ol><li class="">자료 — 조위관측소 최신 관측데이터 (dtRecent)</li><li class="">받는 방법 — 요청 1번 = 1곳 × 하루</li><li class="">실습 1 · a1_step1_load.py — 몇 줄, 언제부터 언제까지</li></ol></div><div><h4><small>02</small>품질 점검</h4><ol><li class="">다시 색인(reindex) — 빠진 시각을 보이게</li><li class="hot">실제로 찾은 &#x27;고장 표시&#x27; — 값이 정확히 0.0</li><li class="">한 시간만 튄 값 — 가덕도의 &#x27;오전 8시&#x27;</li><li class="">실습 2 · a1_step2_quality.py — 통영 점검표</li><li class="">결측 지도 — 4곳이 같은 날 빠지면?</li><li class="">채울까 둘까 — 짧은 빈칸만 채운다</li></ol></div><div><h4><small>03</small>수온의 리듬</h4><ol><li class="">계절 — 21개월, 4곳</li><li class="">하루 주기 — 생각보다 작다, 여름엔 하루 두 번</li><li class="">기온이 바뀌면 수온은 언제 따라오나</li><li class="">이겨야 할 점수 — &#x27;그대로 두기&#x27; 예측</li></ol></div><div><h4><small>04</small>문제 정의와 미션</h4><ol><li class="">예측 문제 — 지난 72시간을 보고 24시간 뒤를</li><li class="">시간 순으로 나눈다 — 섞으면 미래를 훔쳐본다</li><li class="">미션 · a1_mission_report.py — 어느 관측소로 배울까</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u3_ai</code><small>a1_explore · a1_mission_report</small></div>
+<div class="num">학습 관측소 = 가덕도 (결측 0.29% · 28℃↑ 351시간)</div><div class="mis">미션: 4곳 점검표로 관측소 고르기</div><div class="task"><b>준비</b>torch 설치 확인: python -c &quot;import torch; print(torch.__version__)&quot; — GPU 가 없으면 CPU 판으로 충분합니다.</div></div></div><div class="row">
+<div class="m"><div class="code"><b>U3-A2</b><span>11/05 · 8시간 · 25장</span></div>
+<div class="ct">전처리 · 슬라이딩 윈도우 · 기준선 · Dataset</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>특성 만들기</span><b>3~4교시</b><span>나누기 · 정규화 · 누수</span><b>5~6교시</b><span>윈도우 · 기준선</span><b>7~8교시</b><span>Dataset · 학습 루프 · 미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>풍향 → 바람 벡터 · 시각 · 날짜 → sin/cos</li><li>시간순 분할 · 학습 구간 정규화 · 누수 실험</li><li>창 15,553개 · 기준선 점수표 (그대로 0.481℃)</li><li>Dataset · DataLoader · 학습 루프 4줄</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>특성 만들기</h4><ol><li class="">풍향은 숫자가 아니다 — 바람 벡터(u, v)로</li><li class="">시각 · 날짜는 원 위의 점으로 — sin, cos</li><li class="">특성 12개 — 무엇을 넣었나</li></ol></div><div><h4><small>02</small>나누기 · 정규화 · 누수</h4><ol><li class="hot">시간순 3구간 — 실제로 들어 있는 것</li><li class="">정규화 — 학습 구간의 평균 · 표준편차로만</li><li class="">누수 실험 — 섞어서 나누면 얼마나 좋아 보이나</li></ol></div><div><h4><small>03</small>슬라이딩 윈도우와 기준선</h4><ol><li class="">슬라이딩 윈도우 — 작은 예로</li><li class="hot">실제 창 — 가덕도 72시간 × 12특성 → 24시간 뒤</li><li class="">기준선 3종 — baselines.py</li><li class="">성적표 — 3회차 LSTM 이 넘어야 할 점수</li><li class="">MAE 만 보면 안 되는 이유 — 평균 쪽으로 당기는 모델</li></ol></div><div><h4><small>04</small>PyTorch Dataset · 학습 루프</h4><ol><li class="">Dataset · DataLoader — 창을 묶음(batch)으로</li><li class="">텐서 모양 (B, T, F) — 모델이 받는 것</li><li class="">학습 루프 4줄 — 가장 작은 선형 모델로</li></ol></div><div><h4><small>05</small>미션</h4><ol><li class="">미션 · a2_mission_settings.py — 설정 바꿔 보기</li><li class="">미션 질문 — 표를 보고 한 줄씩</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u3_ai</code><small>marine_ts/prepare.py · baselines.py</small></div>
+<div class="num">시험 MAE — 그대로 0.481 · 하루 평균 0.596 · 선형 0.457(경보 놓침 107)</div><div class="mis">결론: &#x27;지금 그대로&#x27;가 넘기 어려운 점수</div><div><div class="lbl">미션 질문</div><ol class="qs"><li style="position:relative">MAX_GAP_H=0 일 때 창이 왜 2,151개뿐인가? (힌트: 1회차의 &#x27;오전 8시&#x27;)</li><li style="position:relative">통영은 왜 MAE 가 0.15 로 낮은가? 그래도 3회차에 가덕도로 하는 이유는?</li><li style="position:relative">입력 24시간이 72시간보다 좋았다. 그럼 1회차의 &#x27;72시간&#x27; 결정은 틀렸나?</li><li style="position:relative">검증에는 28℃ 가 없다. 경보 실력은 언제 · 어떻게 확인해야 하나?</li><li style="position:relative">(도전) features= 로 특성을 줄여(수온 · 시각만) 다시 재 보기</li></ol></div><div class="task"><b>준비</b>python a2_step5_dataset.py 가 돌면 3회차 준비 끝. 한 epoch 시간을 적어 오기 — LSTM 학습 시간을 예상하는 데 쓴다.</div></div></div><div class="band alt"><b>모델</b><span>LSTM ↔ 1D-CNN · 경보 · 16시간 · 2회차</span><i></i></div><div class="row">
+<div class="m"><div class="code"><b>U3-A3</b><span>11/06 · 8시간 · 18장</span></div>
+<div class="ct">LSTM 수온 예측 — 기억하는 신경망</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>RNN · LSTM 모양</span><b>3~4교시</b><span>단변량 · 다변량</span><b>5~6교시</b><span>씨앗 · 24시간 · 저장</span><b>7~8교시</b><span>설정 고르기 미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>LSTM: (B, T, F) → 기억 → 지금 + 변화량</li><li>조기 종료 · set_seed · 시험은 마지막에 한 번</li><li>씨앗 흔들림: 시험 0.452 ± 0.013</li><li>24시간 한 번에: 2~22시간 뒤에서 이김, 24시간 뒤는 비김</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>RNN 과 LSTM</h4><ol><li class="">RNN — 같은 상자를 72번 다시 쓴다</li><li class="">실습 1 · 모양부터 — a3_step1_lstm_shapes.py</li><li class="">우리 모델 — models.py 의 LSTMForecaster</li></ol></div><div><h4><small>02</small>학습 — 단변량에서 다변량으로</h4><ol><li class="">조기 종료 — train.py 의 fit()</li><li class="">실습 2 · 단변량 LSTM — 수온 + 시각 · 날짜만</li><li class="">실습 3 · 다변량 LSTM — 그리고 씨앗만 바꿔 3번</li></ol></div><div><h4><small>03</small>24시간 전부 · 저장</h4><ol><li class="">앞으로 24시간을 한 번에 — 몇 시간 뒤에 이기나</li><li class="hot">저장 — 가중치만으로는 서비스를 못 한다</li></ol></div><div><h4><small>04</small>미션 — 설정 고르기</h4><ol><li class="">미션 · 8가지 설정 중 하나 고르기</li><li class="">미션 질문 — 그리고 4회차로</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u3_ai</code><small>models.py · train.py · lstm_v1</small></div>
+<div class="num">시험 MAE 0.452 ± 0.013 vs 그대로 0.481 — 2~22시간 뒤에서 이김</div><div class="mis">미션: 8가지 설정 중 검증으로만 하나 고르기</div><div><div class="lbl">미션 질문</div><ol class="qs"><li style="position:relative">검증 차이 0.379 vs 0.389 — 씨앗 흔들림(±0.003)과 비교하면 의미 있는 차이인가?</li><li style="position:relative">입력 24시간이 학습 시간은 절반인데 점수는 비슷하다. 서비스라면 무엇을 고를까?</li><li style="position:relative">LSTM 이 경보를 &#x27;그대로&#x27;보다 많이 놓치는 이유는? (힌트: 평균 쪽으로 당기기 · 손실 함수 L1)</li><li style="position:relative">검증 구간에 여름이 없다는 문제를 어떻게 풀 수 있을까? (기간 바꾸기 · 교차 검증)</li><li style="position:relative">(도전) dropout 0 · 0.5 를 넣어 다시 — 외우기가 줄어드나?</li></ol></div><div class="task"><b>남길</b>것 models/lstm_v1.pt · .json 과 lstm_multi_v1 — 5회차 FastAPI /predict 가 이 파일을 불러 쓴다.</div></div></div><div class="row">
+<div class="m"><div class="code"><b>U3-A4</b><span>11/12 · 8시간 · 24장</span></div>
+<div class="ct">1D-CNN 비교 · 다른 관측소 · 고수온 경보</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>1D-CNN 구조</span><b>3교시</b><span>CNN vs LSTM</span><b>4~5교시</b><span>다른 관측소</span><b>6교시</b><span>고수온 경보</span><b>7~8교시</b><span>기록 · 미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>1D-CNN: 팽창으로 멀리 · 인과로 미래 차단 · 보는 범위 31h</li><li>CNN ≈ LSTM — 차이가 씨앗 흔들림 크기</li><li>다른 관측소엔 그대로 못 쓴다 (통영 0.37 vs 0.19)</li><li>경보는 놓침 ↔ 헛경보 맞바꿈 · &#x27;그대로&#x27;가 강하다</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>1D-CNN</h4><ol><li class="">LSTM 은 차례로 읽고, CNN 은 한꺼번에 대 본다</li><li class="">팽창(dilation) — 칸을 건너뛰며 멀리 본다</li><li class="">인과 합성곱 — 오른쪽(미래)을 덧대지 않는다</li></ol></div><div><h4><small>02</small>CNN vs LSTM</h4><ol><li class="">공정한 비교 — 다른 것은 모델뿐</li><li class="">그럼 무엇으로 고르나 — 점수 말고도</li></ol></div><div><h4><small>03</small>다른 관측소에서도 통하나</h4><ol><li class="">가덕도 모델을 다른 바다에 그대로 쓰면</li><li class="hot">왜 통영에서 무너지나 — 입력의 눈금이 다르다</li><li class="">경보로 보면 — 관측소마다 놓침 / 헛경보 (시간)</li></ol></div><div><h4><small>04</small>고수온 경보 맞히기</h4><ol><li class="">문제 — 검증 구간에는 28℃ 가 한 시간도 없다</li><li class="">경보 가중 손실 — 더운 창의 오차를 더 크게 본다</li><li class="">결과 — 놓침과 헛경보는 맞바꿈</li><li class="">숫자로 — 씨앗 3개 평균 (시험 구간)</li></ol></div><div><h4><small>05</small>실험 기록 · 미션</h4><ol><li class="">실험 기록 — 실행마다 한 줄</li><li class="hot">숫자를 맞춰 보다 찾은 버그 — 사라진 28.0℃</li><li class="">미션 — CNN 설정 4가지 + 비교 리포트</li><li class="">미션 질문</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u3_ai</code><small>cnn_v1 · explog.py · experiments.csv</small></div>
+<div class="num">CNN 0.470 ≈ LSTM 0.452 · 통영에 그대로 0.370 vs 그대로 0.186</div><div class="mis">발견: float32 로 28.0℃ 가 사라지는 버그 → 반올림</div><div><div class="lbl">미션 질문</div><ol class="qs"><li style="position:relative">CNN 과 LSTM 중 무엇을 A5 에 올릴까? 근거 4가지(검증 · 시험 · 속도 · 흔들림)로</li><li style="position:relative">통영 · 포항 사용자가 /predict 를 부르면? 400 · &#x27;그대로&#x27; · 그 관측소 모델 — 각각의 비용</li><li style="position:relative">경보 249시간을 &#x27;사건&#x27;으로 세면 몇 번인가? 사건 단위로 놓침을 다시 세 보라 (연속 시간 묶기)</li><li style="position:relative">가중치 5 · 기준 26℃ 는 어떻게 정할까? 검증에 경보가 없을 때의 방법을 하나 제안</li><li style="position:relative">(도전) 4곳 자료를 함께 학습(관측소별 정규화)하면? 각 관측소 시험 MAE 를 ③ 자기 모델과 비교</li></ol></div><div class="task"><b>준비</b>pip install fastapi uvicorn httpx — A5 의 requirements 에 들어간다. 단원 2 U2-05 의 FastAPI 코드를 다시 열어 둘 것.</div></div></div><div class="band"><b>서비스</b><span>서빙 → 화면 · 기록 · 14시간 · 2회차</span><i></i></div><div class="row">
+<div class="m"><div class="code"><b>U3-A5</b><span>11/13 · 8시간 · 23장</span></div>
+<div class="ct">모델 서빙 — FastAPI 수온 예측 API</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1교시</b><span>저장 형식</span><b>2~3교시</b><span>서비스용 예측기</span><b>4~5교시</b><span>FastAPI</span><b>6~7교시</b><span>최신 관측 · pytest</span><b>8교시</b><span>미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>모델 파일 + .json(정규화 · 특성 순서)은 한 몸</li><li>같은 함수 재사용 + 창 2,520개 대조로 어긋남 찾기</li><li>8시 점검: 서비스는 &#x27;다음 시각&#x27;을 모른다 → 당기기</li><li>400 · 422 · 503 은 누구의 문제인지 알려 준다</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>저장 형식</h4><ol><li class="">모델 파일에는 무엇이 들어 있나</li><li class="">torch.export — 묶음 크기만 바뀔 수 있게</li></ol></div><div><h4><small>02</small>서비스용 예측기</h4><ol><li class="hot">같은 함수를 다시 쓴다 — 학습/서비스 어긋남 막기</li><li class="hot">처음 검사 결과 — 2,520개 중 29개가 어긋났다</li><li class="">고친 방법 — 마지막 시각이 의심스러우면 한 시간 앞으로</li><li class="">망가진 입력 8가지 — 받아 줄까, 거절할까</li></ol></div><div><h4><small>03</small>FastAPI</h4><ol><li class="">엔드포인트 3개</li><li class="">api/main.py — 켜질 때 한 번, 요청마다 조금</li><li class="">응답 — /predict/latest (8월 10일 9시 기준)</li><li class="">오류 코드 — 누구의 잘못인지 알려 준다</li></ol></div><div><h4><small>04</small>진짜 &#x27;지금&#x27; · 자동 검사</h4><ol><li class="">공공데이터포털에서 지금 관측을 받아 바로 예측</li><li class="">pytest — 서버를 띄우지 않고 API 검사</li></ol></div><div><h4><small>05</small>미션 — 여름을 다시 돌려 보기</h4><ol><li class="">API 를 3시간마다 불렀다면</li><li class="">서비스 성적 — 모델 · 그대로 · 둘 다</li><li class="">미션 질문</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u3_ai</code><small>serve.py · source.py · api/main.py</small></div>
+<div class="num">어긋남 29/2,520 → &#x27;8시 당김&#x27; 규칙으로 0 · 여름 840회 MAE 0.466 vs 0.478</div><div class="mis">미션: 놓침 18 vs 헛경보 29 — 누구 입장에서 고르나</div><div><div class="lbl">미션 질문</div><ol class="qs"><li style="position:relative">경보를 화면에 어떻게 보여 줄까? pred_over · now_over · 둘 중 하나 — 놓침 18 vs 헛경보 29 의 맞바꿈을 누구 입장에서 고르나 (양식장 · 행정)</li><li style="position:relative">기준 시각 당김 문턱 1℃ 를 0.5 · 2℃ 로 바꾸면 당김 횟수와 예측은? (a5_step2 를 고쳐 다시)</li><li style="position:relative">as_of 를 매시간으로 바꿔 다시 돌리면 8시 당김은 몇 번? 8시 정각 요청에 7시 기준 답을 주는 것을 화면에 어떻게 알릴까</li><li style="position:relative">LiveSource 가 매 요청 2.5초 — 캐시를 넣는다면 몇 분이 적당한가? (관측은 매시 정각 갱신)</li><li style="position:relative">(도전) MODEL_FORMAT=export 로 서버를 켜고 tests 를 다시 — 무엇이 같고 무엇이 다른가</li></ol></div><div class="task"><b>준비</b>단원 2 U2-06 의 u2_06(React 19 + Spring Boot 4.1) 프로젝트를 열어 두기 — 같은 구조에 수온 예측 화면을 더한다. Node 22 이상 · JDK 21.</div></div></div><div class="row">
+<div class="m"><div class="code"><b>U3-A6</b><span>11/16 1~6교시 · 6시간 · 23장</span></div>
+<div class="ct">예측 화면 · 예측 기록 · 통합 점검</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>화면 · 타입 · 그래프</span><b>3교시</b><span>경보 · 안내 · 모바일</span><b>4교시</b><span>Spring 기록 · 채점</span><b>5교시</b><span>통합 점검</span><b>6교시</b><span>미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>pydantic 응답 → TypeScript 타입</li><li>라이브러리 없이 SVG — 관측 · 예측 · 오차 띠 · 28℃ 선</li><li>경보 단계 · 기준 시각 당김 안내 · 모바일</li><li>Spring forecast_log 저장 → 목표 시각 뒤 채점</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>구조와 화면</h4><ol><li class="">세 서버 — AI 는 파이썬, 업무 기록은 자바</li><li class="">완성 화면 — 8월 25일 9시를 다시 보기</li><li class="">응답 모양 = 타입 — pydantic → TypeScript</li></ol></div><div><h4><small>02</small>예측 그래프</h4><ol><li class="">그래프 = 직선 함수 두 개 + 층 쌓기</li><li class="">작은 함수 셋 — 눈금 · 28℃ 선 · 시간 더하기</li></ol></div><div><h4><small>03</small>경보 · 안내 · 모바일</h4><ol><li class="">경보 단계 — 5회차 미션의 결론을 화면 규칙으로</li><li class="">기준 시각 당김 — 숨기지 않고 알린다</li><li class="">모바일 — 같은 화면, 좁은 폭</li></ol></div><div><h4><small>04</small>Spring — 예측 기록과 채점</h4><ol><li class="hot">forecast_log — 예측 하나 = 한 줄, 실제값은 나중에</li><li class="">채점 — 세 서버가 한 번씩</li><li class="">기록으로 본 성적 — 7/20 ~ 8/20 · 6시간마다</li></ol></div><div><h4><small>05</small>통합 점검</h4><ol><li class="">a6_integration_check.py — 14개 모두 OK</li><li class="">자동 검사 한눈에 — 단원 3 AI 트랙</li></ol></div><div><h4><small>06</small>미션</h4><ol><li class="">미션 질문</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u3_web · marine-forecast-api</code><small>a6_integration_check.py</small></div>
+<div class="num">통합 점검 14개 OK · 7/20~8/20 기록 MAE 0.588 vs 그대로 0.602</div><div class="mis">미션: 현장(양식장) 사용자의 첫 화면 다시 배치</div><div><div class="lbl">미션 질문</div><ol class="qs"><li style="position:relative">out/a5_replay.csv(5회차 840건)를 기록 탭에 &#x27;여름 전체 성적&#x27;으로 보여 주기 — Spring 에 넣을까, 화면이 직접 읽을까</li><li style="position:relative">현장 사용자(양식장)를 생각하면 첫 화면은 무엇이어야 하나? 모바일 먼저 다시 배치해 보기</li><li style="position:relative">채점을 버튼 대신 매시간 자동으로 — Spring @Scheduled 또는 파이썬 작업. 어느 쪽이 맞나</li><li style="position:relative">&#x27;참고용 예측&#x27; 안내 문구와 국립수산과학원 공식 특보로 가는 길을 화면 어디에 둘까</li><li style="position:relative">(도전) cnn_v1 도 함께 예측 · 저장해 같은 시각의 두 모델을 기록 탭에서 나란히 채점</li></ol></div></div></div></div><div class="bt"><div class="fl"><div class="bh">완성된 구조 — 수온 예측 서비스 (세 서버)</div><div class="cols"><div class="col"><b>자료</b><div class="stack"><div class="node"><strong>공공데이터포털</strong><em>조위관측소 최신 관측 dtRecent</em></div><div class="node"><strong>sample / live</strong><em>SampleSource · LiveSource</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>정리 · 창</b><div class="stack"><div class="node"><strong>marine_ts</strong><em>clean · add_features · prepare</em></div><div class="node"><strong>Predictor</strong><em>BUFFER 24h · 8시 당김</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>모델 · API</b><div class="stack"><div class="node"><strong>lstm_v1.pt2 · cnn_v1</strong><em>모델 + .json 한 몸</em></div><div class="node"><strong>FastAPI :8001</strong><em>/predict/latest · /observations</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>화면</b><div class="stack"><div class="node k"><strong>React :5173 u3_web</strong><em>관측 · 예측 · 28℃ 선 · 경보 단계</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>기록 · 채점</b><div class="stack"><div class="node"><strong>Spring Boot :8082</strong><em>marine-forecast-api</em></div><div class="node"><strong>MariaDB forecast_log</strong><em>예측 한 줄 · 실제값은 나중에</em></div></div></div></div></div><div class="sd"><div class="bh">40시간 동안 정직하게 잰 것</div><table class="tb"><tr><td>LSTM vs 그대로 (시험 MAE)</td><td>0.452 vs 0.481 — 작지만 있다</td></tr><tr><td>CNN vs LSTM</td><td>비슷 — 차이 = 씨앗 흔들림</td></tr><tr><td>다른 관측소에 그대로</td><td>통영 0.370 vs 0.186 — 못 쓴다</td></tr><tr><td>28℃ 경보</td><td>놓침 ↔ 헛경보 맞바꿈 · &#x27;그대로&#x27;가 강하다</td></tr><tr><td>서비스 기록 7/20~8/20</td><td>0.588 vs 0.602 — 오르는 철엔 하루 늦다</td></tr></table><div class="note">좋은 AI 서비스 = 좋은 모델 + 학습과 같은 입력 + 모르는 것을 알리는 화면 + 실제 성적을 남기는 기록</div></div></div>
+<div class="kt"><div class="bh">U3-A2 · 기준선 성적표 (가덕도 · 24시간 뒤 · 시험 구간)</div><table><tr><th>방법</th><th>MAE</th><th>RMSE</th><th>1℃ 초과%</th><th>경보 맞힘</th><th>헛경보</th><th>놓침</th></tr><tr class=""><td>그대로 (24h 뒤 = 지금)</td><td>0.481</td><td>0.648</td><td>14.0</td><td>179</td><td>70</td><td>70</td></tr><tr class=""><td>지난 하루 평균</td><td>0.596</td><td>0.799</td><td>18.3</td><td>177</td><td>67</td><td>72</td></tr><tr class=""><td>선형회귀 (창 전체)</td><td>0.457</td><td>0.609</td><td>11.2</td><td>142</td><td>53</td><td>107</td></tr><tr class="hl"><td>LSTM (A3 고른 설정 · 씨앗 1개)</td><td>0.471</td><td>—</td><td>—</td><td>144</td><td>61</td><td>105</td></tr></table></div><div class="ft"><span>AI·데이터 기반 해양·수산 서비스 개발자 과정 · 라이스리치AI · 부산IT교육센터 · 상세판</span><span>장 제목·숫자·질문은 교안 슬라이드에서 그대로 옮김</span></div><script>function fit(){document.body.style.zoom=Math.min(1,(innerWidth-16)/1600)}addEventListener("resize",fit);fit()</script></body></html>

@@ -29,6 +29,21 @@
       "source": "/logistic_detail",
       "destination": "/logistic_detail/",
       "permanent": true
+    },
+    {
+      "source": "/marine",
+      "destination": "/marine/",
+      "permanent": true
+    },
+    {
+      "source": "/marine_detail",
+      "destination": "/marine_detail/",
+      "permanent": true
+    },
+    {
+      "source": "/marine_system",
+      "destination": "/marine_system/",
+      "permanent": true
     }
   ],
   "rewrites": [

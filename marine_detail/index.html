@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>해양·수산 AI 과목 상세 지도 · 라이스리치AI</title>
+<meta name="description" content="AI·데이터 기반 해양·수산 서비스 개발자 과정 — 해양·수산 AI 과목 상세 지도">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{--bg:#F6F8FA;--ink:#0F1B2D;--mute:#5B6778;--line:#D9E0E8;--card:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10161f;--ink:#eef2f6;--mute:#9aa8b8;--line:#253142;--card:#17202c}}
+:root[data-theme="dark"]{--bg:#10161f;--ink:#eef2f6;--mute:#9aa8b8;--line:#253142;--card:#17202c}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Pretendard','Malgun Gothic',system-ui,sans-serif;word-break:keep-all}
+a{color:inherit;text-decoration:none}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.top{max-width:1640px;margin:0 auto;padding:12px 16px 0;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.top h1{font-size:18px;font-weight:800}
+.top h1 small{font-size:13px;color:var(--mute);font-weight:500;margin-left:8px}
+.links{display:flex;gap:8px;font-size:13px;flex-wrap:wrap}
+.links a{padding:5px 11px;border:1px solid var(--line);border-radius:7px;background:var(--card);font-weight:600}
+.links a:hover{border-color:var(--ink)}
+nav{max-width:1640px;margin:0 auto;padding:10px 16px 0;display:flex;gap:4px;overflow-x:auto}
+nav a{padding:8px 14px 10px;border-bottom:3px solid transparent;white-space:nowrap;color:var(--mute)}
+nav a b{font-weight:800;margin-right:6px}
+nav a span{font-size:13px}
+nav a.on{color:var(--ink);border-bottom-color:#0F766E}
+main{max-width:1640px;margin:0 auto;padding:14px 8px 30px}
+iframe{display:block;width:100%;border:0;background:#fff;border-radius:6px}
+.hint{max-width:1640px;margin:0 auto;padding:0 16px 30px;font-size:12.5px;color:var(--mute)}
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <h1>해양·수산 AI 과목 상세 지도<small>슬라이드 구성 · 미션 질문 · 과제까지</small></h1>
+    <div class="links"><a href="/">← 라이스리치AI</a><a href="/marine/">요약판 →</a><a href="/marine_system/">시스템 설계·구현 →</a><a id="open" href="u1.html" target="_blank" rel="noopener">새 창으로 열기 ↗</a></div>
+  </div>
+  <nav><a href="#u1" data-k="u1"><b>U1</b><span>빅데이터 수집·저장 · 40h</span></a><a href="#u2" data-k="u2"><b>U2</b><span>RAG 활용 · 30h</span></a><a href="#u3a" data-k="u3a"><b>U3-A</b><span>수온 예측 서비스 · 40h</span></a><a href="#u3p" data-k="u3p"><b>U3-P</b><span>어장 추천 프로젝트 · 35h</span></a></nav>
+</header>
+<main><iframe id="f" title="해양·수산 AI 과목 상세 지도" src="u1.html" scrolling="no"></iframe></main>
+<p class="hint">AI·데이터 기반 해양·수산 서비스 개발자 과정 · 담당 4과목 145시간 · 숫자는 교안 실습의 실제 실행 결과입니다.</p>
+<script>
+const f=document.getElementById('f'),open=document.getElementById('open'),tabs=[...document.querySelectorAll('nav a')];
+function size(){try{const d=f.contentDocument;if(!d||!d.body)return;f.style.height=Math.ceil(d.documentElement.getBoundingClientRect().height||d.body.scrollHeight)+'px'}catch(e){}}
+function go(){const k=(location.hash||'#u1').slice(1);const t=tabs.find(a=>a.dataset.k===k)||tabs[0];tabs.forEach(a=>a.classList.toggle('on',a===t));const src=t.dataset.k+'.html';if(!f.src.endsWith(src))f.src=src;open.href=src}
+f.addEventListener('load',()=>{size();setTimeout(size,300);setTimeout(size,1200);try{f.contentWindow.addEventListener('resize',()=>setTimeout(size,50))}catch(e){}});
+addEventListener('resize',()=>setTimeout(size,80));addEventListener('hashchange',go);go();
+</script>
+</body>
+</html>

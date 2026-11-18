@@ -1,0 +1,176 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>단원 2 AI 서비스 데이터 구축 및 RAG 활용 — 상세판</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--a:#6D28D9;--s:#EFE9FC;--ink:#0F1B2D;--mute:#5B6778;--line:#D9E0E8;--bg:#F6F8FA}
+body{width:1600px;height:1130px;background:var(--bg);font-family:'Pretendard','Malgun Gothic','Apple SD Gothic Neo','Noto Sans CJK KR',sans-serif;color:var(--ink);
+ padding:26px 30px 22px;display:flex;flex-direction:column;gap:12px;overflow:hidden;letter-spacing:-.01em}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.badge{display:inline-block;background:var(--a);color:#fff;font-weight:700;font-size:14px;padding:4px 10px;border-radius:4px;margin-right:10px;vertical-align:5px}
+h1{font-size:31px;font-weight:800;letter-spacing:-.025em}
+.sub{font-size:14px;color:var(--mute);margin-top:6px;font-weight:500}
+.goal{max-width:700px;text-align:right}
+.goal b{display:block;font-size:11px;letter-spacing:.08em;color:var(--a);font-weight:700;margin-bottom:3px}
+.goal p{font-size:15px;font-weight:600;line-height:1.4}
+.chips{display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-end;margin-top:7px}
+.chip{font-size:11px;font-weight:600;padding:2px 7px;border:1px solid var(--line);background:#fff;border-radius:10px;color:#334155}
+/* timeline */
+.tl{display:flex;height:30px;border-radius:5px;overflow:hidden;gap:2px}
+.tl div{display:flex;align-items:center;justify-content:center;gap:6px;color:#fff;font-size:11.5px;font-weight:700;white-space:nowrap;overflow:hidden}
+.tl i{font-style:normal;font-weight:500;opacity:.85}
+/* phases */
+.ph{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:14px}
+.ph>div{border-top:3px solid var(--a);padding-top:4px;font-size:13px;font-weight:700;color:var(--a)}
+.ph span{color:var(--mute);font-weight:500;margin-left:6px}
+.ph>div.alt{border-top-color:var(--ink);color:var(--ink)}
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:14px;flex:1;min-height:0}
+.card{flex:1;min-width:0;background:#fff;border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;position:relative}
+.card+.card::before{content:'';position:absolute;left:-12px;top:44px;border:5px solid transparent;border-left:8px solid #94A3B8}
+.ch{padding:9px 11px 8px;border-bottom:1px solid var(--line)}
+.code{display:flex;justify-content:space-between;align-items:baseline}
+.code b{font-size:13px;font-weight:800;color:var(--a)}
+.code span{font-size:11px;color:var(--mute);font-weight:600}
+.ct{font-size:14.5px;font-weight:700;line-height:1.3;margin-top:4px;min-height:38px}
+.hrs{display:flex;gap:2px;margin-top:6px}
+.hrs u{width:9px;height:5px;background:var(--a);border-radius:1px;text-decoration:none}
+.cb{padding:10px 11px;flex:1;display:flex;flex-direction:column;gap:10px}
+.lbl{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--mute);margin-bottom:3px}
+ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+li{font-size:12.8px;line-height:1.45;padding-left:10px;position:relative;color:#1E293B}
+li::before{content:'';position:absolute;left:0;top:7px;width:4px;height:4px;border-radius:50%;background:var(--a)}
+.lab{background:#F1F5F9;border-radius:5px;padding:6px 8px}
+.lab code{font-family:Consolas,'D2Coding','DejaVu Sans Mono',monospace;font-size:10.8px;font-weight:600;color:var(--ink);display:block;word-break:break-all}
+.lab small{font-size:10.8px;color:var(--mute);display:block;margin-top:2px;line-height:1.35;word-break:break-all}
+.num{background:var(--s);border-left:3px solid var(--a);border-radius:0 5px 5px 0;padding:7px 8px;font-size:12.4px;font-weight:600;line-height:1.42}
+.fw{display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:12px;line-height:1.35}
+.fw b{color:var(--a);font-weight:700;white-space:nowrap}
+.fw span{color:#1E293B}
+.out{margin-top:auto;font-size:11.6px;line-height:1.42;color:#334155;border-top:1px dashed var(--line);padding-top:7px}
+/* bottom */
+.bt{display:flex;gap:14px;height:262px}
+.fl{flex:1.75;background:#fff;border:1px solid var(--line);border-radius:8px;padding:11px 14px;display:flex;flex-direction:column}
+.sd{flex:1;background:var(--ink);color:#fff;border-radius:8px;padding:12px 16px;display:flex;flex-direction:column}
+.bh{font-size:14px;font-weight:800;margin-bottom:9px}
+.sd .bh{color:#fff}
+.cols{display:flex;flex:1;align-items:stretch;gap:0}
+.col{flex:1;display:flex;flex-direction:column;min-width:0}
+.col>b{font-size:10.5px;font-weight:700;letter-spacing:.05em;color:var(--a);margin-bottom:5px;text-align:center}
+.stack{flex:1;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.node{border:1.5px solid var(--a);border-radius:6px;padding:6px 8px;background:#fff;text-align:center}
+.node.k{background:var(--s)}
+.node strong{display:block;font-size:12.3px;font-weight:700;line-height:1.25}
+.node em{display:block;font-style:normal;font-size:10.8px;color:var(--mute);line-height:1.3;margin-top:2px}
+.arr{width:26px;display:flex;align-items:center;justify-content:center;padding-top:16px}
+.arr::before{content:'';width:15px;height:2px;background:#64748B;box-shadow:none;position:relative}
+.arr span{width:0;height:0;border:5px solid transparent;border-left:7px solid #64748B;margin-left:-1px}
+.pl{display:flex;flex-direction:column;gap:9px;flex:1;justify-content:center}
+.pl div b{display:block;font-size:13.5px;font-weight:700}
+.pl div span{display:block;font-size:12px;color:#B8C4D4;line-height:1.4;margin-top:1px}
+.pl div{padding-left:11px;border-left:3px solid var(--a)}
+.tb{width:100%;border-collapse:collapse;font-size:12px}
+.tb td{padding:6px 0;border-bottom:1px solid #2A3A52;vertical-align:top;line-height:1.4}
+.tb td:first-child{color:#B8C4D4;width:44%;padding-right:10px}
+.tb td:last-child{font-weight:600}
+.bars{display:flex;flex-direction:column;gap:7px;flex:1;justify-content:center}
+.bar{display:flex;align-items:center;gap:8px;font-size:12px}
+.bar>span:first-child{width:132px;color:#B8C4D4;text-align:right;flex:none}
+.bar .t{flex:1;height:15px;background:#22324A;border-radius:3px;position:relative}
+.bar .t i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:#64748B}
+.bar.hi .t i{background:var(--a)}
+.bar.hi>span:first-child{color:#fff;font-weight:700}
+.bar b{width:40px;font-weight:700;font-variant-numeric:tabular-nums}
+.note{font-size:11.5px;color:#B8C4D4;margin-top:8px;line-height:1.4}
+.ft{display:flex;justify-content:space-between;font-size:10.5px;color:var(--mute)}
+
+body{height:auto!important;overflow:visible!important}
+.rows{display:flex;flex-direction:column;gap:12px}
+.band{display:flex;align-items:center;gap:10px;margin-top:6px}
+.band b{font-size:15px;font-weight:800;color:var(--a)}
+.band span{font-size:13px;color:var(--mute);font-weight:500}
+.band i{flex:1;height:2px;background:var(--a);opacity:.35}
+.band.alt b{color:var(--ink)}.band.alt i{background:var(--ink)}
+.row{display:grid;grid-template-columns:270px 1fr 400px;background:#fff;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.row>div{padding:13px 15px}
+.m{background:var(--s);border-right:1px solid var(--line)}
+.m .code b{font-size:15px}
+.m .ct{font-size:17px;min-height:0;margin-top:5px}
+.m .hrs{margin:8px 0 10px}
+.m .fw{font-size:12.4px;gap:4px 9px}
+.m .lbl{margin-top:11px}
+.lrn{list-style:none;counter-reset:n}
+.lrn li{padding-left:10px;font-size:12.6px}
+.lrn li::before{top:8px}
+.sec{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:10px 14px;align-content:start}
+.sec>div{border-top:2px solid var(--line);padding-top:6px}
+.sec h4{font-size:12.6px;font-weight:800;color:var(--ink);margin-bottom:5px}
+.sec h4 small{font-weight:600;color:var(--a);margin-right:5px}
+.sec ol{list-style:none;display:flex;flex-direction:column;gap:3px}
+.sec ol li{font-size:12.2px;line-height:1.4;color:#334155;padding-left:9px;position:relative}
+.sec ol li::before{content:'';position:absolute;left:0;top:7px;width:4px;height:1.5px;background:#94A3B8}
+.sec ol li.hot{color:var(--ink);font-weight:600}
+.sec ol li.hot::before{background:var(--a);height:4px;width:4px;border-radius:50%;top:6px}
+.r{border-left:1px solid var(--line);display:flex;flex-direction:column;gap:9px}
+.qs{counter-reset:q;list-style:none;display:flex;flex-direction:column;gap:4px}
+.qs li{counter-increment:q;font-size:11.8px;line-height:1.42;padding-left:18px;color:#334155}
+.qs li::before{content:counter(q);position:absolute;left:0;top:1px;width:13px;height:13px;border-radius:50%;background:var(--ink);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.task{font-size:12px;line-height:1.45;background:#FFF8E6;border:1px solid #F3E2B3;border-radius:5px;padding:6px 8px;color:#5B4A1A}
+.task b{font-weight:700;color:#7A5B00;margin-right:4px}
+.mis{font-size:12.4px;line-height:1.45;font-weight:600}
+.legend{display:flex;gap:16px;font-size:11.5px;color:var(--mute);align-items:center}
+.legend em{font-style:normal;display:inline-flex;align-items:center;gap:5px}
+.legend em::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--a)}
+.bt{height:auto!important}
+.fl{min-height:250px}
+.kt{background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 15px}
+.kt table{width:100%;border-collapse:collapse;font-size:12.4px}
+.kt th{text-align:left;font-size:11px;color:var(--mute);font-weight:700;border-bottom:1.5px solid var(--ink);padding:5px 8px}
+.kt td{padding:6px 8px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.kt td:first-child{font-weight:600}
+.kt tr.hl td{background:var(--s)}
+.lastrow{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
+html{background:#E5E9EF}body{margin:0 auto;box-shadow:0 2px 16px rgba(15,27,45,.12)}@page{size:1600px 2400px;margin:0}@media print{html{background:none}body{box-shadow:none;zoom:1!important}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}.row{break-inside:avoid}}</style></head><body style="--n:6">
+<div class="hd"><div><h1><span class="badge">단원 2</span>AI 서비스 데이터 구축 및 RAG 활용 <span style="font-size:17px;color:var(--mute);font-weight:600">상세판</span></h1><div class="sub">30시간 · 6회차 · 2026-10-22 ~ 10-30 · 교안 160장 · 결과물 &#x27;해양수산 현장 어시스턴트&#x27;</div></div>
+<div class="goal"><b>이 과목이 끝나면</b><p>특보 · 법령 · 현장 문서를 근거로, 인용하고 모르면 모른다고 답하는 RAG 서비스</p><div class="chips"><span class="chip">JSONL</span><span class="chip">e5 임베딩</span><span class="chip">FAISS</span><span class="chip">Kiwi BM25</span><span class="chip">Hugging Face</span><span class="chip">Ollama</span><span class="chip">OpenAI · Claude</span><span class="chip">FastAPI</span><span class="chip">React 19 + TS</span><span class="chip">Spring Boot 4.1</span></div></div></div>
+<div class="tl"><div style="flex:8;background:var(--a)" title="U2-01">U2-01 <i>8h</i></div><div style="flex:2;background:var(--a)" title="U2-02">U2-02 <i>2h</i></div><div style="flex:6;background:var(--ink)" title="U2-03">U2-03 <i>6h</i></div><div style="flex:4;background:var(--ink)" title="U2-04">U2-04 <i>4h</i></div><div style="flex:4;background:var(--a)" title="U2-05">U2-05 <i>4h</i></div><div style="flex:6;background:var(--a)" title="U2-06">U2-06 <i>6h</i></div></div><div class="legend"><span>● 굵은 장 제목 = 실제 데이터로 겪은 함정 · 버그 · 발견</span><span>노란 상자 = 다음 회차 전 과제 · 준비</span></div><div class="rows"><div class="band"><b>색인</b><span>문서 → 청크 → 벡터 · 10시간 · 2회차</span><i></i></div><div class="row">
+<div class="m"><div class="code"><b>U2-01</b><span>10/22 · 8시간 · 28장</span></div>
+<div class="ct">생성형 AI · RAG 와 해양수산 문서 코퍼스</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1~2교시</b><span>생성형 AI · LLM</span><b>3~4교시</b><span>RAG 구조 · 문서 모으기</span><b>5~6교시</b><span>정제 · 청킹</span><b>7~8교시</b><span>코퍼스 · 평가 질문</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>LLM 은 다음 토큰을 고른다 — 우리 자료 · 최신 정보는 모른다</li><li>RAG = 색인(미리) + 질의(질문마다) · 오늘은 색인의 앞부분</li><li>출처가 달라도 &#x27;문서&#x27; 하나의 모양으로 모은다</li><li>구조를 경계로 청킹 · 제목표(embed_text) · chunk_id</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>생성형 AI 와 LLM</h4><ol><li class="">LLM 은 &#x27;다음 토큰을 고르는&#x27; 프로그램입니다</li><li class="">LLM 이 잘하는 것, 못하는 것</li><li class="">환각 — 모르는 것을 그럴듯하게 지어낸다</li><li class="">우리 자료를 쓰게 하는 세 가지 방법</li></ol></div><div><h4><small>02</small>RAG 구조와 문서 모으기</h4><ol><li class="">RAG 는 두 흐름으로 돈다</li><li class="">이 단원에서 쓸 LLM 세 가지 (3회차 실습 예고)</li><li class="">오늘의 재료 — 세 출처, 네 종류</li><li class="">모든 출처를 &#x27;문서&#x27; 하나의 모양으로</li><li class="">특보 문서 — 단원 1 수집기의 결과를 그대로</li><li class="">법령 — 국가법령정보 공동활용 OpenAPI</li><li class="">실습 1 · 문서 목록 만들기</li></ol></div><div><h4><small>03</small>정제와 청킹</h4><ol><li class="">정제 — 검색을 방해하는 것만 지운다</li><li class="hot">청크는 너무 커도, 너무 작아도 안 됩니다</li><li class="">청킹 전략 네 가지 — 종류마다 자연스러운 경계</li><li class="">실습 3 · 조문 단위 vs 고정 길이</li><li class="">조문을 자르는 정규식</li><li class="">청크에 &#x27;제목표&#x27;를 붙인다 — embed_text</li></ol></div><div><h4><small>04</small>코퍼스와 평가 질문</h4><ol><li class="">실습 4 · 코퍼스 만들기 — chunks.jsonl</li><li class="">미션 · 코퍼스 품질 점검 + 평가 질문 10개</li><li class="">좋은 평가 질문의 조건</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u2_rag</code><small>chunks.jsonl · qa.jsonl</small></div>
+<div class="num">코퍼스 47청크 · 평가 질문 10개(정답 chunk_id · 핵심어)</div><div class="mis">과제: 법령 OpenAPI 신청 · &#x27;없는 질문&#x27;도 시험지에</div><div class="task"><b>과제</b>open.law.go.kr OpenAPI 신청 · 평가 질문 10개(정답 chunk_id · 핵심어 포함) 완성. 내일 2교시에 Ollama 를 설치하므로 노트북 디스크 10GB 이상 비워 오기.</div></div></div><div class="row">
+<div class="m"><div class="code"><b>U2-02</b><span>10/23 1~2교시 · 2시간 · 22장</span></div>
+<div class="ct">문장 임베딩과 FAISS 검색</div><div class="hrs"><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1교시</b><span>텐서 · 코사인 · 임베딩 두 가지</span><b>2교시</b><span>FAISS 인덱스 · 검색 · 채점</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>임베딩 = 문장을 같은 길이의 숫자 목록으로 · 정규화하면 내적 = 코사인</li><li>TF-IDF 는 글자 겹침, e5 는 뜻 — 그러나 우리 데이터에선 e5-small 이 졌다 · 재 봐야 안다</li><li>e5 는 query: / passage: 앞말 · 모델을 바꾸면 인덱스도 다시</li><li>FAISS IndexFlatIP 로 47개 청크 검색 · Hit@k · MRR 로 채점</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>벡터와 코사인 유사도</h4><ol><li class="">임베딩 — 문장을 &#x27;숫자 목록&#x27;으로</li><li class="">실습 1 · 텐서 맛보기</li><li class="">코사인 유사도 — 길이는 빼고 방향만 본다</li></ol></div><div><h4><small>02</small>두 가지 임베딩</h4><ol><li class="">글자 겹침(TF-IDF) vs 의미 임베딩(e5)</li><li class="">e5 사용법 — 앞말 두 개를 꼭 붙인다</li><li class="">실습 2 · 같은 다섯 문장, 두 가지 임베딩</li></ol></div><div><h4><small>03</small>FAISS 인덱스와 검색</h4><ol><li class="">FAISS — 벡터 검색 전용 도구</li><li class="">실습 3 · 인덱스 만들기</li><li class="">실습 4 · 질문으로 검색하기</li></ol></div><div><h4><small>04</small>검색을 채점하기</h4><ol><li class="">Hit@1 · Hit@3 · MRR</li><li class="">시험지 두 장 — 같은 답, 다른 말</li><li class="">미션 결과 · 두 방법 × 두 시험지</li><li class="hot">결과 읽기 · 의미 임베딩은 왜 졌을까</li><li class="">미션 · 내 평가 질문으로 채점하기</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u2_rag</code><small>embed.py · s2_step3_build_index</small></div>
+<div class="num">말 바꾼 시험지 Hit@1 — TF-IDF 0.42 vs e5 0.33</div><div class="mis">교훈: 의미 임베딩이 이길 것 같았지만, 재 봐야 안다</div></div></div><div class="band alt"><b>질의</b><span>검색 → 프롬프트 → LLM · 10시간 · 2회차</span><i></i></div><div class="row">
+<div class="m"><div class="code"><b>U2-03</b><span>10/23 3~8교시 · 6시간 · 39장</span></div>
+<div class="ct">해양 도메인 프롬프트와 LLM 3종</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>3교시</b><span>LLM 기본 · chat()</span><b>4교시</b><span>Hugging Face</span><b>5교시</b><span>Ollama</span><b>6교시</b><span>OpenAI · Claude</span><b>7교시</b><span>RAG 프롬프트 · 용어</span><b>8교시</b><span>JSON · 미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>토큰 · 메시지 · temperature — LLM 은 기억이 없어 매번 전부 보낸다</li><li>HF · Ollama · OpenAI · Claude 를 chat() 하나로 · LLM_BACKEND 한 줄로 교체</li><li>규칙 5개 프롬프트 · 인용 검사 · &#x27;모름&#x27; 문장</li><li>용어 주입(검색 · 프롬프트) · JSON 스키마 검사 · 같은 시험지로 비교</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>LLM 호출의 기본</h4><ol><li class="">LLM 은 &#x27;다음 토큰 맞히기&#x27;를 반복한다</li><li class="">메시지 — system · user · assistant</li><li class="">생성 설정 — temperature · 최대 토큰 · 추론 정도</li><li class="">LLM 3종 — 어디서 돌아가나</li><li class="">chat() 하나로 감싸기 — marine_rag/llm.py</li><li class="">실습 1 · 메시지를 눈으로 보기</li></ol></div><div><h4><small>02</small>Hugging Face — 내 PC 에서 직접</h4><ol><li class="">transformers 로 LLM 돌리는 4단계</li><li class="">Qwen3 의 &#x27;생각 모드&#x27; — &lt;think&gt; … &lt;/think&gt;</li><li class="">실습 2 · 토큰 세기와 temperature</li></ol></div><div><h4><small>03</small>Ollama — 내 PC 의 LLM 서버</h4><ol><li class="">Ollama — 설치하고 모델 받기</li><li class="">HTTP 로 부르기 — POST /api/chat</li><li class="hot">왜 Ollama 가 더 빠른가 — 숫자 형식과 엔진</li><li class="">실습 3 · 한 번에 받기 vs 스트리밍</li></ol></div><div><h4><small>04</small>OpenAI · Claude API</h4><ol><li class="">API 키 — 비밀번호보다 더 조심</li><li class="">두 SDK 나란히 — 같은 일, 다른 이름</li><li class="">요금 계산 — 토큰 × 단가</li><li class="">오류는 바로 고칠 수 있는 말로</li></ol></div><div><h4><small>05</small>RAG 프롬프트와 해양 용어</h4><ol><li class="">RAG 프롬프트 — 규칙 5개</li><li class="">답을 검사한다 — check_answer()</li><li class="">실습 5 · RAG 로 답하기</li><li class="">근거가 없을 때 vs 있을 때 — 같은 0.6B 모델</li><li class="">검사를 통과해도 틀린 답 — 규칙 채점의 한계</li><li class="">해양 용어 주입 ① — 질의 확장</li><li class="">해양 용어 주입 ② — 프롬프트에 알려 주기</li></ol></div><div><h4><small>06</small>JSON 출력과 미션</h4><ol><li class="hot">왜 JSON 인가 — 앱 알림 카드</li><li class="">믿지 말고 검사 — pydantic + 한 번 더</li><li class="">JSON 모양을 LLM 에 알려 주는 방법</li><li class="">미션 · 같은 시험지로 LLM 비교</li><li class="">미션 결과 · 강사 PC</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u2_rag</code><small>marine_rag/llm.py · prompt.py</small></div>
+<div class="num">같은 시험지: qwen3:1.7b 4/4 · 20.7초 / HF 0.6B 3/4 · 146초 · 지어낸 인용 0</div><div class="mis">과제: 미션 CSV 에 사람 점수 매기기</div><div class="task"><b>과제</b>미션 CSV 에 사람 점수를 매겨 오기 — 4회차에 규칙 채점과 사람 채점이 얼마나 맞는지 봅니다.</div></div></div><div class="row">
+<div class="m"><div class="code"><b>U2-04</b><span>10/29 1~4교시 · 4시간 · 21장</span></div>
+<div class="ct">BM25 와 하이브리드 검색</div><div class="hrs"><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1교시</b><span>BM25 · 한국어 낱말 자르기</span><b>2교시</b><span>BM25 채점</span><b>3교시</b><span>하이브리드 (RRF)</span><b>4교시</b><span>표 청크 실험 · 미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>BM25 = 낱말 빈도 · 희귀도 · 길이 보정 — 학습 없는 검색의 표준</li><li>한국어는 자르는 법이 절반 — Kiwi 형태소로 BM25 ② Hit@1 0.25 → 0.58</li><li>RRF 는 &#x27;합의&#x27;를 믿는다 — 둘이 같이 틀리면 같이 틀린다</li><li>가장 큰 효과는 질의 확장 · 그다음 검색 대상 정리(사전 빼기)</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>BM25 — 낱말 검색의 표준</h4><ol><li class="">BM25 가 세는 세 가지</li><li class="">실습 1 · 한국어는 낱말 자르기가 절반</li><li class="">Kiwi — 한국어 형태소 분석기</li><li class="">실습 2 · BM25 채점 — 토크나이저 세 가지</li></ol></div><div><h4><small>02</small>하이브리드 — 낱말과 의미 합치기</h4><ol><li class="hot">왜 섞나 — 서로 다른 질문을 맞힌다</li><li class="">RRF — 순위만 보고 합친다</li><li class="">코드 · HybridRetriever</li><li class="">실습 3 · 하이브리드 채점</li><li class="hot">왜 RRF 가 졌나 — &#x27;둘 다 동의&#x27;한 오답</li></ol></div><div><h4><small>03</small>표 청크 실험</h4><ol><li class="">가설 3 — 표 청크가 1등을 빼앗는다</li><li class="">실습 4 · 표를 나누거나 빼면?</li></ol></div><div><h4><small>04</small>미션 — 다음 회차에 쓸 검색기 고르기</h4><ol><li class="">미션 · 전체 비교표로 하나 고르기</li><li class="">가설 세 개 — 판정</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u2_rag</code><small>retriever.py · HybridRetriever</small></div>
+<div class="num">Kiwi BM25 Hit@1 0.25 → 0.58 · 질의 확장 Hit@3 +0.17~0.34</div><div class="mis">결정: RETRIEVER · EXCLUDE_DOCS 를 .env 에 → 5회차가 읽음</div></div></div><div class="band"><b>서비스</b><span>API → 화면 · 기록 · 10시간 · 2회차</span><i></i></div><div class="row">
+<div class="m"><div class="code"><b>U2-05</b><span>10/29 5~8교시 · 4시간 · 22장</span></div>
+<div class="ct">FastAPI 로 RAG API 만들기</div><div class="hrs"><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>5교시</b><span>FastAPI 기초</span><b>6교시</b><span>/ask 설계 · 구현</span><b>7교시</b><span>스트리밍 · 실시간 수온</span><b>8교시</b><span>자동 검사 · 미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>FastAPI: 함수 = URL · pydantic = 요청 검사 · /docs = 계약</li><li>lifespan 으로 모델은 한 번 · 오류는 상태 코드 + 한국어</li><li>/ask/stream: sources → token → done (NDJSON)</li><li>문서(규칙) + 마트(지금 값) · 질문 로그 · pytest</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>FastAPI 기초</h4><ol><li class="">FastAPI 첫걸음 — api/hello.py</li><li class="">/docs — 코드가 곧 API 문서</li><li class="">pydantic — 틀린 요청은 문 앞에서 막는다</li></ol></div><div><h4><small>02</small>/ask 설계와 구현</h4><ol><li class="">API 설계 — 경로 다섯 개</li><li class="">응답 모양 — AskOut</li><li class="">서버가 켜질 때 한 번 — lifespan</li><li class="">오류는 상태 코드 + 알아듣는 말로</li><li class="">실습 2 · 손님 쪽에서 /ask 부르기</li></ol></div><div><h4><small>03</small>스트리밍 · 실시간 수온 · 로그</h4><ol><li class="">/ask/stream — 근거 먼저, 글자는 흐르게</li><li class="">실시간 수온 — 문서는 규칙, 마트는 지금 값</li><li class="">질문 로그 — 서비스를 키우는 재료</li></ol></div><div><h4><small>04</small>자동 검사와 미션</h4><ol><li class="">자동 검사 — tests/test_api.py</li><li class="">강사 PC 에서 본 것 — 서비스의 숙제</li><li class="">미션 · 서비스처럼 써 보기</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u2_rag</code><small>api/main.py · tests/test_api.py</small></div>
+<div class="num">CPU 에서 답 하나 중앙값 17.5초 → 화면은 스트리밍 필수</div><div class="mis">미션: 서비스처럼 10문항 — 인용OK · 모름 · 인용X 읽기</div><div class="task"><b>준비</b>Node.js 22 LTS 이상 설치 (node -v) — 6회차 React 개발 서버에 필요합니다.</div></div></div><div class="row">
+<div class="m"><div class="code"><b>U2-06</b><span>10/30 · 6시간 · 28장</span></div>
+<div class="ct">React 채팅 화면과 Spring Boot 질문 기록</div><div class="hrs"><u></u><u></u><u></u><u></u><u></u><u></u></div>
+<div class="lbl">수업 흐름</div><div class="fw"><b>1교시</b><span>구조 · Vite · 타입</span><b>2교시</b><span>스트리밍 받기</span><b>3교시</b><span>인용 · 근거 · 수온 막대</span><b>4교시</b><span>Spring Boot 질문 기록</span><b>5교시</b><span>저장 · 피드백 · 관리</span><b>6교시</b><span>통합 실행 · 검사 · 미션</span></div>
+<div class="lbl">오늘 배운 것</div><ul class="lrn"><li>Vite + React 19 + TS · types.ts 로 응답 타입</li><li>fetch 스트리밍 · NdjsonBuffer · Turn 상태</li><li>인용 칩 · 근거 원문 · 실시간 수온 막대</li><li>Spring Boot 4.1 marine-qa-api — qa_log · 피드백 · 관리 화면</li></ul></div>
+<div><div class="lbl" style="margin-bottom:8px">슬라이드 구성 — 단원별 장 제목</div><div class="sec"><div><h4><small>01</small>React + TypeScript 시작</h4><ol><li class="">Vite 로 프로젝트 만들기</li><li class="">폴더 구조 — 역할별로 나눈다</li><li class="">서버 모양을 타입으로 — types.ts</li></ol></div><div><h4><small>02</small>스트리밍 받기</h4><ol><li class="">fetch 로 스트리밍 받기 — api/rag.ts</li><li class="">줄 중간에서 잘린다 — NdjsonBuffer 와 테스트</li><li class="">한 질문의 상태 — Turn</li><li class="hot">실제 화면 — 쓰는 중과 다 쓴 뒤</li><li class="">화면이 보여 준 것 — 엉뚱한 번호 인용</li></ol></div><div><h4><small>03</small>근거를 믿을 수 있게</h4><ol><li class="">인용 칩과 근거 원문</li><li class="">실시간 수온 막대 — 화면의 단 하나의 그림</li></ol></div><div><h4><small>04</small>Spring Boot 4.1 질문 기록</h4><ol><li class="hot">왜 질문 기록은 자바 서비스로?</li><li class="">application.properties · qa_log 테이블</li><li class="">API 네 개 — QaController · QaService</li><li class="">오류는 ProblemDetail 로 — 그리고 Boot 4 에서 만난 것</li></ol></div><div><h4><small>05</small>화면과 Spring 잇기</h4><ol><li class="hot">언제 저장하나 — 실제로 겪은 두 가지 버그</li><li class="">관리 화면 — 질문 기록</li></ol></div><div><h4><small>06</small>함께 켜고, 검사하고, 마무리</h4><ol><li class="">세 서버 켜기</li><li class="">미션 · 기능 하나 더하기 (팀별 선택)</li></ol></div></div></div>
+<div class="r"><div class="lab"><div class="lbl" style="margin-bottom:1px">실습 프로젝트</div><code>u2_06</code><small>web/ · marine-qa-api/</small></div>
+<div class="mis">미션: 기능 하나 더하기 (👎 이유 · CSV · 해역 필터) + 통합 검사</div></div></div></div><div class="bt"><div class="fl"><div class="bh">완성된 구조 — 해양수산 현장 어시스턴트</div><div class="cols"><div class="col"><b>색인 (미리 한 번)</b><div class="stack"><div class="node"><strong>문서 4종</strong><em>특보 · 법령 · 수칙 · 용어 노트</em></div><div class="node"><strong>정제 · 청킹</strong><em>chunks.jsonl 47청크</em></div><div class="node"><strong>인덱스</strong><em>e5 → FAISS · Kiwi BM25</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>RAG API</b><div class="stack"><div class="node"><strong>FastAPI :8000</strong><em>/ask · /ask/stream (NDJSON)</em></div><div class="node"><strong>검색기</strong><em>질의 확장 + hybrid/dense</em></div><div class="node"><strong>프롬프트 규칙 5</strong><em>인용 · 모르면 모른다</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>LLM · 지금 값</b><div class="stack"><div class="node"><strong>LLM_BACKEND</strong><em>HF · Ollama · OpenAI · Claude</em></div><div class="node"><strong>단원 1 마트</strong><em>실시간 수온 live-temp</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>화면</b><div class="stack"><div class="node k"><strong>React :5173</strong><em>글자 흐름 · 인용 칩 · 근거 원문 · 수온 막대</em></div></div></div><div class="arr"><span></span></div><div class="col"><b>기록</b><div class="stack"><div class="node"><strong>Spring Boot :8081</strong><em>marine-qa-api</em></div><div class="node"><strong>MariaDB qa_log</strong><em>질문 · 피드백 · 관리 화면</em></div></div></div></div></div><div class="sd"><div class="bh">되풀이한 교훈</div><div class="pl"><div><b>재 봐야 안다</b><span>e5 는 TF-IDF 에 졌고, 섞은 RRF 는 BM25 에 졌다</span></div><div><b>숫자만 보지 말고 답을 읽는다</b><span>&#x27;인용 OK&#x27; 인데 엉뚱한 청크 · &#x27;200 OK&#x27; 인데 모름</span></div><div><b>가장 큰 효과는 사용자의 말</b><span>현장 말 → 문서 말 (질의 확장) · 질문 기록 → 사전</span></div></div></div></div>
+<div class="kt"><div class="bh">U2-03 · 같은 시험지로 LLM 비교 (강사 PC)</div><table><tr><th>LLM</th><th>정답 낱말</th><th>올바른 인용</th><th>지어낸 인용</th><th>모름 처리</th><th>평균 초</th></tr><tr class=""><td>mock</td><td>2/4</td><td>2/4</td><td>0</td><td>2/2</td><td>0.0</td></tr><tr class=""><td>hf · Qwen3-0.6B</td><td>3/4</td><td>4/4</td><td>0</td><td>2/2</td><td>146.3</td></tr><tr class="hl"><td>ollama · qwen3:1.7b</td><td>4/4</td><td>4/4</td><td>0</td><td>2/2</td><td>20.7</td></tr><tr class=""><td>ollama · exaone3.5:2.4b</td><td>4/4</td><td>4/4</td><td>0</td><td>1/2</td><td>31.5</td></tr></table></div><div class="ft"><span>AI·데이터 기반 해양·수산 서비스 개발자 과정 · 라이스리치AI · 부산IT교육센터 · 상세판</span><span>장 제목·숫자·질문은 교안 슬라이드에서 그대로 옮김</span></div><script>function fit(){document.body.style.zoom=Math.min(1,(innerWidth-16)/1600)}addEventListener("resize",fit);fit()</script></body></html>
